@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>Basic Access VBA</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>Basic Access VBA</h1>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#vba-data-types-variables">VBA Data Types (variables)</a></li>
+        <li><a href="#default-values-before-assignment">Default Values (before assignment)</a></li>
+        <li><a href="#basic-math-operators">Basic Math Operators</a></li>
+        <li><a href="#arrays">Arrays</a></li>
+        <li><a href="#list-collection">List (Collection)</a></li>
+        <li><a href="#dictionary-key-value">Dictionary (Key/Value)</a></li>
+        <li><a href="#loops">Loops</a></li>
+        <li><a href="#sub-and-function">Sub and Function</a></li>
+        <li><a href="#byval-vs-byref-parameter-passing">ByVal vs ByRef (Parameter Passing)</a></li>
+        <li><a href="#oop-example-–-simple-point-class">OOP Example – Simple Point Class</a></li>
+        <li><a href="#access-forms,-controls,-and-events">Access Forms, Controls, and Events</a></li>
+      </ol>
+    </div>
+    <p class="small">Quick reference for common <strong>Access VBA</strong> concepts: data types, operators, arrays/collections, control flow, procedures, and Access Forms/Controls/events.</p>
+    <h2 id="vba-data-types-variables">VBA Data Types (variables)</h2>
+    <table aria-label="VBA Data Types Table">
+      <thead>
+        <tr>
+          <th style="width:22%">VBA Type</th>
+          <th style="width:10%">Bytes</th>
+          <th>Range / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boolean</strong></td>
+          <td>2</td>
+          <td><code>True</code> / <code>False</code> (internally often <code>-1</code> for True, <code>0</code> for False)</td>
+        </tr>
+        <tr>
+          <td><strong>Byte</strong></td>
+          <td>1</td>
+          <td>0 to 255</td>
+        </tr>
+        <tr>
+          <td><strong>Integer (Int2)</strong></td>
+          <td>2</td>
+          <td>-32,768 to 32,767</td>
+        </tr>
+        <tr>
+          <td><strong>Long (Int4)</strong></td>
+          <td>4</td>
+          <td>-2,147,483,648 to 2,147,483,647</td>
+        </tr>
+        <tr>
+          <td><strong>LongLong (Int8)</strong><span class="small">(64-bit only)</span></td>
+          <td>8</td>
+          <td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+        </tr>
+        <tr>
+          <td><strong>Single (Float)</strong></td>
+          <td>4</td>
+          <td>≈ 7 digits precision</td>
+        </tr>
+        <tr>
+          <td><strong>Double</strong></td>
+          <td>8</td>
+          <td>≈ 15–16 digits precision</td>
+        </tr>
+        <tr>
+          <td><strong>Currency</strong></td>
+          <td>8</td>
+          <td>Fixed-point, 4 decimals (recommended for money)</td>
+        </tr>
+        <tr>
+          <td><strong>Decimal</strong><span class="small">(Variant subtype)</span></td>
+          <td>14</td>
+          <td>Up to 28–29 significant digits (use <code>CDec(...)</code> ; stored inside a Variant)</td>
+        </tr>
+        <tr>
+          <td><strong>Date</strong></td>
+          <td>8</td>
+          <td>Stored as Double (date serial with fractional time)</td>
+        </tr>
+        <tr>
+          <td><strong>String</strong><span class="small">(variable-length)</span></td>
+          <td>10 + 2×len</td>
+          <td>Unicode (BSTR) + overhead</td>
+        </tr>
+        <tr>
+          <td><strong>String * n</strong><span class="small">(fixed-length)</span></td>
+          <td>2×n</td>
+          <td>Exactly <code>n</code> characters (padded/truncated)</td>
+        </tr>
+        <tr>
+          <td><strong>Object</strong></td>
+          <td>4 (32-bit) / 8 (64-bit)</td>
+          <td>Reference/pointer to an object</td>
+        </tr>
+        <tr>
+          <td><strong>Variant</strong></td>
+          <td>16 (32-bit) / 24 (64-bit)</td>
+          <td>Holds any type + subtype info; size varies with contents</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="default-values-before-assignment">Default Values (before assignment)</h2>
+    <table aria-label="VBA Default Values">
+      <thead>
+        <tr>
+          <th style="width:22%">VBA Type</th>
+          <th style="width:22%">Default Value</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Numbers</strong> (Byte/Integer/Long/Single/Double/Currency/Date)</td>
+          <td><code>0</code></td>
+          <td><code>Date</code> uses <code>0</code> = <code>12/30/1899 12:00:00 AM</code></td>
+        </tr>
+        <tr>
+          <td><strong>Boolean</strong></td>
+          <td><code>False</code></td>
+          <td>Equivalent to <code>0</code></td>
+        </tr>
+        <tr>
+          <td><strong>String</strong> (variable-length)</td>
+          <td><code>""</code></td>
+          <td>Zero-length string (not <code>Null</code> )</td>
+        </tr>
+        <tr>
+          <td><strong>Object</strong></td>
+          <td><code>Nothing</code></td>
+          <td>No reference until <code>Set</code></td>
+        </tr>
+        <tr>
+          <td><strong>Variant</strong></td>
+          <td><code>Empty</code></td>
+          <td>Becomes <code>Null</code> only if assigned <code>Null</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="basic-math-operators">Basic Math Operators</h2>
+    <table aria-label="Math operators">
+      <thead>
+        <tr>
+          <th style="width:20%">Operator</th>
+          <th style="width:28%">Meaning</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>+</code></td>
+          <td>Addition</td>
+          <td><code>x = 2 + 3 ' 5</code></td>
+        </tr>
+        <tr>
+          <td><code>-</code></td>
+          <td>Subtraction / Negation</td>
+          <td><code>x = 10 - 4 ' 6</code><br/><code>x = -5</code></td>
+        </tr>
+        <tr>
+          <td><code>*</code></td>
+          <td>Multiplication</td>
+          <td><code>x = 6 * 7 ' 42</code></td>
+        </tr>
+        <tr>
+          <td><code>/</code></td>
+          <td>Division (returns Double)</td>
+          <td><code>x = 5 / 2 ' 2.5</code></td>
+        </tr>
+        <tr>
+          <td><code>\</code></td>
+          <td>Integer division</td>
+          <td><code>x = 5 \ 2 ' 2</code></td>
+        </tr>
+        <tr>
+          <td><code>Mod</code></td>
+          <td>Remainder</td>
+          <td><code>x = 5 Mod 2 ' 1</code></td>
+        </tr>
+        <tr>
+          <td><code>^</code></td>
+          <td>Power</td>
+          <td><code>x = 2 ^ 3 ' 8</code></td>
+        </tr>
+        <tr>
+          <td><code>&amp;</code></td>
+          <td>String concatenation</td>
+          <td><code>full = "Loc" &amp; " " &amp; "Ha"</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note small">
+ Tip: if you use 
+      <code>+</code>
+ with strings, VBA may try to coerce values and can surprise you. Prefer 
+      <code>&amp;</code>
+ for joining strings. 
+    </div>
+    <h2 id="arrays">Arrays</h2>
+    <table aria-label="Arrays">
+      <thead>
+        <tr>
+          <th style="width:22%">Topic</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fixed-size array</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim nums(1 To 3) As Integer
+nums(1) = 10
+nums(2) = 20
+nums(3) = 30
+Debug.Print nums(2)  ' 20</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Dynamic array</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim nums() As Long
+ReDim nums(1 To 5)
+nums(5) = 99
+ReDim Preserve nums(1 To 10)  ' keep existing values</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Loop an array</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim i As Long
+For i = LBound(nums) To UBound(nums)
+  Debug.Print nums(i)
+Next i</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="list-collection">List (Collection)</h2>
+    <p class="small">VBA doesn’t have a built-in generic <code>List&lt;T&gt;</code> . The most common “list” is <strong>Collection</strong> .</p>
+    <table aria-label="Collection list">
+      <thead>
+        <tr>
+          <th style="width:22%">Topic</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Create + add items</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim list As Collection
+Set list = New Collection
+list.Add "Apple"
+list.Add "Banana"
+Debug.Print list.Count  ' 2</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Loop items</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim item As Variant
+For Each item In list
+  Debug.Print item
+Next item</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Access by index</strong></td>
+          <td><code>Debug.Print list(1) ' "Apple" (1-based)</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="dictionary-key-value">Dictionary (Key/Value)</h2>
+    <p class="small">Use <code>Scripting.Dictionary</code> (recommended). In Access: Tools → References → check <strong>Microsoft Scripting Runtime</strong> (optional but nice for IntelliSense).</p>
+    <table aria-label="Dictionary">
+      <thead>
+        <tr>
+          <th style="width:22%">Topic</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Create + set values</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim dict As Object
+Set dict = CreateObject("Scripting.Dictionary")
+
+dict("name") = "Phuong"
+dict("age") = 25
+Debug.Print dict("name")</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Check key</strong></td>
+          <td>
+            <pre class="code-block"><code>If dict.Exists("age") Then
+  Debug.Print dict("age")
+End If</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Loop keys</strong></td>
+          <td>
+            <pre class="code-block"><code>Dim k As Variant
+For Each k In dict.Keys
+  Debug.Print k &amp; ": " &amp; dict(k)
+Next k</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="loops">Loops</h2>
+    <h3>For...Next</h3>
+    <table aria-label="For loop">
+      <thead>
+        <tr>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Dim i As Long
+For i = 1 To 5
+  Debug.Print i
+Next i</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>For Each...Next</h3>
+    <table aria-label="For each loop">
+      <thead>
+        <tr>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Dim c As Collection, v As Variant
+Set c = New Collection
+c.Add "A": c.Add "B"
+
+For Each v In c
+  Debug.Print v
+Next v</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Do While...Loop</h3>
+    <table aria-label="Do while loop">
+      <thead>
+        <tr>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Dim n As Long
+n = 1
+
+Do While n &lt;= 3
+  Debug.Print n
+  n = n + 1
+Loop</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Do...Loop While</h3>
+    <table aria-label="Do loop while">
+      <thead>
+        <tr>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Dim n As Long
+n = 1
+
+Do
+  Debug.Print n
+  n = n + 1
+Loop While n &lt;= 3</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="sub-and-function">Sub and Function</h2>
+    <table aria-label="Sub and Function">
+      <thead>
+        <tr>
+          <th style="width:22%">Topic</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sub</strong> (no return)</td>
+          <td>
+            <pre class="code-block"><code>Public Sub SayHello(ByVal who As String)
+  MsgBox "Hello " &amp; who
+End Sub</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Function</strong> (returns value)</td>
+          <td>
+            <pre class="code-block"><code>Public Function Add(ByVal a As Long, ByVal b As Long) As Long
+  Add = a + b
+End Function</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Call examples</strong></td>
+          <td>
+            <pre class="code-block"><code>Sub DemoCalls()
+  SayHello "Loc"
+  Debug.Print Add(2, 3)  ' 5
+End Sub</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ✅ ADDED SECTION: ByVal vs ByRef -->
+    <h2 id="byval-vs-byref-parameter-passing">ByVal vs ByRef (Parameter Passing)</h2>
+    <p class="small">
+ In VBA, parameters are passed 
+      <strong>ByRef</strong>
+ by default (unless you specify 
+      <code>ByVal</code>
+ ). 
+      <br/>
+      <strong>ByVal</strong>
+ = pass a copy (callee can’t change caller variable). 
+      <strong>ByRef</strong>
+ = pass a reference (callee can change caller variable). 
+    </p>
+    <table aria-label="ByVal vs ByRef">
+      <thead>
+        <tr>
+          <th style="width:22%">Topic</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ByVal (copy)</strong></td>
+          <td>
+            <pre class="code-block"><code>Public Sub AddTen_ByVal(ByVal n As Long)
+  n = n + 10
+  Debug.Print "Inside AddTen_ByVal, n=" &amp; n
+End Sub
+
+Sub Demo_ByVal()
+  Dim x As Long
+  x = 5
+
+  AddTen_ByVal x
+
+  Debug.Print "After call, x=" &amp; x  ' still 5
+End Sub</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>ByRef (reference)</strong><span class="small">(default)</span></td>
+          <td>
+            <pre class="code-block"><code>Public Sub AddTen_ByRef(ByRef n As Long)
+  n = n + 10
+  Debug.Print "Inside AddTen_ByRef, n=" &amp; n
+End Sub
+
+Sub Demo_ByRef()
+  Dim x As Long
+  x = 5
+
+  AddTen_ByRef x
+
+  Debug.Print "After call, x=" &amp; x  ' now 15
+End Sub</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note small">
+ Rule of thumb: 
+      <ul>
+        <li>Use <strong>ByVal</strong> for inputs (safer, avoids surprises).</li>
+        <li>Use <strong>ByRef</strong> when you intentionally want the procedure to modify a variable / return extra values.</li>
+      </ul>
+    </div>
+    <!-- ✅ END ADDED SECTION -->
+    <h2 id="oop-example-–-simple-point-class">OOP Example – Simple Point Class</h2>
+    <p class="small">A minimal OOP example in VBA using a <strong>Point</strong> class with <code>X</code> and <code>Y</code> properties and a method to compute distance to the origin.</p>
+    <h3>1) Create Class Module: <code>Point</code></h3>
+    <table aria-label="Point class code">
+      <thead>
+        <tr>
+          <th>Point.cls</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Option Explicit
+
+Private mX As Double
+Private mY As Double
+
+Public Property Get X() As Double
+  X = Me.mX
+End Property
+
+Public Property Let X(ByVal value As Double)
+  Me.mX = value
+End Property
+
+Public Property Get Y() As Double
+  Y = Me.mY
+End Property
+
+Public Property Let Y(ByVal value As Double)
+  Me.mY = value
+End Property
+
+Public Function DistanceToOrigin() As Double
+  DistanceToOrigin = Sqr(Me.mX ^ 2 + Me.mY ^ 2)
+End Function</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>2) Usage Example (Standard Module)</h3>
+    <table aria-label="Point usage code">
+      <thead>
+        <tr>
+          <th>Module code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Option Explicit
+
+Public Sub TestPoint()
+  Dim p As Point
+  Set p = New Point
+
+  p.X = 3
+  p.Y = 4
+
+  Debug.Print p.DistanceToOrigin()  ' Output: 5
+
+  Set p = Nothing
+End Sub</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="access-forms,-controls,-and-events">Access Forms, Controls, and Events</h2>
+    <div class="note">
+      <div>
+        <strong>Key idea:</strong>
+ In Access VBA, a 
+        <strong>Form</strong>
+ is an object (a class instance). 
+      </div>
+      <div class="small">
+ Controls on a form (TextBox, ComboBox, Button...) are also objects (classes). 
+      </div>
+      <div class="small">
+ When you write code behind a form, you are writing code inside that form’s 
+        <strong>class module</strong>
+ . 
+      </div>
+    </div>
+    <h3>Common UI Controls (objects)</h3>
+    <table aria-label="Access controls">
+      <thead>
+        <tr>
+          <th style="width:22%">Control</th>
+          <th>Notes / Example usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TextBox</strong></td>
+          <td><code>Me.txtName.Value = "Loc"</code><br/><span class="small">Value is often default; <code>Me.txtName = "Loc"</code> also works</span></td>
+        </tr>
+        <tr>
+          <td><strong>ComboBox</strong></td>
+          <td><code>Me.cboStatus.Value = "Active"</code></td>
+        </tr>
+        <tr>
+          <td><strong>CommandButton</strong></td>
+          <td><code>' user clicks to run code</code></td>
+        </tr>
+        <tr>
+          <td><strong>Label</strong></td>
+          <td><code>Me.lblInfo.Caption = "Saved!"</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Event Handlers (run when user does something)</h3>
+    <p class="small">Event procedures live in the <strong>form class module</strong> . Access calls them automatically.</p>
+    <table aria-label="Access events">
+      <thead>
+        <tr>
+          <th style="width:28%">Event</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Form_Load</strong> (when form opens)</td>
+          <td>
+            <pre class="code-block"><code>Private Sub Form_Load()
+  Me.lblInfo.Caption = "Ready"
+End Sub</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Button_Click</strong></td>
+          <td>
+            <pre class="code-block"><code>Private Sub cmdSave_Click()
+  ' Example: basic validation
+  If Nz(Me.txtName.Value, "") = "" Then
+    MsgBox "Name is required."
+    Exit Sub
+  End If
+
+  DoCmd.RunCommand acCmdSaveRecord
+  Me.lblInfo.Caption = "Saved!"
+End Sub</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>TextBox_AfterUpdate</strong></td>
+          <td>
+            <pre class="code-block"><code>Private Sub txtName_AfterUpdate()
+  Me.lblInfo.Caption = "Name changed: " &amp; Nz(Me.txtName.Value, "")
+End Sub</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Form Class Module Example</h3>
+    <p class="small">This is what code behind a form can look like (e.g., form named <code>frmCustomer</code> ).</p>
+    <table aria-label="Form module example">
+      <thead>
+        <tr>
+          <th>frmCustomer (Form Class Module)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <pre class="code-block"><code>Option Explicit
+
+Private Sub Form_Load()
+  Me.lblInfo.Caption = "Ready"
+End Sub
+
+Private Sub cmdClear_Click()
+  Me.txtName.Value = Null
+  Me.cboStatus.Value = Null
+  Me.lblInfo.Caption = "Cleared"
+End Sub
+
+Private Sub cmdSave_Click()
+  If Nz(Me.txtName.Value, "") = "" Then
+    MsgBox "Name is required."
+    Exit Sub
+  End If
+
+  DoCmd.RunCommand acCmdSaveRecord
+  Me.lblInfo.Caption = "Saved!"
+End Sub</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

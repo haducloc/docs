@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Access VBA X Framework Cheatsheet</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <header>
+      <h1>Access VBA X Framework Cheatsheet</h1>
+      <p class="subtitle">Build scalable Access front-end apps that connect to remote SQL databases using ADO. Access is the UI layer; business logic and data access live in VBA modules/classes.</p>
+    </header>
+    <nav aria-label="Table of contents" class="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li><a href="#part1">Part 1 — Repository Structure</a></li>
+        <li><a href="#part2">Part 2 — Standard Form Pattern</a></li>
+        <li><a href="#part3">Part 3 — Core Framework Concepts</a></li>
+        <li><a href="#part4">Part 4 — Ticket Sample Walkthrough</a></li>
+        <li><a href="#part5">Part 5 — Creating a New CRUD Module</a></li>
+        <li><a href="#part6">Part 6 — Beginner Tips</a></li>
+      </ol>
+    </nav>
+    <div class="note small">
+      <ul>
+        <li>Access is the <strong>UI layer only</strong> for forms and reports.</li>
+        <li>Business logic and data access live in VBA modules/classes.</li>
+        <li>Database storage is a <strong>remote SQL database</strong> : SQL Server, MySQL, PostgreSQL, Oracle, etc.</li>
+        <li>Framework files start with <code>X</code> , for example <code>XInputState</code> , <code>XStateCollection</code> , and <code>XAdoUtil</code> .</li>
+        <li>App-specific files do <strong>not</strong> start with <code>X</code> , for example <code>Ticket_MainForm</code> and <code>Ticket_EditForm</code> .</li>
+      </ul>
+    </div>
+    <section class="part-heading" id="part1">
+      <h2>Part 1 — Repository Structure</h2>
+      <p>Understand which files belong to the reusable framework and which files belong to your specific app.</p>
+    </section>
+    <section id="framework-modules">
+      <div class="section-title">
+        <span class="badge">1.1</span>
+        <h2>Framework Modules</h2>
+      </div>
+      <table aria-label="Framework modules">
+        <thead>
+          <tr>
+            <th style="width:28%">Area</th>
+            <th>Modules / Responsibilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Input parsing + validation</strong></td>
+            <td><code>XInputState</code> , <code>XInputUtil</code> , <code>XStateCollection</code></td>
+          </tr>
+          <tr>
+            <td><strong>ADO helpers</strong></td>
+            <td><code>XAdoUtil</code> , <code>XAdoCrud</code> , <code>XAdoDropdown</code></td>
+          </tr>
+          <tr>
+            <td><strong>Form helpers</strong></td>
+            <td><code>XFormUtil</code> , <code>XDatasheetDelegate</code></td>
+          </tr>
+          <tr>
+            <td><strong>Utilities / support</strong></td>
+            <td>Parsing, error handling, assertions, strings, DB type mapping, and other support helpers.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="app-modules">
+      <div class="section-title">
+        <span class="badge">1.2</span>
+        <h2>App-Specific Modules</h2>
+      </div>
+      <table aria-label="App-specific modules">
+        <thead>
+          <tr>
+            <th style="width:28%">Module</th>
+            <th>Responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Ticket_MainForm</code></td>
+            <td>Search page and subform container.</td>
+          </tr>
+          <tr>
+            <td><code>Ticket_Datasheet</code></td>
+            <td>Result grid used as an embedded subform.</td>
+          </tr>
+          <tr>
+            <td><code>Ticket_EditForm</code></td>
+            <td>Single-record add, update, and delete screen.</td>
+          </tr>
+          <tr>
+            <td><code>Ticket_Ado</code></td>
+            <td>SQL query module for ticket search.</td>
+          </tr>
+          <tr>
+            <td><code>App_DbConnection</code></td>
+            <td>Database connection string and connection factory.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="part-heading" id="part2">
+      <h2>Part 2 — Standard Form Pattern</h2>
+      <p>For each database table, create a main search form, a datasheet subform, and an edit form.</p>
+    </section>
+    <div class="note small">
+ For each table, create three forms: 
+      <ul>
+        <li><code>Table_MainForm</code></li>
+        <li><code>Table_Datasheet</code></li>
+        <li><code>Table_EditForm</code></li>
+      </ul>
+ Example for the Ticket table: 
+      <code>Ticket_MainForm</code>
+ , 
+      <code>Ticket_Datasheet</code>
+ , and 
+      <code>Ticket_EditForm</code>
+ . 
+    </div>
+    <section id="main-form-pattern">
+      <div class="section-title">
+        <span class="badge">2.1</span>
+        <h2>Table_MainForm — Single Form Search Screen</h2>
+      </div>
+      <table aria-label="MainForm pattern">
+        <thead>
+          <tr>
+            <th style="width:28%">Topic</th>
+            <th>Rules / Flow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Typical UI</strong></td>
+            <td>
+              <ul>
+                <li>Top section: search controls such as <code>txt...</code> , <code>cbo...</code> , and <code>chk...</code> .</li>
+                <li>Bottom section: embedded <code>Table_Datasheet</code> subform.</li>
+                <li>Optional action button: <code>btnAddNew</code> .</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Form_Load</strong></td>
+            <td>
+              <ul>
+                <li>Call <code>ConfigCustomForm Me</code> .</li>
+                <li>Call the search routine to load initial data.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Search routine</strong></td>
+            <td>
+              <ol style="margin:8px 0 0 18px;">
+                <li>Read search controls into <code>XInputState</code> .</li>
+                <li>Add them to <code>XStateCollection</code> .</li>
+                <li>If invalid, bind an empty recordset.</li>
+                <li>If valid, run ADO search, apply sort, and bind to the datasheet subform.</li>
+              </ol>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="datasheet-form-pattern">
+      <div class="section-title">
+        <span class="badge">2.2</span>
+        <h2>Table_Datasheet — Datasheet Subform Only</h2>
+      </div>
+      <table aria-label="Datasheet pattern">
+        <thead>
+          <tr>
+            <th style="width:28%">Topic</th>
+            <th>Rules</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Design rules</strong></td>
+            <td>
+              <ul>
+                <li>Set <code>DefaultView = Datasheet</code> .</li>
+                <li>Add controls for each query field, such as textbox or checkbox controls.</li>
+                <li>No labels are required.</li>
+                <li>
+ For each displayed field, set: 
+                  <ul>
+                    <li><code>Control Source</code> — field name from SQL.</li>
+                    <li><code>Datasheet Caption</code> — display caption in the grid.</li>
+                  </ul>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Runtime rules</strong></td>
+            <td>
+              <ul>
+                <li>Let <code>XDatasheetDelegate</code> handle sort, double-click, and error plumbing.</li>
+                <li>
+ Implement only: 
+                  <ul>
+                    <li><code>ReloadOnParentOnSort(sortByAdo As String)</code></li>
+                    <li><code>OpenEditForm(selectedRow As Object)</code></li>
+                  </ul>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="edit-form-pattern">
+      <div class="section-title">
+        <span class="badge">2.3</span>
+        <h2>Table_EditForm — Single Form Add/Edit/Delete Screen</h2>
+      </div>
+      <table aria-label="EditForm pattern">
+        <thead>
+          <tr>
+            <th style="width:28%">Topic</th>
+            <th>Rules / Flow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Design rules</strong></td>
+            <td>
+              <ul>
+                <li>Set <code>DefaultView = Single Form</code> .</li>
+                <li>Add controls freely: labels, textboxes, combo boxes, check boxes, and buttons.</li>
+                <li>
+ Naming convention: 
+                  <ul>
+                    <li><code>txtName</code> , <code>txtDescription</code> , <code>chkIsDone</code> , <code>cboTypeID</code></li>
+                    <li><code>btnSave</code> , <code>btnDelete</code></li>
+                  </ul>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Form_Load</strong></td>
+            <td>
+              <ul>
+                <li>Call <code>ConfigCustomForm Me</code> .</li>
+                <li>Initialize dropdowns.</li>
+                <li>Parse primary key from <code>OpenArgs</code> .</li>
+                <li>Switch UI between add mode and edit mode.</li>
+                <li>Load the row if editing.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>btnSave_Click</strong></td>
+            <td>
+              <ul>
+                <li>Convert controls to <code>XInputState</code> .</li>
+                <li>Validate via <code>XStateCollection</code> .</li>
+                <li>Map values to a dictionary and call <code>InsertRowAdo</code> or <code>UpdateRowAdo</code> .</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>btnDelete_Click</strong></td>
+            <td>Confirm with the user, then call <code>DeleteRowAdo</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Form_Close</strong></td>
+            <td>Close the connection and refresh the parent main form.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="part-heading" id="part3">
+      <h2>Part 3 — Core Framework Concepts</h2>
+      <p>Reusable building blocks for input parsing, validation, ADO commands, CRUD operations, and form behavior.</p>
+    </section>
+    <section id="xinputstate">
+      <div class="section-title">
+        <span class="badge">3.1</span>
+        <h2>XInputState — One Control to One Typed State</h2>
+      </div>
+      <table aria-label="XInputState">
+        <thead>
+          <tr>
+            <th style="width:28%">Field</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>FieldName</code></td>
+            <td>Database field name.</td>
+          </tr>
+          <tr>
+            <td><code>ValueType</code></td>
+            <td>Data type such as int, string, bool, date, etc.</td>
+          </tr>
+          <tr>
+            <td><code>Value</code></td>
+            <td>Converted value or <code>Null</code> .</td>
+          </tr>
+          <tr>
+            <td><code>IsValid</code></td>
+            <td>Conversion and required-field validation result.</td>
+          </tr>
+          <tr>
+            <td><code>ErrorMessage</code></td>
+            <td>Human-readable validation message.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note small">
+ Create typed states using helpers in 
+        <code>XInputUtil</code>
+ : 
+        <ul>
+          <li><code>GetString</code> , <code>GetCode</code></li>
+          <li><code>GetInt2</code> , <code>GetInt4</code> , <code>GetInt8</code> , <code>GetByte</code> , <code>GetUByte</code></li>
+          <li><code>GetBool</code></li>
+          <li><code>GetDate</code> , <code>GetTime</code> , <code>GetDateTime</code></li>
+          <li><code>GetFloat</code> , <code>GetDouble</code> , <code>GetDecimal</code></li>
+        </ul>
+      </div>
+      <table aria-label="XInputState example">
+        <thead>
+          <tr>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <pre><code>Dim stName As XInputState
+
+' GetXXX(ctrl, fieldName, required)
+Set stName = GetString(Me.txtName, "Name", True)
+
+If Not stName.IsValid Then
+    MsgBox stName.ErrorMessage
+End If</code></pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="xstatecollection">
+      <div class="section-title">
+        <span class="badge">3.2</span>
+        <h2>XStateCollection — Validate Many Controls Together</h2>
+      </div>
+      <table aria-label="XStateCollection">
+        <thead>
+          <tr>
+            <th style="width:28%">Capability</th>
+            <th>Benefit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AllValid</code></td>
+            <td>Aggregated validation for multiple states.</td>
+          </tr>
+          <tr>
+            <td><code>ToErrorString</code></td>
+            <td>Centralized error display.</td>
+          </tr>
+          <tr>
+            <td><code>ToValuesDict</code></td>
+            <td>Easy database payload creation using a dictionary.</td>
+          </tr>
+        </tbody>
+      </table>
+      <table aria-label="XStateCollection flow">
+        <thead>
+          <tr>
+            <th>Common Flow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <pre><code>Dim states As XStateCollection: Set states = New XStateCollection
+states.AddStates stName, stDescription, stIsDone
+
+If Not states.AllValid Then
+    MsgBox states.ToErrorString
+    Exit Sub
+End If
+
+Dim values As Object
+Set values = states.ToValuesDict</code></pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="xadoutil">
+      <div class="section-title">
+        <span class="badge">3.3</span>
+        <h2>XAdoUtil — Parameterized ADO Command Helpers</h2>
+      </div>
+      <table aria-label="XAdoUtil">
+        <thead>
+          <tr>
+            <th style="width:28%">Area</th>
+            <th>Helpers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core helpers</strong></td>
+            <td>
+              <ul>
+                <li><code>CreateCommandAdo(cn, sql)</code></li>
+                <li><code>ExecuteQueryAdo(cmd, disconnect=True)</code></li>
+                <li><code>ExecuteUpdateAdo(cmd)</code></li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Typed parameters</strong></td>
+            <td class="small">
+              <ul>
+                <li><code>ParamByteAdo</code> , <code>ParamUByteAdo</code></li>
+                <li><code>ParamInt2Ado</code> , <code>ParamInt4Ado</code> , <code>ParamInt8Ado</code></li>
+                <li><code>ParamBoolAdo</code></li>
+                <li><code>ParamDateAdo</code> , <code>ParamTimeAdo</code> , <code>ParamDateTimeAdo</code></li>
+                <li><code>ParamVarcharAdo</code> , <code>ParamCharAdo</code></li>
+                <li><code>ParamLikeAdo</code> , etc.</li>
+              </ul>
+ These helpers keep SQL parameterized and DB-provider-aware. 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="xadocrud">
+      <div class="section-title">
+        <span class="badge">3.4</span>
+        <h2>XAdoCrud — Generic Insert, Update, Delete, and Select by PK</h2>
+      </div>
+      <table aria-label="XAdoCrud">
+        <thead>
+          <tr>
+            <th style="width:28%">Main APIs</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <ul>
+                <li><code>InsertRowAdo</code></li>
+                <li><code>UpdateRowAdo</code></li>
+                <li><code>DeleteRowAdo</code></li>
+                <li><code>GetRowByPkAdo</code></li>
+                <li><code>ExistsByPkAdo</code></li>
+              </ul>
+            </td>
+            <td>Pass <code>fieldsCsv</code> , <code>typesCsv</code> , and a values dictionary, often from <code>XStateCollection.ToValuesDict</code> . The framework builds SQL and appends typed parameters in the correct order.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="xformutil-xdatasheetdelegate">
+      <div class="section-title">
+        <span class="badge">3.5</span>
+        <h2>XFormUtil + XDatasheetDelegate</h2>
+      </div>
+      <table aria-label="Form utilities">
+        <thead>
+          <tr>
+            <th style="width:28%">Component</th>
+            <th>Responsibilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>XFormUtil</code></td>
+            <td>
+              <ul>
+                <li><code>ConfigCustomForm</code> — Single Form settings.</li>
+                <li><code>ConfigCustomDatasheet</code> — Datasheet settings.</li>
+                <li><code>TryOpenForm</code> — prevent duplicate edit forms.</li>
+                <li><code>TryCallForm</code> — call a public method on a loaded form.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><code>XDatasheetDelegate</code></td>
+            <td>
+              <ul>
+                <li>Datasheet sorting handoff to ADO recordset.</li>
+                <li>Double-click row to open edit form.</li>
+                <li>Datasheet filter/sort edge cases.</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="part-heading" id="part4">
+      <h2>Part 4 — Ticket Sample Walkthrough</h2>
+      <p>Example flow showing how the framework pieces work together in a Ticket module.</p>
+    </section>
+    <section id="connection-setup">
+      <div class="section-title">
+        <span class="badge">4.1</span>
+        <h2>Connection Setup — App_DbConnection</h2>
+      </div>
+      <div class="note small">
+        <ul>
+          <li>Configure provider, server, and database in <code>GetDbConString</code> .</li>
+          <li>Use <code>GetConnection(ByRef cn)</code> to lazily create or open a cached ADODB connection.</li>
+          <li>Reuse this pattern in all forms and modules.</li>
+        </ul>
+      </div>
+    </section>
+    <section id="ticket-main-form">
+      <div class="section-title">
+        <span class="badge">4.2</span>
+        <h2>Main Search Form — Ticket_MainForm</h2>
+      </div>
+      <table aria-label="Ticket mainform flow">
+        <thead>
+          <tr>
+            <th>SearchTickets Flow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <ul>
+                <li>Read search controls: <code>GetInt4(Me.txtTicketID)</code> , <code>GetString(Me.txtName)</code> .</li>
+                <li>Validate with <code>XStateCollection</code> .</li>
+                <li>If invalid, use <code>CreateEmptyRsAdo</code> .</li>
+                <li>If valid, call <code>SearchTicketAdo(GetConn(), ...)</code> .</li>
+                <li>Apply sort using <code>BuildRsSortByAdo</code> .</li>
+                <li>Bind result to <code>Me.Ticket_Datasheet.Form.Recordset</code> .</li>
+              </ul>
+              <pre><code>Me.Ticket_Datasheet.Form.Recordset</code></pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="ticket-ado-module">
+      <div class="section-title">
+        <span class="badge">4.3</span>
+        <h2>Search SQL Module — Ticket_Ado</h2>
+      </div>
+      <div class="note small">
+        <ul>
+          <li>Uses one parameterized query.</li>
+          <li>Uses optional filters with the <code>(? IS NULL OR ...)</code> pattern.</li>
+          <li>Uses <code>ParamInt4Ado</code> and <code>ParamLikeAdo</code> .</li>
+          <li>Returns a disconnected recordset via <code>ExecuteQueryAdo(cmd, True)</code> .</li>
+        </ul>
+      </div>
+    </section>
+    <section id="ticket-datasheet-form">
+      <div class="section-title">
+        <span class="badge">4.4</span>
+        <h2>Datasheet Form — Ticket_Datasheet</h2>
+      </div>
+      <div class="note small">
+ Thin glue code only. The delegate handles events. 
+        <ul>
+          <li><code>OpenEditForm</code> reads selected <code>TicketID</code> .</li>
+          <li>Opens <code>Ticket_EditForm</code> with <code>OpenArgs</code> .</li>
+        </ul>
+      </div>
+    </section>
+    <section id="ticket-edit-form">
+      <div class="section-title">
+        <span class="badge">4.5</span>
+        <h2>Edit Form — Ticket_EditForm</h2>
+      </div>
+      <table aria-label="Ticket edit form behavior">
+        <thead>
+          <tr>
+            <th style="width:28%">Action</th>
+            <th>Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mode</strong></td>
+            <td>Determines add/edit mode from <code>OpenArgs</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Dropdowns</strong></td>
+            <td>Loads options from SQL via <code>ExecuteDropdownOptionsSqlAdo</code> and <code>XDropdownOptions.ToValueList</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Save</strong></td>
+            <td>Builds states with helpers such as <code>GetString</code> , <code>GetBool</code> , <code>GetInt4</code> , and <code>GetDate</code> . Then validates and inserts/updates via <code>XAdoCrud</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Delete</strong></td>
+            <td>Builds a primary-key dictionary, then calls <code>DeleteRowAdo</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Close</strong></td>
+            <td>Calls <code>Ticket_MainForm.RefreshTickets</code> .</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="part-heading" id="part5">
+      <h2>Part 5 — Creating a New CRUD Module</h2>
+      <p>Repeat the same pattern for each new table: main form, datasheet form, edit form, and ADO search module.</p>
+    </section>
+    <section id="crud-checklist">
+      <div class="section-title">
+        <span class="badge">5.1</span>
+        <h2>Checklist</h2>
+      </div>
+      <table aria-label="CRUD checklist">
+        <thead>
+          <tr>
+            <th style="width:28%">Step</th>
+            <th>What to do</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Create forms</strong></td>
+            <td>
+              <ul>
+                <li><code>YourTable_MainForm</code></li>
+                <li><code>YourTable_Datasheet</code></li>
+                <li><code>YourTable_EditForm</code></li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Design datasheet</strong></td>
+            <td>Map controls to query columns via <code>Control Source</code> , set <code>Datasheet Caption</code> , and keep it subform-only.</td>
+          </tr>
+          <tr>
+            <td><strong>Design edit form</strong></td>
+            <td>Add inputs and action buttons. Use clear names such as <code>txt...</code> , <code>cbo...</code> , <code>chk...</code> , and <code>btn...</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>Create search SQL module</strong></td>
+            <td><code>YourTable_Ado</code> : write a parameterized query and return a disconnected recordset.</td>
+          </tr>
+          <tr>
+            <td><strong>MainForm logic</strong></td>
+            <td>Call <code>ConfigCustomForm</code> , collect search states, validate, and bind the recordset to the datasheet subform.</td>
+          </tr>
+          <tr>
+            <td><strong>Datasheet glue</strong></td>
+            <td>Add delegate hooks; implement <code>ReloadOnParentOnSort</code> and <code>OpenEditForm</code> .</td>
+          </tr>
+          <tr>
+            <td><strong>EditForm logic</strong></td>
+            <td>Parse <code>OpenArgs</code> primary key; load by primary key; save via <code>InsertRowAdo</code> / <code>UpdateRowAdo</code> ; delete via <code>DeleteRowAdo</code> ; refresh parent after close <code>TryCallForm "YourTable_MainForm", "Refresh..."</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="part-heading" id="part6">
+      <h2>Part 6 — Beginner Tips</h2>
+      <p>Simple practices that keep Access VBA front-end code clean, reliable, and consistent.</p>
+    </section>
+    <section id="beginner-best-practices">
+      <div class="section-title">
+        <span class="badge">6.1</span>
+        <h2>Best Practices</h2>
+      </div>
+      <div class="note small">
+        <ul>
+          <li>Always use <code>Option Explicit</code> .</li>
+          <li>Prefer framework parsing methods such as <code>GetInt4</code> and <code>GetDate</code> over manual conversion.</li>
+          <li>Always validate all input states before database write operations.</li>
+          <li>Keep SQL parameterized. Never string-concatenate user input into SQL.</li>
+          <li>Keep datasheet forms thin; put business logic in modules or parent forms.</li>
+          <li>Reuse <code>X*</code> framework modules instead of copy-pasting helpers.</li>
+          <li>Close objects such as <code>Recordset</code> and <code>Connection</code> in form close events.</li>
+        </ul>
+      </div>
+    </section>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

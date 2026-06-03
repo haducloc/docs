@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Power BI Report Builder Cheatsheet</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>Power BI Report Builder Cheatsheet</h1>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#components">Components Overview</a></li>
+        <li><a href="#steps">Steps to Build a Paginated Report</a></li>
+        <li><a href="#tips">Additional Tips &amp; Gotchas</a></li>
+        <li><a href="#expressions">Expression Language Quick Reference</a></li>
+        <li><a href="#useful">Added Useful Expressions</a></li>
+        <li><a href="#placeholders">Placeholders</a></li>
+        <li><a href="#subreports">Subreports (More Details)</a></li>
+      </ol>
+    </div>
+    <p>Paginated Reports (.RDL) — components, workflow, expressions, and practical tips.</p>
+    <h2 id="components">1) Components Overview</h2>
+    <h3>Data Sources</h3>
+    <ul>
+      <li>Defines the connection to your data backend.</li>
+      <li>Supported: SQL Server, Azure SQL DB, Oracle, Power BI Datasets, Excel, OData, etc.</li>
+      <li>Includes: server/URL, authentication (Windows/Basic/OAuth), connection properties (timeouts, catalog).</li>
+    </ul>
+    <p><b>Tip:</b> Name data sources clearly (e.g., <code>SalesDB_Prod</code> , <code>ReportingWarehouse_2024</code> ).</p>
+    <h3>Datasets</h3>
+    <ul>
+      <li>Represents the result of a query or table/view selection.</li>
+      <li>Based on SQL, table/view, stored procedure, embedded/shared dataset.</li>
+      <li>Dataset fields bind to report items (tables, textboxes, charts).</li>
+    </ul>
+    <p><b>Best practice:</b> Use aliases in complex queries; avoid <code>SELECT *</code> for performance and clarity.</p>
+    <h3>Parameters</h3>
+    <ul>
+      <li>Built-in (page info) and custom (user-defined).</li>
+      <li>Used in SQL queries (WHERE), report filters, expressions (visibility/labels/titles).</li>
+    </ul>
+    <p><b>Tip:</b> Display friendly names with <code>Parameters!X.Label</code> .</p>
+    <h3>UI Widgets</h3>
+    <ul>
+      <li><b>Table/Matrix:</b> tabular display, grouping, sorting</li>
+      <li><b>List:</b> repeating layout for custom design</li>
+      <li><b>Chart:</b> bar/pie/line</li>
+      <li><b>Text Box:</b> labels, values, expressions</li>
+      <li><b>Image:</b> embedded/external</li>
+      <li><b>Subreport:</b> embed another .RDL</li>
+    </ul>
+    <p><b>Expressions:</b><code>=Fields!Name.Value</code> , <code>=Parameters!Region.Value</code> , <code>=Globals!PageNumber</code></p>
+    <h3>Page Header &amp; Footer</h3>
+    <ul>
+      <li>Branding (logo, title), page info, date/time, disclaimers.</li>
+    </ul>
+    <h3>Subreports</h3>
+    <ul>
+      <li>Independent .RDL embedded into a parent report.</li>
+      <li>Use for reusable layouts or nested detail sections with different datasets.</li>
+    </ul>
+    <p><b>Important:</b> Size subreports explicitly and pass parameters as needed.</p>
+    <hr/>
+    <h2 id="steps">2) Steps to Build a Paginated Report</h2>
+    <ol>
+      <li><b>Understand requirements:</b> paper size, orientation, groupings, filters, totals, security.</li>
+      <li><b>Register data sources:</b> embedded/shared; test connection.</li>
+      <li><b>Create datasets:</b> query designer; preview; validate fields.</li>
+      <li><b>Configure page size &amp; margins:</b> match target export (PDF/print).</li>
+      <li><b>Add widgets:</b> tables/lists/charts; set width/height/borders/padding/fonts.</li>
+      <li><b>Grouping &amp; sorting:</b> groups, subtotals, headers; configure sort order.</li>
+      <li><b>Expressions &amp; formatting:</b> conditional visibility, formatting (currency/date).</li>
+      <li><b>Parameters &amp; filters:</b> bind to SQL and/or report filters; control visibility.</li>
+      <li><b>Preview &amp; test:</b> page breaks, grouping, filters, parameter behavior.</li>
+      <li><b>Save &amp; export:</b> PDF/Excel/Word/CSV/PPT/XML; deploy to Service/SSRS/Report Server.</li>
+    </ol>
+    <h3>Common Page Sizes</h3>
+    <ul>
+      <li>Letter Portrait: <code>8.5in x 11in</code></li>
+      <li>Letter Landscape: <code>11in x 8.5in</code></li>
+      <li>A4 Portrait: <code>8.27in x 11.69in</code></li>
+    </ul>
+    <h3>Avoid Blank Pages (PDF)</h3>
+    <pre><code>BodyWidth + LeftMargin + RightMargin  ≤  PageWidth</code></pre>
+    <hr/>
+    <h2 id="tips">3) Additional Tips &amp; Gotchas</h2>
+    <ul>
+      <li><b>Repeat headers:</b> set <code>RepeatOnNewPage</code> on table/group headers.</li>
+      <li><b>Page breaks:</b> add between groups; set <code>KeepTogether = false</code> for long groups.</li>
+      <li><b>Shared vs Embedded:</b> shared sources/datasets help consistency across reports.</li>
+      <li><b>Performance:</b> reduce heavy joins/subqueries; index filter/join columns; pull only needed columns.</li>
+      <li><b>Excel export:</b> keep layout grid-aligned; avoid floating/overlapping objects.</li>
+    </ul>
+    <hr/>
+    <h2 id="expressions">4) Expression Language Quick Reference</h2>
+    <h3>1. Basic Field Display</h3>
+    <table>
+      <tr>
+        <th>Purpose</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Display a field value</td>
+        <td><code>=Fields!Name.Value</code></td>
+      </tr>
+      <tr>
+        <td>Concatenate strings</td>
+        <td><code>="Customer: " &amp; Fields!CustomerName.Value</code></td>
+      </tr>
+      <tr>
+        <td>Add numeric values</td>
+        <td><code>=Fields!Price.Value + Fields!Tax.Value</code></td>
+      </tr>
+      <tr>
+        <td>Round to 2 decimals</td>
+        <td><code>=Round(Fields!Amount.Value, 2)</code></td>
+      </tr>
+      <tr>
+        <td>Line break</td>
+        <td><code>="Name: " &amp; Fields!Name.Value &amp; vbCrLf &amp; "Amount: " &amp; Fields!Amount.Value</code></td>
+      </tr>
+    </table>
+    <h3>2. Formatting Numbers</h3>
+    <table>
+      <tr>
+        <th>Format</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Currency</td>
+        <td><code>=FormatCurrency(Fields!Total.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Currency (no decimals)</td>
+        <td><code>=Format(Fields!Total.Value, "C0")</code></td>
+      </tr>
+      <tr>
+        <td>Number (2 decimals)</td>
+        <td><code>=FormatNumber(Fields!Value.Value, 2)</code></td>
+      </tr>
+      <tr>
+        <td>Percent</td>
+        <td><code>=FormatPercent(Fields!Score.Value)</code></td>
+      </tr>
+    </table>
+    <h3>3. Date &amp; Time Formatting</h3>
+    <table>
+      <tr>
+        <th>Format</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Short date (MM/dd/yyyy)</td>
+        <td><code>=Format(Fields!OrderDate.Value, "MM/dd/yyyy")</code></td>
+      </tr>
+      <tr>
+        <td>Long date/time</td>
+        <td><code>=Format(Fields!OrderDate.Value, "F")</code></td>
+      </tr>
+      <tr>
+        <td>Year only</td>
+        <td><code>=Year(Fields!OrderDate.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Month name</td>
+        <td><code>=Format(Fields!OrderDate.Value, "MMMM")</code></td>
+      </tr>
+      <tr>
+        <td>Today's date</td>
+        <td><code>=Today()</code></td>
+      </tr>
+      <tr>
+        <td>Current timestamp</td>
+        <td><code>=Now()</code></td>
+      </tr>
+    </table>
+    <h3>4. Conditional Logic (IIF / Switch)</h3>
+    <table>
+      <tr>
+        <th>Purpose</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Boolean condition</td>
+        <td><code>=IIF(Fields!Status.Value = "Active", "✔", "✘")</code></td>
+      </tr>
+      <tr>
+        <td>Null check</td>
+        <td><code>=IIF(IsNothing(Fields!EndDate.Value), "Ongoing", Fields!EndDate.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Multiple conditions</td>
+        <td><code>=Switch(Fields!Score.Value &gt;= 90, "Excellent", Fields!Score.Value &gt;= 75, "Good", True, "Needs Improvement")</code></td>
+      </tr>
+      <tr>
+        <td>Conditional color</td>
+        <td><code>=IIF(Fields!Balance.Value &lt; 0, "Red", "Black")</code></td>
+      </tr>
+    </table>
+    <h3>5. Visibility</h3>
+    <table>
+      <tr>
+        <th>Purpose</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Hide if no rows</td>
+        <td><code>=IIF(CountRows() = 0, True, False)</code></td>
+      </tr>
+      <tr>
+        <td>Show only for user</td>
+        <td><code>=User!UserID = "admin"</code></td>
+      </tr>
+      <tr>
+        <td>Hide if parameter is false</td>
+        <td><code>=Not Parameters!ShowChart.Value</code></td>
+      </tr>
+    </table>
+    <h3>6. Text &amp; Labels</h3>
+    <table>
+      <tr>
+        <th>Purpose</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Page number</td>
+        <td><code>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</code></td>
+      </tr>
+      <tr>
+        <td>Dynamic title</td>
+        <td><code>="Sales Report for " &amp; Parameters!Region.Value</code></td>
+      </tr>
+      <tr>
+        <td>All uppercase</td>
+        <td><code>=UCase(Fields!Department.Value)</code></td>
+      </tr>
+      <tr>
+        <td>All lowercase</td>
+        <td><code>=LCase(Fields!Email.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Line breaks</td>
+        <td><code>="Customer: " &amp; Fields!Name.Value &amp; vbCrLf &amp; "Region: " &amp; Fields!Region.Value</code></td>
+      </tr>
+    </table>
+    <h3>7. Globals</h3>
+    <table>
+      <tr>
+        <th>Global Info</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Page number</td>
+        <td><code>=Globals!PageNumber</code></td>
+      </tr>
+      <tr>
+        <td>Total pages</td>
+        <td><code>=Globals!TotalPages</code></td>
+      </tr>
+      <tr>
+        <td>Report name</td>
+        <td><code>=Globals!ReportName</code></td>
+      </tr>
+      <tr>
+        <td>Execution time</td>
+        <td><code>=Globals!ExecutionTime</code></td>
+      </tr>
+    </table>
+    <h3>8. Aggregates</h3>
+    <table>
+      <tr>
+        <th>Aggregate</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Sum</td>
+        <td><code>=Sum(Fields!Amount.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Average</td>
+        <td><code>=Avg(Fields!Score.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Count</td>
+        <td><code>=Count(Fields!CustomerID.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Max</td>
+        <td><code>=Max(Fields!Date.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Running total</td>
+        <td><code>=RunningValue(Fields!Amount.Value, Sum, Nothing)</code></td>
+      </tr>
+      <tr>
+        <td>Count rows in group</td>
+        <td><code>=CountRows("GroupName")</code></td>
+      </tr>
+    </table>
+    <h3>9. User &amp; System Info</h3>
+    <table>
+      <tr>
+        <th>Info Type</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>User ID</td>
+        <td><code>=User!UserID</code></td>
+      </tr>
+      <tr>
+        <td>User language</td>
+        <td><code>=User!Language</code></td>
+      </tr>
+      <tr>
+        <td>Today's date</td>
+        <td><code>=Today()</code></td>
+      </tr>
+      <tr>
+        <td>Current timestamp</td>
+        <td><code>=Now()</code></td>
+      </tr>
+    </table>
+    <h3>10. Utility Functions</h3>
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Join multi-value parameter labels</td>
+        <td><code>=Join(Parameters!State.Label, ", ")</code></td>
+      </tr>
+      <tr>
+        <td>Replace text</td>
+        <td><code>=Replace(Fields!Desc.Value, "old", "new")</code></td>
+      </tr>
+      <tr>
+        <td>Substring from left</td>
+        <td><code>=Left(Fields!Code.Value, 3)</code></td>
+      </tr>
+      <tr>
+        <td>Substring from right</td>
+        <td><code>=Right(Fields!Code.Value, 2)</code></td>
+      </tr>
+      <tr>
+        <td>Mid-string substring</td>
+        <td><code>=Mid(Fields!Code.Value, 2, 3)</code></td>
+      </tr>
+      <tr>
+        <td>Trim whitespace</td>
+        <td><code>=Trim(Fields!Name.Value)</code></td>
+      </tr>
+    </table>
+    <h3>11. Multi-Line Labels (vbCrLf)</h3>
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Multi-line report header</td>
+        <td><code>="Company XYZ" &amp; vbCrLf &amp; "Monthly Sales Report"</code></td>
+      </tr>
+      <tr>
+        <td>Tooltip with line breaks</td>
+        <td><code>="Product: " &amp; Fields!ProductName.Value &amp; vbCrLf &amp; "Stock: " &amp; Fields!StockLevel.Value</code></td>
+      </tr>
+      <tr>
+        <td>Display address across lines</td>
+        <td><code>=Fields!Street.Value &amp; vbCrLf &amp; Fields!City.Value &amp; ", " &amp; Fields!State.Value</code></td>
+      </tr>
+      <tr>
+        <td>Parameter summary block</td>
+        <td><code>="Region: " &amp; Parameters!Region.Value &amp; vbCrLf &amp; "Date: " &amp; Format(Parameters!ReportDate.Value, "MM/dd/yyyy")</code></td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="useful">5) Added Useful Expressions</h2>
+    <h3>Lookup / LookupSet (cross-dataset)</h3>
+    <table>
+      <tr>
+        <th>Need</th>
+        <th>Expression</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Lookup single value</td>
+        <td><code>=Lookup(Fields!DeptId.Value, Fields!DeptId.Value, Fields!DeptName.Value, "DeptDataset")</code></td>
+        <td>Returns the first match.</td>
+      </tr>
+      <tr>
+        <td>Lookup multiple values</td>
+        <td><code>=Join(LookupSet(Fields!EmpId.Value, Fields!EmpId.Value, Fields!Skill.Value, "SkillsDataset"), ", ")</code></td>
+        <td>Use <code>Join</code> to display the array.</td>
+      </tr>
+    </table>
+    <h3>RowNumber (indexing)</h3>
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Expression</th>
+      </tr>
+      <tr>
+        <td>Row number (report scope)</td>
+        <td><code>=RowNumber(Nothing)</code></td>
+      </tr>
+      <tr>
+        <td>Row number per group</td>
+        <td><code>=RowNumber("GroupName")</code></td>
+      </tr>
+    </table>
+    <p><small>Print tip: Use browser Print → “Save as PDF” for a clean single-document reference.</small></p>
+    <hr/>
+    <h2 id="placeholders">6) Placeholders</h2>
+    <h3>What “Placeholder” Means in Report Builder</h3>
+    <ul>
+      <li><b>Textbox placeholder:</b> a container that holds static text and/or an expression.</li>
+      <li><b>Value placeholders inside a textbox:</b> when you mix text + expressions (the <code>[&lt;Expr&gt;]</code> areas).</li>
+      <li><b>Layout placeholders:</b> empty cells/rectangles used to reserve space for later content.</li>
+    </ul>
+    <h3>Common Placeholder Patterns</h3>
+    <table>
+      <tr>
+        <th>Pattern</th>
+        <th>Expression / How</th>
+      </tr>
+      <tr>
+        <td>Safe text when null</td>
+        <td><code>=IIF(IsNothing(Fields!Notes.Value), "-", Fields!Notes.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Show “(All)” when parameter blank</td>
+        <td><code>=IIF(Len(Trim(Parameters!Region.Value &amp; ""))=0, "(All)", Parameters!Region.Value)</code></td>
+      </tr>
+      <tr>
+        <td>Hide a textbox if empty</td>
+        <td>Visibility → Hidden: <code>=IIF(Len(Trim(Fields!Comment.Value &amp; ""))=0, True, False)</code></td>
+      </tr>
+      <tr>
+        <td>“No data” placeholder message</td>
+        <td>Textbox Hidden: <code>=IIF(CountRows()=0, False, True)</code></td>
+      </tr>
+    </table>
+    <h3>Layout Helpers</h3>
+    <ul>
+      <li><b>Rectangle:</b> use as a container to keep items together and aligned.</li>
+      <li><b>KeepTogether:</b> helps avoid splitting a section across pages.</li>
+      <li><b>Padding over spaces:</b> prefer padding settings instead of manual spacing.</li>
+      <li><b>Avoid overlaps:</b> best for Excel export and predictable rendering.</li>
+    </ul>
+    <hr/>
+    <h2 id="subreports">7) Subreports (More Details)</h2>
+    <h3>When to Use Subreports</h3>
+    <ul>
+      <li>Reusable layouts shared across multiple reports.</li>
+      <li>Child section needs its own dataset / logic.</li>
+      <li>Nested details per group (customer → orders, department → employees).</li>
+    </ul>
+    <h3>Passing Parameters to the Subreport</h3>
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>Tip</th>
+      </tr>
+      <tr>
+        <td>Parent field → child parameter</td>
+        <td>Subreport Properties → Parameters → Value: <code>=Fields!CustomerId.Value</code></td>
+      </tr>
+      <tr>
+        <td>Parent parameter → child parameter</td>
+        <td>Value: <code>=Parameters!Region.Value</code></td>
+      </tr>
+      <tr>
+        <td>Multi-value parameter</td>
+        <td>Pass the array directly; use provider-supported <code>IN (@Param)</code> patterns in child dataset.</td>
+      </tr>
+    </table>
+    <h3>Sizing &amp; Page Break Behavior</h3>
+    <ul>
+      <li><b>Size explicitly:</b> ensure subreport width fits usable page width.</li>
+      <li><b>CanGrow/CanShrink:</b> control growth inside the child report to reduce unexpected expansion.</li>
+      <li><b>Performance:</b> subreports can increase render time; keep child queries efficient.</li>
+      <li><b>PDF blank pages:</b> subreport width beyond page width can create extra blank pages.</li>
+    </ul>
+    <h3>Common “No Data” Handling</h3>
+    <ul>
+      <li>In child report: show a “No rows returned” textbox based on <code>CountRows()</code> .</li>
+      <li>In parent report: optionally hide the subreport item when no relevant rows exist.</li>
+    </ul>
+    <pre><code>Visibility (Hidden) on Subreport item:
+=IIF(CountRows("ParentGroupName")=0, True, False)</code></pre>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

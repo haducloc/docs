@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>DAX Cheat Sheet (Beginner to Advanced)</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>DAX Cheat Sheet</h1>
+    <p class="muted">Practical patterns with sample data, sample outputs, and “when to use” notes.</p>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#sample">Sample Data Used for Outputs</a></li>
+        <li><a href="#level0">Level 0 — Foundations</a></li>
+        <li><a href="#level1">Level 1 — Basic Aggregations (Measures)</a></li>
+        <li><a href="#level2">Level 2 — Calculated Columns (Row-Level)</a></li>
+        <li><a href="#level3">Level 3 — Data Types, Text, Formatting</a></li>
+        <li><a href="#level4">Level 4 — Logic, Blanks, Safe Math</a></li>
+        <li><a href="#level5">Level 5 — Selector (Sales vs Profit)</a></li>
+        <li><a href="#level6">Level 6 — CALCULATE &amp; Filter Patterns</a></li>
+        <li><a href="#level7">Level 7 — Iterators (SUMX, AVERAGEX, etc.)</a></li>
+        <li><a href="#level8">Level 8 — Percent of Total, Ranking, Top N</a></li>
+        <li><a href="#level9">Level 9 — Time Intelligence (Requires Date Table)</a></li>
+        <li><a href="#level10">Level 10 — Virtual Tables (SUMMARIZE / FILTER / ADDCOLUMNS)</a></li>
+        <li><a href="#level11">Level 11 — Debugging DAX (Practical)</a></li>
+        <li><a href="#level12">Level 12 — Performance &amp; Modeling Rules</a></li>
+      </ol>
+    </div>
+    <h2 id="sample">Sample Data Used for Outputs</h2>
+    <p class="muted">We’ll reference this tiny <b>FactSales</b> sample so outputs are concrete.</p>
+    <table>
+      <tr>
+        <th>OrderID</th>
+        <th>OrderDate</th>
+        <th>Category</th>
+        <th>Sales</th>
+        <th>Profit</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2025-06-15</td>
+        <td>Furniture</td>
+        <td>100</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>2025-06-20</td>
+        <td>Furniture</td>
+        <td>200</td>
+        <td>-10</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>2025-07-05</td>
+        <td>Tech</td>
+        <td>300</td>
+        <td>60</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>2025-07-10</td>
+        <td>Tech</td>
+        <td>50</td>
+        <td>5</td>
+      </tr>
+    </table>
+    <div class="note">
+      <p><b>Important:</b> In Power BI, visuals define the “GROUP BY”. If you put <b>Category</b> on the axis, Power BI evaluates the measure once per category (Furniture, Tech).</p>
+    </div>
+    <hr/>
+    <h2 id="level0">Level 0 — Foundations</h2>
+    <h3>Row Context vs Filter Context</h3>
+    <table>
+      <tr>
+        <th>Concept</th>
+        <th>Meaning</th>
+        <th>Typical Place</th>
+        <th>Notes / When to Use</th>
+      </tr>
+      <tr>
+        <td><b>Row Context</b></td>
+        <td>Evaluates one row at a time</td>
+        <td>Calculated columns</td>
+        <td>Use for per-row values: Year, flags, row-level categories.</td>
+      </tr>
+      <tr>
+        <td><b>Filter Context</b></td>
+        <td>Evaluates over filtered set of rows</td>
+        <td>Measures</td>
+        <td>Use for totals/averages that react to slicers, axes, filters, cross-highlights.</td>
+      </tr>
+    </table>
+    <h3>Examples</h3>
+    <p class="small"><b>Calculated Column</b></p>
+    <pre><code>Year = YEAR(FactSales[OrderDate])</code></pre>
+    <p class="small">Output (per row): all rows show 2025 in this sample.</p>
+    <p class="small"><b>Measure</b></p>
+    <pre><code>Total_Sales = SUM(FactSales[Sales])</code></pre>
+    <p class="small">Output (no filters): 650. By Category: Furniture=300, Tech=350.</p>
+    <h3>Measures vs Columns (Quick Rules)</h3>
+    <table>
+      <tr>
+        <th>Question</th>
+        <th>Calculated Column</th>
+        <th>Measure</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Row-by-row transformation?</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>Year, Month, flags, bucketing, keys.</td>
+      </tr>
+      <tr>
+        <td>Aggregation / totals?</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>SUM, AVG, COUNT, ratios, KPIs.</td>
+      </tr>
+      <tr>
+        <td>Should react to slicers/axes?</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>That’s what measures are for.</td>
+      </tr>
+      <tr>
+        <td>Used as axis / slicer field?</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>Axis wants columns (fields). Measures go in “Values”.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level1">Level 1 — Basic Aggregations (Measures)</h2>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX (Measure)</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes (When / Gotchas)</th>
+      </tr>
+      <tr>
+        <td>Total Sales</td>
+        <td>
+          <pre><code>Total_Sales = SUM(FactSales[Sales])</code></pre>
+        </td>
+        <td>Card / Bar chart by Category</td>
+        <td><b>650</b> (total)</td>
+        <td>Respects filter context. With axis Category: Furniture=300, Tech=350.</td>
+      </tr>
+      <tr>
+        <td>Total Profit</td>
+        <td>
+          <pre><code>Total_Profit = SUM(FactSales[Profit])</code></pre>
+        </td>
+        <td>Card / Line chart over time</td>
+        <td><b>75</b> (total)</td>
+        <td>Profit may be negative. Visuals can show negative bars/points.</td>
+      </tr>
+      <tr>
+        <td>Average Sales</td>
+        <td>
+          <pre><code>Avg_Sales = AVERAGE(FactSales[Sales])</code></pre>
+        </td>
+        <td>KPI</td>
+        <td><b>162.5</b></td>
+        <td>Average of rows in current context (not average per distinct OrderID unless 1 row per order).</td>
+      </tr>
+      <tr>
+        <td>Row count</td>
+        <td>
+          <pre><code>Row_Count = COUNTROWS(FactSales)</code></pre>
+        </td>
+        <td>Transactions count</td>
+        <td><b>4</b></td>
+        <td>Counts rows. If your grain is order-lines, it counts lines.</td>
+      </tr>
+      <tr>
+        <td>Distinct orders</td>
+        <td>
+          <pre><code>Distinct_Orders = DISTINCTCOUNT(FactSales[OrderID])</code></pre>
+        </td>
+        <td>Unique count</td>
+        <td><b>4</b></td>
+        <td>Use when there can be multiple rows per order.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level2">Level 2 — Calculated Columns (Row-Level)</h2>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX (Column)</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes (When / Gotchas)</th>
+      </tr>
+      <tr>
+        <td>Year from date</td>
+        <td>
+          <pre><code>Year = YEAR(FactSales[OrderDate])</code></pre>
+        </td>
+        <td>Axis, slicer</td>
+        <td>All rows: <b>2025</b></td>
+        <td>Best practice: do this in a proper Date table for time intelligence.</td>
+      </tr>
+      <tr>
+        <td>Fiscal Year (FY starts July)</td>
+        <td>
+          <pre><code>Fiscal_Year =
+IF(
+  MONTH(FactSales[OrderDate]) &gt;= 7,
+  YEAR(FactSales[OrderDate]) + 1,
+  YEAR(FactSales[OrderDate])
+)</code></pre>
+        </td>
+        <td>Fiscal reporting</td>
+        <td>Jun rows FY=2025; Jul rows FY=2026</td>
+        <td>Great for FY slicing/grouping.</td>
+      </tr>
+      <tr>
+        <td>Profit flag</td>
+        <td>
+          <pre><code>Profit_Flag =
+IF(FactSales[Profit] &lt; 0, "Loss", "Profit")</code></pre>
+        </td>
+        <td>Legend / filter</td>
+        <td>Row 2 = Loss</td>
+        <td>Column is best for categories/flags used on axes/filters.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level3">Level 3 — Data Types, Text, Formatting</h2>
+    <h3>Data Type Notes</h3>
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>Best Practice</th>
+        <th>Why</th>
+        <th>Gotcha</th>
+      </tr>
+      <tr>
+        <td>Currency / % formatting</td>
+        <td>Format in Model (not via FORMAT())</td>
+        <td>Keeps numeric type (usable in math)</td>
+        <td><code>FORMAT()</code> returns text; breaks numeric sorting/math.</td>
+      </tr>
+    </table>
+    <h3>Text / Concatenation</h3>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Concatenate (fast)</td>
+        <td>
+          <pre><code>Label =
+FactSales[Category] &amp; " #" &amp; FORMAT(FactSales[OrderID], "0")</code></pre>
+        </td>
+        <td>Tooltip label</td>
+        <td>Row 3: <b>Tech #3</b></td>
+        <td><code>&amp;</code> is standard. Use FORMAT for ID rendering only.</td>
+      </tr>
+      <tr>
+        <td>Safe combine with delimiter</td>
+        <td>
+          <pre><code>Key =
+COMBINEVALUES("-", FactSales[Category], FactSales[OrderID])</code></pre>
+        </td>
+        <td>Key, label, debugging</td>
+        <td>Row 1: <b>Furniture-1</b></td>
+        <td>More predictable with blanks than chaining <code>&amp;</code> .</td>
+      </tr>
+      <tr>
+        <td>Uppercase</td>
+        <td>
+          <pre><code>Cat_Upper = UPPER(FactSales[Category])</code></pre>
+        </td>
+        <td>Normalization</td>
+        <td>TECH</td>
+        <td>Useful for comparisons / standard labels.</td>
+      </tr>
+    </table>
+    <h3>Formatting (Display vs Numeric)</h3>
+    <table>
+      <tr>
+        <th>Goal</th>
+        <th>DAX Option</th>
+        <th>Sample Output</th>
+        <th>When to Use</th>
+        <th>Warning</th>
+      </tr>
+      <tr>
+        <td>Percent label</td>
+        <td>
+          <pre><code>Margin_Text = FORMAT([Margin], "0.00%")</code></pre>
+        </td>
+        <td>"11.54%"</td>
+        <td>Titles/tooltips only</td>
+        <td>Returns text → don’t use in further calculations.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level4">Level 4 — Logic, Blanks, Safe Math</h2>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Safe divide</td>
+        <td>
+          <pre><code>Margin =
+DIVIDE([Total_Profit], [Total_Sales])</code></pre>
+        </td>
+        <td>KPI</td>
+        <td>75/650 = <b>0.11538</b></td>
+        <td>Use DIVIDE to avoid divide-by-zero errors. Format as % in Model.</td>
+      </tr>
+      <tr>
+        <td>Blank instead of zero</td>
+        <td>
+          <pre><code>Sales_Blank_If_Zero =
+IF([Total_Sales] = 0, BLANK(), [Total_Sales])</code></pre>
+        </td>
+        <td>Cleaner charts</td>
+        <td>If 0 → blank</td>
+        <td>BLANK often hides labels/marks; cleaner than 0.</td>
+      </tr>
+      <tr>
+        <td>Replace blank with 0</td>
+        <td>
+          <pre><code>Sales_0 = COALESCE([Total_Sales], 0)</code></pre>
+        </td>
+        <td>Tables where 0 is preferred</td>
+        <td>0 if blank</td>
+        <td>Use for numeric display &amp; total math consistency.</td>
+      </tr>
+      <tr>
+        <td>Multi-condition bucket</td>
+        <td>
+          <pre><code>Sales_Band =
+SWITCH(
+  TRUE(),
+  FactSales[Sales] &gt;= 300, "High",
+  FactSales[Sales] &gt;= 100, "Medium",
+  "Low"
+)</code></pre>
+        </td>
+        <td>Segmentation column</td>
+        <td>300=High, 200=Medium, 50=Low</td>
+        <td><code>SWITCH(TRUE())</code> is a clean multi-condition pattern.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level5">Level 5 — Selector (Sales vs Profit)</h2>
+    <h3>1) Disconnected Selector Table</h3>
+    <p class="muted">Create a small table for a slicer (no relationships needed).</p>
+    <pre><code>Metric Selector =
+DATATABLE(
+  "MetricType", STRING,
+  { {"Sales"}, {"Profit"} }
+)</code></pre>
+    <h3>2) Dynamic Measure</h3>
+    <pre><code>Total_Metric :=
+SWITCH(
+  SELECTEDVALUE('Metric Selector'[MetricType], "Sales"),
+  "Sales",  SUM(FactSales[Sales]),
+  "Profit", SUM(FactSales[Profit]),
+  BLANK()
+)</code></pre>
+    <table>
+      <tr>
+        <th>Example Use</th>
+        <th>User Selection</th>
+        <th>Sample Output (Card)</th>
+        <th>Sample Output (Bar by Category)</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Card showing chosen metric</td>
+        <td>Sales</td>
+        <td><b>650</b></td>
+        <td>Furniture=300, Tech=350</td>
+        <td>Measure reads slicer choice with SELECTEDVALUE.</td>
+      </tr>
+      <tr>
+        <td>Same visuals, different metric</td>
+        <td>Profit</td>
+        <td><b>75</b></td>
+        <td>Furniture=10, Tech=65</td>
+        <td>No relationship needed between selector table and FactSales.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level6">Level 6 — CALCULATE &amp; Filter Patterns</h2>
+    <h3>CALCULATE basics</h3>
+    <pre><code>Sales_Tech :=
+CALCULATE(
+  [Total_Sales],
+  FactSales[Category] = "Tech"
+)</code></pre>
+    <table>
+      <tr>
+        <th>Pattern</th>
+        <th>DAX</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Override / apply filter</td>
+        <td>
+          <pre><code>Sales_Tech :=
+CALCULATE([Total_Sales], FactSales[Category] = "Tech")</code></pre>
+        </td>
+        <td>Tech-only KPI</td>
+        <td><b>350</b></td>
+        <td>CALCULATE modifies filter context.</td>
+      </tr>
+      <tr>
+        <td>Remove filter (ALL)</td>
+        <td>
+          <pre><code>Sales_AllCats :=
+CALCULATE([Total_Sales], ALL(FactSales[Category]))</code></pre>
+        </td>
+        <td>Total line on chart</td>
+        <td><b>650</b></td>
+        <td>Returns overall total even inside Category bars.</td>
+      </tr>
+      <tr>
+        <td>Remove all filters (REMOVEFILTERS)</td>
+        <td>
+          <pre><code>Sales_GrandTotal :=
+CALCULATE([Total_Sales], REMOVEFILTERS())</code></pre>
+        </td>
+        <td>True grand total</td>
+        <td><b>650</b></td>
+        <td>Ignores all filters (use carefully).</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level7">Level 7 — Iterators (SUMX, AVERAGEX, etc.)</h2>
+    <p class="muted">Use iterators when you need <b>row-by-row logic</b> before aggregating.</p>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX</th>
+        <th>Example Use</th>
+        <th>Sample Output</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Sum only positive profit</td>
+        <td>
+          <pre><code>Positive_Profit :=
+SUMX(
+  FactSales,
+  IF(FactSales[Profit] &gt; 0, FactSales[Profit], 0)
+)</code></pre>
+        </td>
+        <td>“Profit (only gains)” KPI</td>
+        <td><b>85</b></td>
+        <td>20 + 60 + 5 = 85. Condition is per-row.</td>
+      </tr>
+      <tr>
+        <td>Weighted average (pattern)</td>
+        <td>
+          <pre><code>Weighted_Avg_Example :=
+DIVIDE(
+  SUMX(FactSales, FactSales[Sales] * FactSales[Profit]),
+  SUM(FactSales[Sales])
+)</code></pre>
+        </td>
+        <td>Weighted metrics</td>
+        <td>(depends)</td>
+        <td>Common “SUMX numerator / SUM denominator” structure.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level8">Level 8 — Percent of Total, Ranking, Top N</h2>
+    <h3>Percent of Total</h3>
+    <pre><code>Sales_Pct_Total :=
+DIVIDE(
+  [Total_Sales],
+  CALCULATE([Total_Sales], ALL(FactSales[Category]))
+)</code></pre>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Total_Sales</th>
+        <th>Sales_Pct_Total</th>
+      </tr>
+      <tr>
+        <td>Furniture</td>
+        <td>300</td>
+        <td><b>46.15%</b></td>
+      </tr>
+      <tr>
+        <td>Tech</td>
+        <td>350</td>
+        <td><b>53.85%</b></td>
+      </tr>
+    </table>
+    <h3>Ranking</h3>
+    <pre><code>Category_Rank :=
+RANKX(
+  ALL(FactSales[Category]),
+  [Total_Sales],
+  ,
+  DESC
+)</code></pre>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Total_Sales</th>
+        <th>Rank</th>
+      </tr>
+      <tr>
+        <td>Tech</td>
+        <td>350</td>
+        <td><b>1</b></td>
+      </tr>
+      <tr>
+        <td>Furniture</td>
+        <td>300</td>
+        <td><b>2</b></td>
+      </tr>
+    </table>
+    <p><b>Top N:</b> Often implemented by filtering visuals using Rank (e.g., keep Rank &lt;= 10) or by using a Top N filter in the visual pane.</p>
+    <hr/>
+    <h2 id="level9">Level 9 — Time Intelligence (Requires Date Table)</h2>
+    <p><b>Best practice:</b> Create a proper Date table (DimDate) and relate it to FactSales[OrderDate]. Many time functions expect a contiguous date column.</p>
+    <pre><code>Date =
+ADDCOLUMNS(
+  CALENDAR(DATE(2024,1,1), DATE(2026,12,31)),
+  "Year", YEAR([Date]),
+  "MonthNum", MONTH([Date]),
+  "MonthName", FORMAT([Date], "MMM")
+)</code></pre>
+    <pre><code>Sales_YTD :=
+TOTALYTD([Total_Sales], Date[Date])
+
+Sales_LY :=
+CALCULATE(
+  [Total_Sales],
+  SAMEPERIODLASTYEAR(Date[Date])
+)</code></pre>
+    <table>
+      <tr>
+        <th>Function</th>
+        <th>When to Use</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td><code>TOTALYTD</code></td>
+        <td>Running total for the year</td>
+        <td>Mark Date table as Date table in Power BI.</td>
+      </tr>
+      <tr>
+        <td><code>SAMEPERIODLASTYEAR</code></td>
+        <td>YoY comparisons</td>
+        <td>Works best with complete Date table + relationships.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level10">Level 10 — Virtual Tables (SUMMARIZE / FILTER / ADDCOLUMNS)</h2>
+    <p class="muted">Virtual tables are created inside measures. They unlock advanced patterns (custom grouping, intermediate tables, etc.).</p>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>DAX</th>
+        <th>When to Use</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Group inside a measure</td>
+        <td>
+          <pre><code>ByCategory_Table :=
+SUMMARIZE(
+  FactSales,
+  FactSales[Category],
+  "Sales", [Total_Sales],
+  "Profit", [Total_Profit]
+)</code></pre>
+        </td>
+        <td>Intermediate computations</td>
+        <td>Returns a table (used inside other expressions).</td>
+      </tr>
+      <tr>
+        <td>Filter rows (table function)</td>
+        <td>
+          <pre><code>HighSalesRows :=
+FILTER(FactSales, FactSales[Sales] &gt; 100)</code></pre>
+        </td>
+        <td>Used with iterators / advanced filters</td>
+        <td>FILTER returns a table; often combined with CALCULATE or X functions.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level11">Level 11 — Debugging DAX (Practical)</h2>
+    <table>
+      <tr>
+        <th>Problem</th>
+        <th>Technique</th>
+        <th>Example</th>
+        <th>Why it Helps</th>
+      </tr>
+      <tr>
+        <td>Measure looks “wrong”</td>
+        <td>Inspect context with a table visual</td>
+        <td>Add Category + Date + measure</td>
+        <td>See exactly which filters produce which value.</td>
+      </tr>
+      <tr>
+        <td>Complex measure</td>
+        <td>Use VAR for intermediate values</td>
+        <td>
+          <pre><code>Test :=
+VAR s = [Total_Sales]
+VAR p = [Total_Profit]
+RETURN DIVIDE(p,s)</code></pre>
+        </td>
+        <td>Readable + easier to debug + sometimes faster.</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="level12">Level 12 — Performance &amp; Modeling Rules</h2>
+    <table>
+      <tr>
+        <th>Rule</th>
+        <th>Why</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td>Prefer star schema</td>
+        <td>Faster filters + simpler DAX</td>
+        <td>Dimensions filter facts via relationships</td>
+      </tr>
+      <tr>
+        <td>Prefer measures over calculated columns</td>
+        <td>Less memory; dynamic results</td>
+        <td>Use columns only for grouping/slicing/row logic</td>
+      </tr>
+      <tr>
+        <td>Avoid FORMAT() for numeric measures</td>
+        <td>Converts number → text</td>
+        <td>Format in Model instead</td>
+      </tr>
+      <tr>
+        <td>Use VAR</td>
+        <td>Reduces repeated computation</td>
+        <td>Store common sub-expressions</td>
+      </tr>
+      <tr>
+        <td>Be careful with FILTER + iterators</td>
+        <td>Can be expensive</td>
+        <td>Use simpler filters where possible</td>
+      </tr>
+    </table>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>Basic Physics Summary (English + Vietnamese)</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>Physics Summary Cheat Sheet</h1>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#matter">Matter</a></li>
+        <li><a href="#motion">Motion &amp; Forces</a></li>
+        <li><a href="#rotation">Rotation &amp; Oscillation</a></li>
+        <li><a href="#thermo">Thermodynamics</a></li>
+        <li><a href="#em">Electricity &amp; Magnetism</a></li>
+        <li><a href="#circuits">Mạch điện nối tiếp &amp; song song (Series &amp; Parallel Circuits)</a></li>
+        <li><a href="#waves">Waves</a></li>
+        <li><a href="#gravity">Gravity &amp; Fields</a></li>
+        <li><a href="#modern">Modern Physics</a></li>
+        <li><a href="#universe">Universe</a></li>
+      </ol>
+    </div>
+    <!-- I. MATTER -->
+    <h2 id="matter">I) Matter <span class="tag">Vật chất</span></h2>
+    <h3>Atom (Nguyên tử)</h3>
+    <div aria-label="Atom bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Mọi vật được tạo từ nguyên tử. 
+        </div>
+        <div class="en">
+ Everything is made of atoms. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Nguyên tử gồm electron (−), proton (+), neutron (0). 
+        </div>
+        <div class="en">
+ Atom = Electron (−), Proton (+), Neutron (0). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Proton + neutron nằm trong hạt nhân; electron chuyển động xung quanh. 
+        </div>
+        <div class="en">
+ Protons + neutrons are inside the nucleus; electrons move around it. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Nguyên tử trung hòa: số electron = số proton. 
+        </div>
+        <div class="en">
+ Neutral atom: number of electrons = number of protons. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Số hiệu nguyên tử = số proton (thứ tự trong bảng tuần hoàn). 
+        </div>
+        <div class="en">
+ Atomic number = number of protons (Periodic Table order). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Số khối ≈ proton + neutron (khối lượng electron rất nhỏ). 
+        </div>
+        <div class="en">
+ Mass number ≈ protons + neutrons (electron mass is tiny). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Đồng vị: cùng proton, khác neutron. 
+        </div>
+        <div class="en">
+ Isotopes: same protons, different neutrons. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Ion: nhận/mất electron → thành điện tích (+ hoặc −). 
+        </div>
+        <div class="en">
+ Ion: gain/lose electrons → becomes charged (+ or −). 
+        </div>
+      </div>
+    </div>
+    <h3>Molecule (Phân tử)</h3>
+    <div aria-label="Molecule bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Phân tử = nhiều nguyên tử liên kết (do tương tác electron). 
+        </div>
+        <div class="en">
+ Molecule = atoms bonded together (via electron interactions). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Ví dụ: H₂O, CO₂. 
+        </div>
+        <div class="en">
+ Examples: H₂O, CO₂. 
+        </div>
+      </div>
+    </div>
+    <h3>States of matter (Trạng thái vật chất)</h3>
+    <div aria-label="States of matter bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Rắn: hình dạng cố định. 
+        </div>
+        <div class="en">
+ Solid: fixed shape. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Lỏng: thể tích cố định, đổi hình dạng. 
+        </div>
+        <div class="en">
+ Liquid: fixed volume, changes shape. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Khí: không cố định hình dạng/thể tích. 
+        </div>
+        <div class="en">
+ Gas: no fixed shape/volume. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Plasma: khí ion hóa (Mặt trời, sét). 
+        </div>
+        <div class="en">
+ Plasma: ionized gas (Sun, lightning). 
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <div class="vi">
+ Ghi chú: Phần lớn nguyên tử là “khoảng trống”; hạt nhân rất nhỏ nhưng rất đậm đặc. 
+      </div>
+      <div class="en">
+ Note: Most of an atom is empty space; the nucleus is extremely small and dense. 
+      </div>
+    </div>
+    <!-- II. MOTION & NEWTON -->
+    <h2 id="motion">II) Motion &amp; Forces <span class="tag">Chuyển động &amp; Lực</span></h2>
+    <h3>Core ideas</h3>
+    <div aria-label="Core ideas bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Vận tốc có hướng; tốc độ không có hướng. 
+        </div>
+        <div class="en">
+ Velocity includes direction; speed does not. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Gia tốc là sự thay đổi vận tốc. 
+        </div>
+        <div class="en">
+ Acceleration is change in velocity. 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Velocity formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ v = d / t 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>v</b> = velocity (m/s) → vận tốc</li>
+          <li><b>d</b> = distance (m) → quãng đường</li>
+          <li><b>t</b> = time (s) → thời gian</li>
+        </ul>
+      </div>
+    </div>
+    <div aria-label="Acceleration formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ a = Δv / t 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>a</b> = acceleration (m/s²) → gia tốc</li>
+          <li><b>Δv</b> = change in velocity → độ thay đổi vận tốc</li>
+          <li><b>t</b> = time (s) → thời gian</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Newton’s laws (Định luật Newton)</h3>
+    <div aria-label="Newton laws bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ ĐL1 (quán tính): không có lực tổng → trạng thái giữ nguyên. 
+        </div>
+        <div class="en">
+ 1st law (inertia): no net force → state stays the same. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ ĐL2: lực gây gia tốc. 
+        </div>
+        <div class="en">
+ 2nd law: force causes acceleration. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ ĐL3: lực và phản lực (bằng nhau, ngược chiều). 
+        </div>
+        <div class="en">
+ 3rd law: action = reaction (equal &amp; opposite). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Newton second law formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ F = m a 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>F</b> = force (N) → lực</li>
+          <li><b>m</b> = mass (kg) → khối lượng</li>
+          <li><b>a</b> = acceleration (m/s²) → gia tốc</li>
+        </ul>
+        <div class="small">
+ 1 N = 1 kg·m/s² 
+        </div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div aria-label="Momentum formula" class="formula">
+          <div class="head">
+            <div class="eq">
+ p = m v 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>p</b> = momentum (kg·m/s) → động lượng</li>
+              <li><b>m</b> = mass → khối lượng</li>
+              <li><b>v</b> = velocity → vận tốc</li>
+            </ul>
+            <div class="small">
+ Momentum is conserved (isolated system). 
+              <br/>
+ Động lượng được bảo toàn (hệ cô lập). 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div aria-label="Work formula" class="formula">
+          <div class="head">
+            <div class="eq">
+ W = F d 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>W</b> = work (J) → công</li>
+              <li><b>F</b> = force (N) → lực</li>
+              <li><b>d</b> = distance (m) → quãng đường</li>
+            </ul>
+            <div class="small">
+ 1 J = 1 N·m 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div aria-label="Kinetic energy formula" class="formula">
+          <div class="head">
+            <div class="eq">
+ KE = ½ m v² 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>KE</b> = kinetic energy (J) → động năng</li>
+              <li><b>m</b> = mass (kg) → khối lượng</li>
+              <li><b>v</b> = velocity (m/s) → vận tốc</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div aria-label="Potential energy formula" class="formula">
+          <div class="head">
+            <div class="eq">
+ PE = m g h 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>PE</b> = potential energy (J) → thế năng</li>
+              <li><b>m</b> = mass (kg) → khối lượng</li>
+              <li><b>g</b> = gravitational acceleration (~9.8 m/s²) → gia tốc trọng trường</li>
+              <li><b>h</b> = height (m) → độ cao</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <div class="vi">
+ Các dạng năng lượng: động năng, thế năng, nhiệt, hóa, điện, hạt nhân. 
+      </div>
+      <div class="en">
+ Energy types: kinetic, potential, thermal, chemical, electrical, nuclear. 
+      </div>
+    </div>
+    <!-- III. ROTATION & OSCILLATION -->
+    <h2 id="rotation">III) Rotation &amp; Oscillation <span class="tag">Quay &amp; Dao động</span></h2>
+    <div aria-label="Torque formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ τ = r F 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>τ</b> (tau) = torque (N·m) → mô-men lực</li>
+          <li><b>r</b> = lever arm distance (m) → khoảng cách đến trục quay</li>
+          <li><b>F</b> = force (N) → lực</li>
+        </ul>
+        <div class="small">
+ More exact: τ = r × F (uses direction). 
+          <br/>
+ Chính xác hơn: τ = r × F (có hướng). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Angular momentum formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ L = I ω 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>L</b> = angular momentum → mô-men động lượng</li>
+          <li><b>I</b> = moment of inertia → mô-men quán tính</li>
+          <li><b>ω</b> (omega) = angular velocity (rad/s) → vận tốc góc</li>
+        </ul>
+        <div class="small">
+ Angular momentum is conserved (isolated system). 
+          <br/>
+ Mô-men động lượng được bảo toàn (hệ cô lập). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Hooke law" class="formula">
+      <div class="head">
+        <div class="eq">
+ F = −k x 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>F</b> = restoring force → lực kéo về</li>
+          <li><b>k</b> = spring constant → độ cứng lò xo</li>
+          <li><b>x</b> = displacement from equilibrium → độ lệch khỏi vị trí cân bằng</li>
+          <li><b>−</b> means opposite direction (pulls back). → dấu “−” nghĩa là kéo ngược lại.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <div class="vi">
+ Ví dụ: lò xo, con lắc (xấp xỉ), rung động trong máy. 
+      </div>
+      <div class="en">
+ Examples: springs, pendulums (approx), vibrations in machines. 
+      </div>
+    </div>
+    <!-- IV. THERMODYNAMICS -->
+    <h2 id="thermo">IV) Thermodynamics <span class="tag">Nhiệt động học</span></h2>
+    <div aria-label="Thermo bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Nhiệt độ đo mức chuyển động trung bình của hạt. 
+        </div>
+        <div class="en">
+ Temperature measures average particle motion. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Nhiệt là sự truyền năng lượng do chênh lệch nhiệt độ. 
+        </div>
+        <div class="en">
+ Heat is energy transfer due to temperature difference. 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Heat equation" class="formula">
+      <div class="head">
+        <div class="eq">
+ Q = m c ΔT 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>Q</b> = heat energy (J) → nhiệt lượng</li>
+          <li><b>m</b> = mass (kg) → khối lượng</li>
+          <li><b>c</b> = specific heat capacity → nhiệt dung riêng</li>
+          <li><b>ΔT</b> = temperature change (°C or K) → độ tăng/giảm nhiệt độ</li>
+        </ul>
+      </div>
+    </div>
+    <h3>3 Laws (3 định luật)</h3>
+    <div aria-label="Thermo laws" class="pair">
+      <div class="row">
+        <div class="vi">
+ 1) Bảo toàn năng lượng. 
+        </div>
+        <div class="en">
+ 1) Energy is conserved. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ 2) Entropy (độ hỗn loạn) có xu hướng tăng. 
+        </div>
+        <div class="en">
+ 2) Entropy tends to increase. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ 3) Không thể đạt 0K tuyệt đối. 
+        </div>
+        <div class="en">
+ 3) Absolute zero cannot be reached. 
+        </div>
+      </div>
+    </div>
+    <!-- V. ELECTRICITY & MAGNETISM -->
+    <h2 id="em">V) Electricity &amp; Magnetism <span class="tag">Điện &amp; Từ</span></h2>
+    <h3>Charge (Điện tích)</h3>
+    <div aria-label="Charge bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Cùng dấu đẩy nhau; trái dấu hút nhau. 
+        </div>
+        <div class="en">
+ Same charges repel; opposite charges attract. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Trường điện mô tả điện tích ảnh hưởng lên không gian. 
+        </div>
+        <div class="en">
+ Electric fields describe how charges affect space. 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Coulomb law" class="formula">
+      <div class="head">
+        <div class="eq">
+ F = k q₁ q₂ / r² 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>F</b> = electric force (N) → lực điện</li>
+          <li><b>k</b> = Coulomb constant → hằng số Coulomb</li>
+          <li><b>q₁, q₂</b> = charges (C) → điện tích</li>
+          <li><b>r</b> = distance (m) → khoảng cách</li>
+        </ul>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div aria-label="Current formula" class="formula">
+          <div class="head">
+            <div class="eq">
+ I = Q / t 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>I</b> = current (A) → dòng điện</li>
+              <li><b>Q</b> = charge (C) → điện tích</li>
+              <li><b>t</b> = time (s) → thời gian</li>
+            </ul>
+            <div class="small">
+ 1 A = 1 C/s 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div aria-label="Ohm law" class="formula">
+          <div class="head">
+            <div class="eq">
+ V = I R 
+            </div>
+          </div>
+          <div class="body">
+            <ul class="symbols">
+              <li><b>V</b> = voltage (V) → hiệu điện thế</li>
+              <li><b>I</b> = current (A) → dòng điện</li>
+              <li><b>R</b> = resistance (Ω) → điện trở</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div aria-label="Power formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ P = V I 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>P</b> = power (W) → công suất</li>
+          <li><b>V</b> = voltage (V) → hiệu điện thế</li>
+          <li><b>I</b> = current (A) → dòng điện</li>
+        </ul>
+        <div class="small">
+ 1 W = 1 J/s 
+        </div>
+      </div>
+    </div>
+    <h3>DC vs AC (1 chiều vs xoay chiều)</h3>
+    <div aria-label="DC vs AC bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+          <b>DC</b>
+ : dòng đi 1 chiều (pin, mạch điện tử). 
+        </div>
+        <div class="en">
+          <b>DC</b>
+ : current flows one direction (battery, electronics). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>AC</b>
+ : dòng đổi chiều theo chu kỳ (điện gia đình, lưới điện). 
+        </div>
+        <div class="en">
+          <b>AC</b>
+ : current changes direction periodically (homes, grid). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="AC voltage function" class="formula">
+      <div class="head">
+        <div class="eq">
+ V(t) = V₀ sin(ωt) 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>V(t)</b> = voltage at time <b>t</b> → điện áp tại thời điểm t</li>
+          <li><b>V₀</b> = peak (maximum) voltage → biên độ (đỉnh)</li>
+          <li><b>sin</b> = sine function → hàm sin</li>
+          <li><b>ω</b> = angular frequency → tần số góc</li>
+          <li><b>t</b> = time (s) → thời gian</li>
+        </ul>
+      </div>
+    </div>
+    <div aria-label="Angular frequency formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ ω = 2πf 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>ω</b> = angular frequency (rad/s) → tần số góc</li>
+          <li><b>π</b> ≈ 3.1416 → số pi</li>
+          <li><b>f</b> = frequency (Hz) → tần số</li>
+        </ul>
+        <div class="note">
+          <div class="vi">
+ Thường: Việt Nam 50 Hz, Mỹ 60 Hz. 
+          </div>
+          <div class="en">
+ Typical: Vietnam 50 Hz, US 60 Hz. 
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Single-phase vs Three-phase (1 pha vs 3 pha)</h3>
+    <div aria-label="1-phase vs 3-phase bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+          <b>1 pha</b>
+ : một sóng AC, thường dùng gia đình. 
+        </div>
+        <div class="en">
+          <b>1-phase</b>
+ : one AC wave, common in homes. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>3 pha</b>
+ : ba sóng lệch 120°, công suất ổn định, dùng công nghiệp/động cơ. 
+        </div>
+        <div class="en">
+          <b>3-phase</b>
+ : three waves shifted by 120°, stable power, industry/motors. 
+        </div>
+      </div>
+    </div>
+    <div aria-label="3 phase wave equations" class="formula">
+      <div class="head">
+        <pre class="code-block"><code>V₁ = V₀ sin(ωt)
+V₂ = V₀ sin(ωt + 120°)
+V₃ = V₀ sin(ωt + 240°)</code></pre>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>V₁, V₂, V₃</b> = three phase voltages → điện áp 3 pha</li>
+          <li><b>V₀</b> = peak voltage → biên độ</li>
+          <li><b>ω</b> = angular frequency → tần số góc</li>
+          <li><b>t</b> = time → thời gian</li>
+          <li><b>120°</b> , <b>240°</b> = phase shifts → độ lệch pha</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Magnetism (Từ)</h3>
+    <div aria-label="Magnetism bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Điện tích chuyển động tạo ra từ trường. 
+        </div>
+        <div class="en">
+ Moving charges create magnetic fields. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Điện + từ = điện từ; ánh sáng là sóng điện từ. 
+        </div>
+        <div class="en">
+ Electricity + magnetism = electromagnetism; light is an electromagnetic wave. 
+        </div>
+      </div>
+    </div>
+    <!-- V.A SERIES & PARALLEL CIRCUITS -->
+    <h2 id="circuits">V.A) Mạch điện nối tiếp &amp; song song <span class="tag">Series &amp; Parallel Circuits</span></h2>
+    <div class="note">
+      <div class="vi">
+        <b>Mục tiêu:</b>
+ hiểu cách 
+        <b>dòng điện (I)</b>
+ , 
+        <b>điện áp (V)</b>
+ , và 
+        <b>điện trở (R)</b>
+ thay đổi trong mạch nối tiếp và song song. 
+      </div>
+      <div class="en">
+        <b>Goal:</b>
+ understand how 
+        <b>current (I)</b>
+ , 
+        <b>voltage (V)</b>
+ , and 
+        <b>resistance (R)</b>
+ behave in series vs parallel circuits. 
+      </div>
+    </div>
+    <h3>Mạch điện nối tiếp (Series circuit) — mạch “một đường”</h3>
+    <div aria-label="Series circuit bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+          <b>Dòng điện:</b>
+ như nhau qua mọi thiết bị: 
+          <code>I = I1 = I2 = ...</code>
+        </div>
+        <div class="en">
+          <b>Current:</b>
+ same through all devices: 
+          <code>I = I1 = I2 = ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Điện áp:</b>
+ chia ra theo từng thiết bị: 
+          <code>Vtổng = V1 + V2 + ...</code>
+        </div>
+        <div class="en">
+          <b>Voltage:</b>
+ splits across devices: 
+          <code>Vtotal = V1 + V2 + ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Điện trở tương đương:</b>
+ cộng lại: 
+          <code>R <sub>eq</sub> = R1 + R2 + ...</code>
+        </div>
+        <div class="en">
+          <b>Equivalent resistance:</b>
+ adds up: 
+          <code>R <sub>eq</sub> = R1 + R2 + ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Nếu 1 thiết bị hỏng/đứt:</b>
+ cả mạch ngừng chạy (đèn chuỗi Noel kiểu cũ). 
+        </div>
+        <div class="en">
+          <b>If one device fails/opens:</b>
+ the whole circuit stops (old-style Christmas lights). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Series resistance formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ R_eq = R1 + R2 + ... 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>R <sub>eq</sub></b> = điện trở tương đương → equivalent resistance</li>
+          <li><b>R1, R2, ...</b> = điện trở từng phần tử → individual resistances</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Mạch điện song song (Parallel circuit) — mạch “nhiều nhánh”</h3>
+    <div aria-label="Parallel circuit bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+          <b>Điện áp:</b>
+ như nhau trên mỗi nhánh: 
+          <code>V = V1 = V2 = ...</code>
+        </div>
+        <div class="en">
+          <b>Voltage:</b>
+ same across each branch: 
+          <code>V = V1 = V2 = ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Dòng điện:</b>
+ chia ra theo nhánh: 
+          <code>I_tổng = I1 + I2 + ...</code>
+        </div>
+        <div class="en">
+          <b>Current:</b>
+ splits among branches: 
+          <code>I_total = I1 + I2 + ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Điện trở tương đương:</b>
+ theo nghịch đảo: 
+          <code>1/R <sub>eq</sub> = 1/R1 + 1/R2 + ...</code>
+        </div>
+        <div class="en">
+          <b>Equivalent resistance:</b>
+ reciprocal rule: 
+          <code>1/R <sub>eq</sub> = 1/R1 + 1/R2 + ...</code>
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+          <b>Nếu 1 nhánh hỏng/đứt:</b>
+ nhánh khác vẫn chạy (điện trong nhà thường là song song). 
+        </div>
+        <div class="en">
+          <b>If one branch fails/opens:</b>
+ other branches still work (home wiring is usually parallel). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Parallel resistance formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ 1/R_eq = 1/R1 + 1/R2 + ... 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>R <sub>eq</sub></b> = điện trở tương đương → equivalent resistance</li>
+          <li><b>R1, R2, ...</b> = điện trở từng nhánh → branch resistances</li>
+        </ul>
+        <div class="note">
+          <div class="vi">
+ Mẹo: trong song song, 
+            <b>R <sub>eq</sub></b>
+ luôn 
+            <b>nhỏ hơn</b>
+ điện trở nhỏ nhất của các nhánh. 
+          </div>
+          <div class="en">
+ Tip: in parallel, 
+            <b>R <sub>eq</sub></b>
+ is always 
+            <b>smaller</b>
+ than the smallest branch resistance. 
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Các thiết bị điện trên mạch nối tiếp và song song (Devices in series vs parallel)</h3>
+    <table aria-label="Devices behavior in series vs parallel">
+      <thead>
+        <tr>
+          <th style="width:22%">Thiết bị / Device</th>
+          <th>Mạch nối tiếp (Series)</th>
+          <th>Mạch song song (Parallel)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Bóng đèn / Lamps</b></td>
+          <td>
+            <div class="vi">
+ Nhiều đèn nối tiếp thường 
+              <b>mờ hơn</b>
+ vì điện áp chia nhỏ; nếu 1 đèn đứt, 
+              <b>tất cả tắt</b>
+ . 
+            </div>
+            <div class="en">
+ Multiple lamps in series are often 
+              <b>dimmer</b>
+ because voltage is shared; if one opens, 
+              <b>all go off</b>
+ . 
+            </div>
+          </td>
+          <td>
+            <div class="vi">
+ Mỗi đèn nhận 
+              <b>cùng điện áp nguồn</b>
+ nên sáng ổn định; 1 đèn hỏng thì 
+              <b>đèn khác vẫn sáng</b>
+ . 
+            </div>
+            <div class="en">
+ Each lamp gets the 
+              <b>same supply voltage</b>
+ so brightness is stable; if one fails, 
+              <b>others stay on</b>
+ . 
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Công tắc / Switch</b></td>
+          <td>
+            <div class="vi">
+ Công tắc đặt “trên đường chính” sẽ ngắt/mở 
+              <b>toàn bộ</b>
+ mạch nối tiếp. 
+            </div>
+            <div class="en">
+ A switch on the main path controls 
+              <b>the whole</b>
+ series circuit. 
+            </div>
+          </td>
+          <td>
+            <div class="vi">
+ Có thể đặt công tắc cho 
+              <b>từng nhánh</b>
+ để bật/tắt từng thiết bị độc lập. 
+            </div>
+            <div class="en">
+ You can switch 
+              <b>each branch</b>
+ to control devices independently. 
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Cầu chì / Fuse</b></td>
+          <td>
+            <div class="vi">
+ Thường mắc nối tiếp với nguồn; nếu quá dòng thì cầu chì đứt và 
+              <b>ngắt toàn mạch</b>
+ . 
+            </div>
+            <div class="en">
+ Usually in series with the supply; overcurrent blows the fuse and 
+              <b>cuts the whole circuit</b>
+ . 
+            </div>
+          </td>
+          <td>
+            <div class="vi">
+ Vẫn hay đặt ở “đường chính” để bảo vệ tổng; đôi khi từng nhánh cũng có cầu chì/CB riêng. 
+            </div>
+            <div class="en">
+ Often placed on the main line for overall protection; sometimes each branch has its own fuse/breaker. 
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Điện trở / Resistors</b></td>
+          <td>
+            <div class="vi">
+              <b>R tăng</b>
+ khi thêm điện trở → 
+              <b>I giảm</b>
+ (vì 
+              <code>V = IR</code>
+ ). 
+            </div>
+            <div class="en">
+              <b>R increases</b>
+ when adding resistors → 
+              <b>I decreases</b>
+ (since 
+              <code>V = IR</code>
+ ). 
+            </div>
+          </td>
+          <td>
+            <div class="vi">
+              <b>R <sub>eq</sub> giảm</b>
+ khi thêm nhánh song song → 
+              <b>I tổng tăng</b>
+ . 
+            </div>
+            <div class="en">
+              <b>R <sub>eq</sub> decreases</b>
+ when adding parallel branches → 
+              <b>total current increases</b>
+ . 
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="vi">
+        <b>Gợi ý thực tế:</b>
+ Mạch điện gia đình (ổ cắm, đèn các phòng) thường được thiết kế 
+        <b>song song</b>
+ để mỗi thiết bị hoạt động độc lập. 
+      </div>
+      <div class="en">
+        <b>Real-world hint:</b>
+ Home wiring (outlets, room lights) is usually 
+        <b>parallel</b>
+ so each device works independently. 
+      </div>
+    </div>
+    <!-- VI. WAVES -->
+    <h2 id="waves">VI) Waves <span class="tag">Sóng</span></h2>
+    <div aria-label="Waves bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Sóng truyền năng lượng mà không “chuyển” vật chất tổng thể. 
+        </div>
+        <div class="en">
+ Waves transfer energy without moving matter overall. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Sóng cơ (âm, nước) vs sóng điện từ (ánh sáng). 
+        </div>
+        <div class="en">
+ Mechanical waves (sound, water) vs electromagnetic waves (light). 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Wave speed formula" class="formula">
+      <div class="head">
+        <div class="eq">
+ v = f λ 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>v</b> = wave speed (m/s) → vận tốc sóng</li>
+          <li><b>f</b> = frequency (Hz) → tần số</li>
+          <li><b>λ</b> (lambda) = wavelength (m) → bước sóng</li>
+        </ul>
+      </div>
+    </div>
+    <!-- VII. GRAVITY + FIELDS -->
+    <h2 id="gravity">VII) Gravity &amp; Fields <span class="tag">Trọng lực &amp; Trường</span></h2>
+    <div aria-label="Fields bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Trường mô tả tương tác trong không gian (hấp dẫn, điện, từ). 
+        </div>
+        <div class="en">
+ Fields describe interactions in space (gravity field, electric field, magnetic field). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Trọng lực tác dụng lên mọi vật có khối lượng. 
+        </div>
+        <div class="en">
+ Gravity affects everything with mass. 
+        </div>
+      </div>
+    </div>
+    <div aria-label="Universal gravitation" class="formula">
+      <div class="head">
+        <div class="eq">
+ F = G m₁ m₂ / r² 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>F</b> = gravitational force (N) → lực hấp dẫn</li>
+          <li><b>G</b> = gravitational constant (~6.67×10⁻¹¹) → hằng số hấp dẫn</li>
+          <li><b>m₁, m₂</b> = masses (kg) → khối lượng</li>
+          <li><b>r</b> = distance between centers (m) → khoảng cách giữa tâm</li>
+        </ul>
+      </div>
+    </div>
+    <div aria-label="Einstein bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Einstein: trọng lực là độ cong của không-thời gian. 
+        </div>
+        <div class="en">
+ Einstein: gravity is curvature of spacetime. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Thời gian có thể chậm khi vận tốc lớn hoặc gần trọng lực mạnh. 
+        </div>
+        <div class="en">
+ Time can slow at high speed or near strong gravity. 
+        </div>
+      </div>
+    </div>
+    <!-- VIII. MODERN PHYSICS -->
+    <h2 id="modern">VIII) Modern Physics <span class="tag">Vật lý hiện đại</span></h2>
+    <div aria-label="Mass energy equivalence" class="formula">
+      <div class="head">
+        <div class="eq">
+ E = m c² 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>E</b> = energy (J) → năng lượng</li>
+          <li><b>m</b> = mass (kg) → khối lượng</li>
+          <li><b>c</b> = speed of light (~3×10⁸ m/s) → tốc độ ánh sáng</li>
+        </ul>
+      </div>
+    </div>
+    <div aria-label="Photon energy" class="formula">
+      <div class="head">
+        <div class="eq">
+ E = h f 
+        </div>
+      </div>
+      <div class="body">
+        <ul class="symbols">
+          <li><b>E</b> = photon energy (J) → năng lượng photon</li>
+          <li><b>h</b> = Planck constant (~6.626×10⁻³⁴ J·s) → hằng số Planck</li>
+          <li><b>f</b> = frequency (Hz) → tần số</li>
+        </ul>
+      </div>
+    </div>
+    <div aria-label="Quantum bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Lượng tử: năng lượng rời rạc; ánh sáng vừa sóng vừa hạt. 
+        </div>
+        <div class="en">
+ Quantum: energy comes in packets (quanta); light is wave + particle. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Bất định: không thể biết chính xác đồng thời vị trí &amp; động lượng. 
+        </div>
+        <div class="en">
+ Uncertainty principle: cannot know exact position &amp; momentum at the same time. 
+        </div>
+      </div>
+    </div>
+    <h3>Nuclear &amp; particles (Hạt nhân &amp; hạt cơ bản)</h3>
+    <div aria-label="Nuclear bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Lực mạnh giữ hạt nhân bền vững. 
+        </div>
+        <div class="en">
+ Strong force holds the nucleus together. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Phân hạch: tách hạt nhân; Nhiệt hạch: hợp hạt nhân (Mặt trời). 
+        </div>
+        <div class="en">
+ Fission: split nuclei; Fusion: combine nuclei (Sun). 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Proton/neutron gồm quark; electron là hạt cơ bản (theo Mô hình Chuẩn). 
+        </div>
+        <div class="en">
+ Protons/neutrons are made of quarks; electrons are fundamental (in the Standard Model). 
+        </div>
+      </div>
+    </div>
+    <!-- IX. UNIVERSE -->
+    <h2 id="universe">IX) Universe <span class="tag">Vũ trụ</span></h2>
+    <div aria-label="Universe bullets" class="pair">
+      <div class="row">
+        <div class="vi">
+ Vụ nổ lớn: vũ trụ bắt đầu nóng/đậm đặc rồi giãn nở. 
+        </div>
+        <div class="en">
+ Big Bang: universe started hot and dense, then expanded. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Sao hình thành do trọng lực; hố đen có trọng lực cực mạnh. 
+        </div>
+        <div class="en">
+ Stars form from gravity; black holes have extreme gravity. 
+        </div>
+      </div>
+      <div class="row">
+        <div class="vi">
+ Có vật chất tối &amp; năng lượng tối (chưa hiểu hoàn toàn). 
+        </div>
+        <div class="en">
+ Dark matter &amp; dark energy exist (not fully understood). 
+        </div>
+      </div>
+    </div>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

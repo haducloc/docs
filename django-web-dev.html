@@ -1,0 +1,4307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta charset="utf-8"/>
+    <title>Django Web Dev Cheat Sheet</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>Django Web Dev Cheat Sheet</h1>
+    <p class="small">A beginner-friendly, printable guide for Python developers learning Django web and web API programming.</p>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#client-vs-server">Client vs Server</a></li>
+        <li><a href="#ports-80-443-8000">Ports: 80, 443, 8000</a></li>
+        <li><a href="#full-communication-diagram">Full Communication Diagram</a></li>
+        <li><a href="#http-request-structure">HTTP Request Structure</a></li>
+        <li><a href="#http-request-parts">HTTP Request Parts</a></li>
+        <li><a href="#http-response-structure">HTTP Response Structure</a></li>
+        <li><a href="#common-http-methods">Common HTTP Methods</a></li>
+        <li><a href="#common-http-status-codes">Common HTTP Status Codes</a></li>
+        <li><a href="#django-request-flow">Django Request Flow</a></li>
+        <li><a href="#django-main-components">Django Main Components</a></li>
+        <li><a href="#django-architecture-mtv">Django Architecture: MTV</a></li>
+        <li><a href="#create-a-django-web-app-step-by-step">Create a Django Web App: Step by Step</a></li>
+        <li><a href="#django-template-engine">Django Template Engine</a></li>
+        <li><a href="#example-templates">Example Templates</a></li>
+        <li><a href="#orm-basic-concept">ORM Basic Concept</a></li>
+        <li><a href="#orm-field-cheat-sheet">ORM Field Cheat Sheet</a></li>
+        <li><a href="#orm-relationship-cheat-sheet">ORM Relationship Cheat Sheet</a></li>
+        <li><a href="#orm-crud-cheat-sheet">ORM CRUD Cheat Sheet</a></li>
+        <li><a href="#orm-lookup-cheat-sheet">ORM Lookup Cheat Sheet</a></li>
+        <li><a href="#orm-ordering-count-slicing">ORM Ordering, Count, Slicing</a></li>
+        <li><a href="#orm-and-or-not">ORM AND / OR / NOT</a></li>
+        <li><a href="#orm-aggregate-and-annotate">ORM Aggregate and Annotate</a></li>
+        <li><a href="#orm-performance">ORM Performance</a></li>
+        <li><a href="#django-request-object-cheat-sheet">Django Request Object Cheat Sheet</a></li>
+        <li><a href="#django-response-cheat-sheet">Django Response Cheat Sheet</a></li>
+        <li><a href="#cookies-and-sessions">Cookies and Sessions</a></li>
+        <li><a href="#static-files">Static Files</a></li>
+        <li><a href="#media-files">Media Files</a></li>
+        <li><a href="#forms-and-csrf">Forms and CSRF</a></li>
+        <li><a href="#html-web-app-vs-json-api">HTML Web App vs JSON API</a></li>
+        <li><a href="#simple-api-without-django-rest-framework">Simple API without Django REST Framework</a></li>
+        <li><a href="#production-deployment-concept">Production Deployment Concept</a></li>
+        <li><a href="#most-important-mental-model">Most Important Mental Model</a></li>
+        <li><a href="#learning-order">Learning Order</a></li>
+        <li><a href="#authentication-and-authorization">Authentication and Authorization</a></li>
+        <li><a href="#django-middleware-deep-dive">Django Middleware Deep Dive</a></li>
+        <li><a href="#cookies-vs-sessions-vs-jwt">Cookies vs Sessions vs JWT</a></li>
+        <li><a href="#csrf-protection-internals">CSRF Protection Internals</a></li>
+        <li><a href="#django-request-lifecycle-detailed">Django Request Lifecycle Detailed</a></li>
+        <li><a href="#class-based-views">Class-Based Views</a></li>
+        <li><a href="#function-based-views-vs-class-based-views">Function-Based Views vs Class-Based Views</a></li>
+        <li><a href="#generic-views">Generic Views</a></li>
+        <li><a href="#forms-vs-modelforms">Forms vs ModelForms</a></li>
+        <li><a href="#model-managers-and-querysets">Model Managers and QuerySets</a></li>
+        <li><a href="#transactions-and-atomic-operations">Transactions and Atomic Operations</a></li>
+        <li><a href="#signals">Signals</a></li>
+        <li><a href="#caching">Caching</a></li>
+        <li><a href="#async-django">Async Django</a></li>
+        <li><a href="#django-rest-framework">Django REST Framework</a></li>
+        <li><a href="#serializers">Serializers</a></li>
+        <li><a href="#authentication-for-apis">Authentication for APIs</a></li>
+        <li><a href="#jwt-authentication">JWT Authentication</a></li>
+        <li><a href="#pagination">Pagination</a></li>
+        <li><a href="#filtering">Filtering</a></li>
+        <li><a href="#docker-deployment">Docker Deployment</a></li>
+        <li><a href="#gunicorn">Gunicorn</a></li>
+        <li><a href="#nginx-reverse-proxy">Nginx Reverse Proxy</a></li>
+        <li><a href="#asgi-vs-wsgi">ASGI vs WSGI</a></li>
+        <li><a href="#websocket-and-django-channels">WebSocket and Django Channels</a></li>
+        <li><a href="#testing">Testing</a></li>
+        <li><a href="#logging">Logging</a></li>
+        <li><a href="#production-architecture">Production Architecture</a></li>
+        <li><a href="#performance-optimization">Performance Optimization</a></li>
+        <li><a href="#database-indexes">Database Indexes</a></li>
+        <li><a href="#postgresql-best-practices">PostgreSQL Best Practices</a></li>
+        <li><a href="#security-best-practices">Security Best Practices</a></li>
+        <li><a href="#common-interview-questions">Common Interview Questions</a></li>
+        <li><a href="#real-enterprise-architecture-example">Real Enterprise Architecture Example</a></li>
+        <li><a href="#django-unit-testing-deep-dive">Django Unit Testing Deep Dive</a></li>
+        <li><a href="#spa-architecture-with-django-api-and-react">SPA Architecture with Django API and React</a></li>
+      </ol>
+    </div>
+    <h2 id="client-vs-server">1. Client vs Server</h2>
+    <pre>CLIENT SIDE                              SERVER SIDE
+-----------                              -----------
+Browser / Mobile App                     Web Server / App Server
+HTML                                     Nginx / Apache / Cloud load balancer
+CSS                                      Django app
+JavaScript                               Python code
+Cookies                                  ORM
+Forms                                    Database
+HTTP requests                            Files / media / static resources
+HTTP responses</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Read this as a boundary line: browser code runs on the user's device, while Django, Python, the ORM, and the database run on the server. 
+    </div>
+    <div class="note">
+      <strong>Important idea:</strong>
+ Django runs on the server. The browser does not run Django. The browser sends HTTP requests, and Django receives those requests and returns HTTP responses. 
+    </div>
+    <h2 id="ports-80-443-8000">2. Ports: 80, 443, 8000</h2>
+    <pre>http://example.com        -&gt; usually port 80
+https://example.com       -&gt; usually port 443
+http://localhost:8000     -&gt; Django development server</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This address means your own computer. Port 8000 is the default port Django uses during local development. 
+    </div>
+    <p>During development:</p>
+    <pre>python manage.py runserver</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This starts Django's development server. It is useful while learning, but it is not the production web server you would expose to the public internet. 
+    </div>
+    <p>Usually runs at:</p>
+    <pre>http://127.0.0.1:8000/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This address means your own computer. Port 8000 is the default port Django uses during local development. 
+    </div>
+    <p>In production:</p>
+    <pre>Browser
+  -&gt; HTTPS port 443
+  -&gt; Nginx / Apache / Load balancer
+  -&gt; Gunicorn / uWSGI / ASGI server
+  -&gt; Django app
+  -&gt; Database</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Follow the arrows from top to bottom: a request starts in the browser, passes through web server layers, reaches Django, and may finally read or write database data. 
+    </div>
+    <div class="note">
+      <strong>Development vs Production:</strong>
+ Development usually runs directly with Django's built-in development server: 
+      <pre>Browser
+  -&gt; Django runserver (:8000)</pre>
+ You start it with: 
+      <pre>python manage.py runserver</pre>
+ No Nginx, Apache, Gunicorn, uWSGI, Daphne, or Uvicorn is usually needed while learning or testing locally. Production is different: 
+      <pre>Browser
+  -&gt; HTTPS :443
+  -&gt; Nginx / Apache / Load balancer
+  -&gt; Gunicorn / uWSGI / Uvicorn / Daphne
+  -&gt; Django</pre>
+ Production servers need better performance, security, worker management, HTTPS handling, logging, and reliability. 
+    </div>
+    <h2 id="full-communication-diagram">3. Full Communication Diagram</h2>
+    <pre>User Browser
+    |
+    | 1. HTTP Request
+    | GET /books/5/ HTTP/1.1
+    | Host: example.com
+    | Cookie: sessionid=abc123
+    v
+
+Web Server
+Nginx / Apache
+    |
+    v
+
+Python App Server
+Gunicorn / uWSGI / Daphne / Uvicorn
+    |
+    v
+
+Django Project
+    |
+    +--&gt; settings.py
+    +--&gt; urls.py
+    +--&gt; middleware
+    +--&gt; view function/class
+    +--&gt; model / ORM
+    +--&gt; template engine
+    |
+    v
+
+Database
+PostgreSQL / MySQL / SQLite / Oracle
+
+    ^
+    |
+    | 2. HTTP Response
+    | HTTP/1.1 200 OK
+    | Content-Type: text/html
+    | Set-Cookie: sessionid=xyz
+    |
+Browser receives HTML / JSON / file</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Follow the arrows from top to bottom: a request starts in the browser, passes through web server layers, reaches Django, and may finally read or write database data. 
+    </div>
+    <div class="note">
+      <strong>What is a Python App Server?</strong>
+ Django itself is a web framework, not a production web server. Gunicorn, uWSGI, Daphne, and Uvicorn are application servers that run your Django code and handle incoming requests from Nginx, Apache, or another front-facing server. Think of them as the production replacement for: 
+      <pre>python manage.py runserver</pre>
+ Common choices: 
+      <pre>Gunicorn = traditional Django websites and APIs
+uWSGI    = older but powerful WSGI server
+Uvicorn  = ASGI server for async Django
+Daphne   = commonly used with Django Channels/WebSockets</pre>
+ They usually do not listen directly on public ports 80 or 443. Nginx normally receives public traffic first, then forwards the request internally to the Python app server. 
+    </div>
+    <h2 id="http-request-structure">4. HTTP Request Structure</h2>
+    <p>An HTTP request has:</p>
+    <pre>1. Request line
+2. Headers
+3. Blank line
+4. Body, optional</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <p>Example GET request:</p>
+    <pre>GET /books/?page=2&amp;search=python HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+Accept: text/html
+Accept-Language: en-US
+Cookie: sessionid=abc123; csrftoken=token123</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is a browser page request. The path tells Django what page is being requested, and headers provide extra details like cookies and browser type. 
+    </div>
+    <p>Example POST request:</p>
+    <pre>POST /books/create/ HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+Cookie: sessionid=abc123; csrftoken=token123
+Content-Length: 37
+
+title=Python+Book&amp;price=29.99</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is a form submission. The browser sends field names and values in the request body, and Django usually reads them from request.POST. 
+    </div>
+    <p>Example JSON API request:</p>
+    <pre>POST /api/books/ HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Authorization: Bearer abc.jwt.token
+Cookie: sessionid=abc123
+
+{
+  "title": "Python Book",
+  "price": 29.99
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is an API-style request. The client sends JSON data, and the Authorization header is commonly used to prove who the caller is. 
+    </div>
+    <h2 id="http-request-parts">5. HTTP Request Parts</h2>
+    <h3>URL</h3>
+    <pre>https://example.com:443/books/5/?format=json#section1</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A URL has several parts. Django mainly receives the path and query string; the fragment after # usually stays inside the browser. 
+    </div>
+    <table>
+      <tr>
+        <th>Part</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td>Scheme</td>
+        <td><code>https</code></td>
+      </tr>
+      <tr>
+        <td>Host</td>
+        <td><code>example.com</code></td>
+      </tr>
+      <tr>
+        <td>Port</td>
+        <td><code>443</code></td>
+      </tr>
+      <tr>
+        <td>Path</td>
+        <td><code>/books/5/</code></td>
+      </tr>
+      <tr>
+        <td>Query string</td>
+        <td><code>?format=json</code></td>
+      </tr>
+      <tr>
+        <td>Fragment</td>
+        <td><code>#section1</code></td>
+      </tr>
+    </table>
+    <p>Important: fragment <code>#section1</code> is handled by the browser, usually not sent to server.</p>
+    <h3>Headers</h3>
+    <p>Headers are metadata.</p>
+    <pre>Host: example.com
+User-Agent: Mozilla/5.0
+Accept: text/html
+Accept-Encoding: gzip
+Content-Type: application/json
+Authorization: Bearer token
+Cookie: sessionid=abc123</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Headers are extra information about the request. Django can read them through request.headers when your view needs metadata. 
+    </div>
+    <h3>Cookie header</h3>
+    <p>Browser sends cookies to server:</p>
+    <pre>Cookie: sessionid=abc123; theme=dark</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Cookies are automatically sent back to the server by the browser. Django uses this pattern for sessions and login state. 
+    </div>
+    <p>Django reads cookies:</p>
+    <pre>request.COOKIES.get("sessionid")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Cookie operations happen on the response or request. The browser stores cookies and sends them back on later requests. 
+    </div>
+    <h3>Body</h3>
+    <p>GET usually has no body. POST/PUT/PATCH usually has body.</p>
+    <p>Form body:</p>
+    <pre>Content-Type: application/x-www-form-urlencoded
+
+username=loc&amp;password=secret</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is the normal encoding for many HTML forms. Django converts this body into request.POST for easier access. 
+    </div>
+    <p>JSON body:</p>
+    <pre>Content-Type: application/json
+
+{
+  "username": "loc",
+  "password": "secret"
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JSON bodies are common for APIs. In plain Django you may parse request.body; in Django REST Framework you usually use request.data. 
+    </div>
+    <p>File upload body:</p>
+    <pre>Content-Type: multipart/form-data</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This content type is used when a form uploads files. Django places uploaded files in request.FILES. 
+    </div>
+    <h2 id="http-response-structure">6. HTTP Response Structure</h2>
+    <p>An HTTP response has:</p>
+    <pre>1. Status line
+2. Headers
+3. Blank line
+4. Body</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <p>Example HTML response:</p>
+    <pre>HTTP/1.1 200 OK
+Content-Type: text/html
+Set-Cookie: sessionid=xyz789; HttpOnly; Secure
+
+&lt;html&gt;
+  &lt;body&gt;Hello Django&lt;/body&gt;
+&lt;/html&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Cookies are automatically sent back to the server by the browser. Django uses this pattern for sessions and login state. 
+    </div>
+    <p>Example JSON response:</p>
+    <pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": 5,
+  "title": "Python Book"
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JSON bodies are common for APIs. In plain Django you may parse request.body; in Django REST Framework you usually use request.data. 
+    </div>
+    <p>Example redirect:</p>
+    <pre>HTTP/1.1 302 Found
+Location: /login/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A redirect response tells the browser to make a new request to another URL, such as after login or after saving a form. 
+    </div>
+    <h2 id="common-http-methods">7. Common HTTP Methods</h2>
+    <table>
+      <tr>
+        <th>Method</th>
+        <th>Meaning</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td>Read</td>
+        <td>show book list</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td>Create / submit</td>
+        <td>submit form</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td>Replace</td>
+        <td>replace book</td>
+      </tr>
+      <tr>
+        <td><code>PATCH</code></td>
+        <td>Partial update</td>
+        <td>update price</td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td>Delete</td>
+        <td>delete book</td>
+      </tr>
+    </table>
+    <h2 id="common-http-status-codes">8. Common HTTP Status Codes</h2>
+    <table>
+      <tr>
+        <th>Code</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td><code>200</code></td>
+        <td>OK</td>
+      </tr>
+      <tr>
+        <td><code>201</code></td>
+        <td>Created</td>
+      </tr>
+      <tr>
+        <td><code>204</code></td>
+        <td>No content</td>
+      </tr>
+      <tr>
+        <td><code>301</code></td>
+        <td>Permanent redirect</td>
+      </tr>
+      <tr>
+        <td><code>302</code></td>
+        <td>Temporary redirect</td>
+      </tr>
+      <tr>
+        <td><code>400</code></td>
+        <td>Bad request</td>
+      </tr>
+      <tr>
+        <td><code>401</code></td>
+        <td>Not logged in / not authenticated</td>
+      </tr>
+      <tr>
+        <td><code>403</code></td>
+        <td>Forbidden</td>
+      </tr>
+      <tr>
+        <td><code>404</code></td>
+        <td>Not found</td>
+      </tr>
+      <tr>
+        <td><code>500</code></td>
+        <td>Server error</td>
+      </tr>
+    </table>
+    <h2 id="django-request-flow">9. Django Request Flow</h2>
+    <pre>1. Browser sends HTTP request
+2. Web server receives request
+3. Request goes to Django
+4. Django creates HttpRequest object
+5. Middleware runs
+6. URLconf finds matching route
+7. View runs
+8. View may call ORM/database
+9. View may render template
+10. View returns HttpResponse
+11. Middleware runs again
+12. Response goes back to browser</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is Django's request lifecycle. For beginners, remember the core path: URL finds a view, the view does work, then returns a response. 
+    </div>
+    <h2 id="django-main-components">10. Django Main Components</h2>
+    <pre>settings.py       project configuration
+urls.py           URL routing
+views.py          request handling
+models.py         database models / ORM
+templates/        HTML view engine files
+forms.py          form validation
+admin.py          admin UI registration
+migrations/       database schema changes
+static/           CSS, JS, images
+media/            uploaded user files</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These are the main files you will edit in most Django projects: settings configure the project, URLs route requests, views handle requests, and models define data. 
+    </div>
+    <h2 id="django-architecture-mtv">11. Django Architecture: MTV</h2>
+    <p>Django uses MTV:</p>
+    <pre>Model      = database/data layer
+Template   = presentation layer / HTML
+View       = request handling / business logic</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ MTV is Django's version of organizing code. Models handle data, templates handle HTML, and views connect user requests to the right result. 
+    </div>
+    <p>Similar to MVC:</p>
+    <pre>Django Model      ~= MVC Model
+Django Template   ~= MVC View
+Django View       ~= MVC Controller</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="create-a-django-web-app-step-by-step">12. Create a Django Web App: Step by Step</h2>
+    <h3>Step 1: Create virtual environment</h3>
+    <pre>python -m venv .venv</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A virtual environment keeps this project's Python packages separate from other projects on your computer. 
+    </div>
+    <p>Activate:</p>
+    <pre># Windows
+.venv\Scripts\activate
+
+# macOS/Linux
+source .venv/bin/activate</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Activation makes your terminal use the Python and packages inside .venv instead of the global Python installation. 
+    </div>
+    <h3>Step 2: Install Django</h3>
+    <pre>pip install django</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This installs Django into the active virtual environment so commands like django-admin and manage.py can work. 
+    </div>
+    <h3>Step 3: Create project</h3>
+    <pre>django-admin startproject mysite
+cd mysite</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A Django project is the main container for settings and site-wide configuration. 
+    </div>
+    <p>Structure:</p>
+    <pre>mysite/
+    manage.py
+    mysite/
+        settings.py
+        urls.py
+        asgi.py
+        wsgi.py</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h3>Step 4: Run server</h3>
+    <pre>python manage.py runserver</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This starts Django's development server. It is useful while learning, but it is not the production web server you would expose to the public internet. 
+    </div>
+    <p>Open:</p>
+    <pre>http://127.0.0.1:8000/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This address means your own computer. Port 8000 is the default port Django uses during local development. 
+    </div>
+    <h3>Step 5: Create app</h3>
+    <pre>python manage.py startapp books</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A Django app is a smaller feature module inside the project, such as books, users, orders, or reports. 
+    </div>
+    <p>Structure:</p>
+    <pre>books/
+    admin.py
+    apps.py
+    models.py
+    tests.py
+    views.py
+    migrations/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Step 6: Register app in settings.py</h3>
+    <pre>INSTALLED_APPS = [
+    # Django apps...
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+
+    # My apps
+    "books",
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Registering the app tells Django to include that app's models, templates, migrations, and other features. 
+    </div>
+    <h3>Step 7: Create model in books/models.py</h3>
+    <pre>from django.db import models
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    published_date = models.DateField(null=True, blank=True)
+    author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        related_name="books"
+    )
+
+    def __str__(self):
+        return self.title</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <h3>Step 8: Create database tables</h3>
+    <pre>python manage.py makemigrations
+python manage.py migrate</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ makemigrations creates a migration file from your model changes. migrate applies those changes to the actual database. 
+    </div>
+    <h3>Step 9: Create admin user</h3>
+    <pre>python manage.py createsuperuser</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This creates an admin login account so you can manage records in Django's built-in admin site. 
+    </div>
+    <h3>Step 10: Register models in books/admin.py</h3>
+    <pre>from django.contrib import admin
+from .models import Author, Book
+
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ["name", "email"]
+    search_fields = ["name", "email"]
+
+
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ["title", "author", "price", "published_date"]
+    search_fields = ["title"]
+    list_filter = ["author"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Registering a model with admin makes it visible in the Django admin interface. list_display and search_fields improve the admin screen. 
+    </div>
+    <p>Admin URL:</p>
+    <pre>http://127.0.0.1:8000/admin/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This address means your own computer. Port 8000 is the default port Django uses during local development. 
+    </div>
+    <h3>Step 11: Create views in books/views.py</h3>
+    <pre>from django.shortcuts import render, get_object_or_404, redirect
+from .models import Book
+from .forms import BookForm
+
+
+def book_list(request):
+    books = Book.objects.select_related("author").all()
+    return render(request, "books/book_list.html", {"books": books})
+
+
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, "books/book_detail.html", {"book": book})
+
+
+def book_create(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("book_list")
+    else:
+        form = BookForm()
+
+    return render(request, "books/book_form.html", {"form": form})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Step 12: Create app URLs in books/urls.py</h3>
+    <pre>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("books/", views.book_list, name="book_list"),
+    path("books/&lt;int:book_id&gt;/", views.book_detail, name="book_detail"),
+    path("books/create/", views.book_create, name="book_create"),
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ urlpatterns maps URL patterns to views. The name value is useful later when templates or redirects need to refer to a URL. 
+    </div>
+    <h3>Step 13: Include app URLs in project mysite/urls.py</h3>
+    <pre>from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("books.urls")),
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ urlpatterns maps URL patterns to views. The name value is useful later when templates or redirects need to refer to a URL. 
+    </div>
+    <h3>Step 14: Create form in books/forms.py</h3>
+    <pre>from django import forms
+from .models import Book
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ["title", "price", "published_date", "author"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A ModelForm builds a form from a model, validates user input, and can save a model object with form.save(). 
+    </div>
+    <h3>Step 15: Create templates</h3>
+    <pre>books/
+    templates/
+        books/
+            book_list.html
+            book_detail.html
+            book_form.html</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This folder layout helps Django find templates by app name, which avoids name conflicts between apps. 
+    </div>
+    <h2 id="django-template-engine">13. Django Template Engine</h2>
+    <p>Django has its own template engine called the Django Template Language, or DTL. A template is a text document, often HTML, with special syntax for variables, tags, and filters.</p>
+    <h3>Template variable</h3>
+    <pre>{{ book.title }}
+{{ book.price }}
+{{ user.username }}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h3>Template tag</h3>
+    <pre>{% if user.is_authenticated %}
+    Hello {{ user.username }}
+{% else %}
+    Please log in
+{% endif %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h3>Loop</h3>
+    <pre>{% for book in books %}
+    &lt;p&gt;{{ book.title }}&lt;/p&gt;
+{% empty %}
+    &lt;p&gt;No books found.&lt;/p&gt;
+{% endfor %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This loop runs once for each book passed from the view. The empty block appears if the list has no items. 
+    </div>
+    <h3>Filter</h3>
+    <pre>{{ book.title|upper }}
+{{ book.published_date|date:"Y-m-d" }}
+{{ book.price|floatformat:2 }}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h3>URL generation</h3>
+    <pre>&lt;a href="{% url 'book_detail' book.id %}"&gt;
+    {{ book.title }}
+&lt;/a&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The url tag builds a link from a Django URL name, so you do not hard-code paths in templates. 
+    </div>
+    <h3>Template inheritance</h3>
+    <p><code>base.html</code> :</p>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;{% block title %}My Site{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Book Site&lt;/h1&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        {% block content %}
+        {% endblock %}
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <p><code>book_list.html</code> :</p>
+    <pre>{% extends "base.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+    &lt;h2&gt;Books&lt;/h2&gt;
+
+    {% for book in books %}
+        &lt;p&gt;
+            &lt;a href="{% url 'book_detail' book.id %}"&gt;
+                {{ book.title }}
+            &lt;/a&gt;
+            - {{ book.price }}
+        &lt;/p&gt;
+    {% empty %}
+        &lt;p&gt;No books found.&lt;/p&gt;
+    {% endfor %}
+{% endblock %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Template inheritance lets one base layout provide the common page structure while child templates fill in only the changing parts. 
+    </div>
+    <h2 id="example-templates">14. Example Templates</h2>
+    <h3>book_list.html</h3>
+    <pre>{% extends "base.html" %}
+
+{% block content %}
+&lt;h2&gt;Book List&lt;/h2&gt;
+
+&lt;a href="{% url 'book_create' %}"&gt;Create Book&lt;/a&gt;
+
+{% for book in books %}
+    &lt;div&gt;
+        &lt;h3&gt;
+            &lt;a href="{% url 'book_detail' book.id %}"&gt;
+                {{ book.title }}
+            &lt;/a&gt;
+        &lt;/h3&gt;
+        &lt;p&gt;Author: {{ book.author.name }}&lt;/p&gt;
+        &lt;p&gt;Price: {{ book.price }}&lt;/p&gt;
+    &lt;/div&gt;
+{% empty %}
+    &lt;p&gt;No books found.&lt;/p&gt;
+{% endfor %}
+{% endblock %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Template inheritance lets one base layout provide the common page structure while child templates fill in only the changing parts. 
+    </div>
+    <h3>book_detail.html</h3>
+    <pre>{% extends "base.html" %}
+
+{% block content %}
+&lt;h2&gt;{{ book.title }}&lt;/h2&gt;
+
+&lt;p&gt;Author: {{ book.author.name }}&lt;/p&gt;
+&lt;p&gt;Price: {{ book.price }}&lt;/p&gt;
+&lt;p&gt;Published: {{ book.published_date }}&lt;/p&gt;
+
+&lt;a href="{% url 'book_list' %}"&gt;Back to list&lt;/a&gt;
+{% endblock %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Template inheritance lets one base layout provide the common page structure while child templates fill in only the changing parts. 
+    </div>
+    <h3>book_form.html</h3>
+    <pre>{% extends "base.html" %}
+
+{% block content %}
+&lt;h2&gt;Create Book&lt;/h2&gt;
+
+&lt;form method="post"&gt;
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+&lt;/form&gt;
+{% endblock %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The csrf_token tag adds a hidden security value to the form. Django checks it when the form is submitted. 
+    </div>
+    <h2 id="orm-basic-concept">15. ORM Basic Concept</h2>
+    <p>ORM means:</p>
+    <pre>Object Relational Mapper</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The ORM lets you work with database data using Python classes and methods instead of writing SQL for every operation. 
+    </div>
+    <p>It converts Python objects to database rows.</p>
+    <pre>Python class       -&gt; database table
+Python attribute   -&gt; table column
+Python object      -&gt; table row
+ORM query          -&gt; SQL query</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The ORM lets you work with database data using Python classes and methods instead of writing SQL for every operation. 
+    </div>
+    <p>Example:</p>
+    <pre>Book.objects.filter(price__gt=20)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Django translates this QuerySet into SQL behind the scenes. price__gt means price greater than 20. 
+    </div>
+    <p>is similar to:</p>
+    <pre>SELECT * FROM book WHERE price &gt; 20;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This SQL is shown only to explain what the ORM roughly does. In normal Django code, you usually write the ORM version. 
+    </div>
+    <h2 id="orm-field-cheat-sheet">16. ORM Field Cheat Sheet</h2>
+    <pre>models.CharField(max_length=100)
+models.TextField()
+models.IntegerField()
+models.DecimalField(max_digits=8, decimal_places=2)
+models.FloatField()
+models.BooleanField(default=False)
+models.DateField()
+models.DateTimeField()
+models.EmailField()
+models.URLField()
+models.FileField(upload_to="files/")
+models.ImageField(upload_to="images/")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Choose field types based on the kind of data you need to store. Django uses these fields to create database columns and validate data. 
+    </div>
+    <h2 id="orm-relationship-cheat-sheet">17. ORM Relationship Cheat Sheet</h2>
+    <h3>One-to-many</h3>
+    <p>One author has many books.</p>
+    <pre>class Book(models.Model):
+    author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        related_name="books"
+    )</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <p>Use:</p>
+    <pre>book.author
+author.books.all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>One-to-one</h3>
+    <pre>class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ OneToOneField means each record is paired with only one related record, such as one profile per user. 
+    </div>
+    <p>Use:</p>
+    <pre>profile.user
+user.profile</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Many-to-many</h3>
+    <pre>class Book(models.Model):
+    categories = models.ManyToManyField(Category)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <p>Use:</p>
+    <pre>book.categories.all()
+category.book_set.all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="orm-crud-cheat-sheet">18. ORM CRUD Cheat Sheet</h2>
+    <h3>Create</h3>
+    <pre>Author.objects.create(
+    name="John",
+    email="john@example.com"
+)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <p>Or:</p>
+    <pre>author = Author(name="John", email="john@example.com")
+author.save()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h3>Read all</h3>
+    <pre>Author.objects.all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ all() returns a QuerySet for every row in that table. It is lazy until Django actually needs the results. 
+    </div>
+    <h3>Get one</h3>
+    <pre>Author.objects.get(id=1)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ get() expects exactly one matching row. If none or multiple rows match, Django raises an error. 
+    </div>
+    <h3>Filter</h3>
+    <pre>Book.objects.filter(author_id=1)
+Book.objects.filter(price__gt=20)
+Book.objects.filter(title__icontains="python")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Django translates this QuerySet into SQL behind the scenes. price__gt means price greater than 20. 
+    </div>
+    <h3>Update one</h3>
+    <pre>book = Book.objects.get(id=1)
+book.price = 29.99
+book.save()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h3>Bulk update</h3>
+    <pre>Book.objects.filter(author_id=1).update(price=19.99)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <h3>Delete one</h3>
+    <pre>book = Book.objects.get(id=1)
+book.delete()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ get() expects exactly one matching row. If none or multiple rows match, Django raises an error. 
+    </div>
+    <h3>Bulk delete</h3>
+    <pre>Book.objects.filter(price__lt=5).delete()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <h2 id="orm-lookup-cheat-sheet">19. ORM Lookup Cheat Sheet</h2>
+    <pre>Book.objects.filter(price__gt=10)
+Book.objects.filter(price__gte=10)
+Book.objects.filter(price__lt=10)
+Book.objects.filter(price__lte=10)
+
+Book.objects.filter(title__contains="Python")
+Book.objects.filter(title__icontains="python")
+
+Book.objects.filter(title__startswith="A")
+Book.objects.filter(title__istartswith="a")
+
+Book.objects.filter(title__endswith="Z")
+Book.objects.filter(title__iendswith="z")
+
+Book.objects.filter(id__in=[1, 2, 3])
+Book.objects.filter(published_date__isnull=True)
+Book.objects.filter(published_date__year=2026)
+Book.objects.filter(published_date__month=6)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <h2 id="orm-ordering-count-slicing">20. ORM Ordering, Count, Slicing</h2>
+    <pre>Book.objects.order_by("title")
+Book.objects.order_by("-price")
+
+Book.objects.count()
+Book.objects.exists()
+
+Book.objects.all()[:10]
+Book.objects.all()[10:20]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ all() returns a QuerySet for every row in that table. It is lazy until Django actually needs the results. 
+    </div>
+    <h2 id="orm-and-or-not">21. ORM AND / OR / NOT</h2>
+    <h3>AND</h3>
+    <pre>Book.objects.filter(author_id=1, price__gt=20)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <h3>OR</h3>
+    <pre>from django.db.models import Q
+
+Book.objects.filter(
+    Q(title__icontains="python") |
+    Q(title__icontains="django")
+)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Q objects let you build OR logic. Without Q, multiple filter arguments are usually combined as AND. 
+    </div>
+    <h3>NOT</h3>
+    <pre>Book.objects.exclude(price__gt=100)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="orm-aggregate-and-annotate">22. ORM Aggregate and Annotate</h2>
+    <pre>from django.db.models import Count, Avg, Max, Min, Sum
+
+Book.objects.count()
+
+Book.objects.aggregate(Avg("price"))
+Book.objects.aggregate(Max("price"))
+Book.objects.aggregate(Min("price"))
+Book.objects.aggregate(Sum("price"))</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These are common QuerySet operations: ordering sorts results, count counts rows, exists checks if any row matches, and slicing limits results. 
+    </div>
+    <p>Count books per author:</p>
+    <pre>authors = Author.objects.annotate(book_count=Count("books"))
+
+for author in authors:
+    print(author.name, author.book_count)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ aggregate returns one summary result for the whole QuerySet. annotate adds calculated values to each object in the result. 
+    </div>
+    <h2 id="orm-performance">23. ORM Performance</h2>
+    <h3>Problem: too many queries</h3>
+    <p>Bad:</p>
+    <pre>books = Book.objects.all()
+
+for book in books:
+    print(book.author.name)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ all() returns a QuerySet for every row in that table. It is lazy until Django actually needs the results. 
+    </div>
+    <p>May cause one query for books, then many queries for authors.</p>
+    <h3>Use select_related</h3>
+    <p>For <code>ForeignKey</code> and <code>OneToOneField</code> :</p>
+    <pre>books = Book.objects.select_related("author").all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ select_related joins related tables in one query. Use it when following ForeignKey or OneToOne relationships. 
+    </div>
+    <h3>Use prefetch_related</h3>
+    <p>For <code>ManyToManyField</code> and reverse relationships:</p>
+    <pre>authors = Author.objects.prefetch_related("books").all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ prefetch_related does extra optimized queries and connects the results in Python. Use it for many-to-many or reverse relationships. 
+    </div>
+    <p>Rule:</p>
+    <pre>ForeignKey / OneToOne      -&gt; select_related
+ManyToMany / reverse FK    -&gt; prefetch_related</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ ForeignKey creates a many-to-one relationship. Many books can point to the same author. 
+    </div>
+    <h2 id="django-request-object-cheat-sheet">24. Django Request Object Cheat Sheet</h2>
+    <p>In a view:</p>
+    <pre>def my_view(request):
+    print(request.method)
+    print(request.path)
+    print(request.GET)
+    print(request.POST)
+    print(request.COOKIES)
+    print(request.headers)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The request object contains everything Django knows about the incoming HTTP request, including method, path, form data, files, cookies, and user. 
+    </div>
+    <p>Common:</p>
+    <pre>request.method          # "GET" or "POST"
+request.path            # "/books/"
+request.GET             # query string data
+request.POST            # form body data
+request.COOKIES         # cookies
+request.FILES           # uploaded files
+request.user            # logged-in user
+request.headers         # request headers</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The request object contains everything Django knows about the incoming HTTP request, including method, path, form data, files, cookies, and user. 
+    </div>
+    <p>Example:</p>
+    <pre>def search_books(request):
+    keyword = request.GET.get("q", "")
+    books = Book.objects.filter(title__icontains=keyword)
+
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <p>URL:</p>
+    <pre>/books/search/?q=python</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <h2 id="django-response-cheat-sheet">25. Django Response Cheat Sheet</h2>
+    <h3>HTML response</h3>
+    <pre>from django.shortcuts import render
+
+def book_list(request):
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Plain text response</h3>
+    <pre>from django.http import HttpResponse
+
+def hello(request):
+    return HttpResponse("Hello Django")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ HttpResponse is the simplest response object. It sends plain text or custom content directly back to the browser. 
+    </div>
+    <h3>JSON response</h3>
+    <pre>from django.http import JsonResponse
+
+def book_json(request):
+    return JsonResponse({
+        "id": 1,
+        "title": "Python Book"
+    })</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JsonResponse converts a Python dict or list into JSON and sets the response content type correctly. 
+    </div>
+    <h3>Redirect response</h3>
+    <pre>from django.shortcuts import redirect
+
+def save_book(request):
+    return redirect("book_list")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ redirect() sends the browser to another route. This is common after a successful form submit. 
+    </div>
+    <h3>404 response</h3>
+    <pre>from django.shortcuts import get_object_or_404
+
+book = get_object_or_404(Book, id=book_id)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ get_object_or_404 tries to find one object. If it cannot, Django returns a 404 page instead of crashing. 
+    </div>
+    <h2 id="cookies-and-sessions">26. Cookies and Sessions</h2>
+    <h3>Set cookie</h3>
+    <pre>response = HttpResponse("Cookie set")
+response.set_cookie("theme", "dark")
+return response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ HttpResponse is the simplest response object. It sends plain text or custom content directly back to the browser. 
+    </div>
+    <h3>Read cookie</h3>
+    <pre>theme = request.COOKIES.get("theme")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Cookie operations happen on the response or request. The browser stores cookies and sends them back on later requests. 
+    </div>
+    <h3>Delete cookie</h3>
+    <pre>response = HttpResponse("Cookie deleted")
+response.delete_cookie("theme")
+return response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ delete() removes matching database rows. Be careful with bulk deletes because they can remove many records at once. 
+    </div>
+    <h3>Session</h3>
+    <p>Session stores user data server-side.</p>
+    <pre>request.session["cart_count"] = 3
+cart_count = request.session.get("cart_count", 0)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Session data is stored server-side. The browser only keeps a session ID cookie that lets Django find the stored data. 
+    </div>
+    <h2 id="static-files">27. Static Files</h2>
+    <p>Static files are CSS, JavaScript, images.</p>
+    <pre>books/
+    static/
+        books/
+            style.css</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <p>Template:</p>
+    <pre>{% load static %}
+
+&lt;link rel="stylesheet" href="{% static 'books/style.css' %}"&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h2 id="media-files">28. Media Files</h2>
+    <p>Media files are uploaded by users.</p>
+    <p><code>settings.py</code> :</p>
+    <pre>MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ MEDIA_URL is the public URL prefix. MEDIA_ROOT is the folder where uploaded files are stored during development. 
+    </div>
+    <p>Project <code>urls.py</code> during development:</p>
+    <pre>from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    # your urls
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ MEDIA_URL is the public URL prefix. MEDIA_ROOT is the folder where uploaded files are stored during development. 
+    </div>
+    <h2 id="forms-and-csrf">29. Forms and CSRF</h2>
+    <p>Django protects POST forms using CSRF token.</p>
+    <p>Template:</p>
+    <pre>&lt;form method="post"&gt;
+    {% csrf_token %}
+    {{ form.as_p }}
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+&lt;/form&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The csrf_token tag adds a hidden security value to the form. Django checks it when the form is submitted. 
+    </div>
+    <p>View:</p>
+    <pre>if request.method == "POST":
+    form = BookForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect("book_list")
+else:
+    form = BookForm()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h2 id="html-web-app-vs-json-api">30. HTML Web App vs JSON API</h2>
+    <h3>HTML web app</h3>
+    <pre>Browser requests page.
+Django returns HTML.
+User sees full page.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <p>Example:</p>
+    <pre>return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ render() combines a template with context data and returns an HTML response. 
+    </div>
+    <h3>JSON API</h3>
+    <pre>Frontend/mobile app requests data.
+Django returns JSON.
+Client renders UI itself.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <p>Example:</p>
+    <pre>return JsonResponse({"message": "ok"})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JsonResponse converts a Python dict or list into JSON and sets the response content type correctly. 
+    </div>
+    <h2 id="simple-api-without-django-rest-framework">31. Simple API without Django REST Framework</h2>
+    <pre>from django.http import JsonResponse
+from .models import Book
+
+
+def books_api(request):
+    books = Book.objects.values("id", "title", "price")
+
+    return JsonResponse(list(books), safe=False)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JsonResponse converts a Python dict or list into JSON and sets the response content type correctly. 
+    </div>
+    <p>URL:</p>
+    <pre>path("api/books/", views.books_api, name="books_api")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <p>Response:</p>
+    <pre>[
+  {
+    "id": 1,
+    "title": "Python Book",
+    "price": "29.99"
+  }
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="production-deployment-concept">32. Production Deployment Concept</h2>
+    <p>Development:</p>
+    <pre>Browser
+  -&gt; Django runserver on port 8000
+  -&gt; SQLite maybe</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <div class="note">
+      <strong>Development deployment:</strong>
+ Most Django developers start with: 
+      <pre>python manage.py runserver</pre>
+ Architecture: 
+      <pre>Browser
+  -&gt; Django runserver (:8000)</pre>
+ This is simple and convenient for learning, debugging, and local development. The development server is not designed for heavy traffic or public internet exposure. In development, you normally do not need Nginx, Apache, Gunicorn, uWSGI, Daphne, or Uvicorn. 
+    </div>
+    <p>Production:</p>
+    <pre>Browser
+  -&gt; HTTPS 443
+  -&gt; Nginx / Apache
+  -&gt; Gunicorn / uWSGI / Uvicorn
+  -&gt; Django
+  -&gt; PostgreSQL / MySQL</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <div class="note">
+      <strong>Why not use Django runserver in production?</strong>
+ Django's 
+      <code>runserver</code>
+ command is a development server. It is convenient, but it is not designed to be the public production server. Production servers such as Gunicorn, Uvicorn, uWSGI, and Daphne provide: 
+      <pre>Multiple worker processes
+Better performance
+Automatic worker restart
+Request timeout handling
+Production logging
+Better reliability
+Better security</pre>
+ Therefore production deployments usually use: 
+      <pre>Browser
+  -&gt; Nginx
+  -&gt; Gunicorn / Uvicorn
+  -&gt; Django</pre>
+ instead of: 
+      <pre>Browser
+  -&gt; Django runserver</pre>
+    </div>
+    <p>Important production settings:</p>
+    <pre>DEBUG = False
+
+ALLOWED_HOSTS = [
+    "example.com",
+    "www.example.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://example.com",
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These settings matter when the site is public. DEBUG must be False so Django does not expose sensitive error details. 
+    </div>
+    <h2 id="most-important-mental-model">33. Most Important Mental Model</h2>
+    <pre>Client:
+    Browser, HTML, CSS, JS, cookies
+
+Network:
+    HTTP request and HTTP response
+
+Server:
+    Django app running in Python
+
+Django:
+    URL -&gt; View -&gt; Model/ORM -&gt; Database
+                 -&gt; Template -&gt; HTML Response
+
+Database:
+    Stores data permanently</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ MTV is Django's version of organizing code. Models handle data, templates handle HTML, and views connect user requests to the right result. 
+    </div>
+    <h2 id="learning-order">34. Learning Order</h2>
+    <pre>1. HTTP basics
+2. Client vs server
+3. Django project/app structure
+4. URLs
+5. Views
+6. Templates
+7. Models
+8. ORM queries
+9. Forms
+10. Admin
+11. Static files
+12. Authentication
+13. JSON APIs
+14. Django REST Framework
+15. Deployment</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="authentication-and-authorization">35. Authentication and Authorization</h2>
+    <h3>Concept</h3>
+    <pre>Authentication = Who are you?
+Authorization  = What are you allowed to do?</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Authentication identifies the user. Authorization decides what that identified user is allowed to do. 
+    </div>
+    <p>Example:</p>
+    <pre>Authentication:
+    User logs in with username/password.
+
+Authorization:
+    User can view books but cannot delete books.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Authentication identifies the user. Authorization decides what that identified user is allowed to do. 
+    </div>
+    <h3>Django built-in auth components</h3>
+    <table>
+      <tr>
+        <th>Component</th>
+        <th>Purpose</th>
+      </tr>
+      <tr>
+        <td><code>User</code></td>
+        <td>Built-in user model</td>
+      </tr>
+      <tr>
+        <td><code>Group</code></td>
+        <td>Collection of users</td>
+      </tr>
+      <tr>
+        <td><code>Permission</code></td>
+        <td>Allowed action</td>
+      </tr>
+      <tr>
+        <td><code>Session</code></td>
+        <td>Remember logged-in user</td>
+      </tr>
+      <tr>
+        <td><code>LoginView</code></td>
+        <td>Built-in login view</td>
+      </tr>
+      <tr>
+        <td><code>LogoutView</code></td>
+        <td>Built-in logout view</td>
+      </tr>
+    </table>
+    <h3>Check if user is logged in</h3>
+    <pre>def dashboard(request):
+    if request.user.is_authenticated:
+        return render(request, "dashboard.html")
+
+    return redirect("login")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ render() combines a template with context data and returns an HTML response. 
+    </div>
+    <h3>Require login</h3>
+    <pre>from django.contrib.auth.decorators import login_required
+
+@login_required
+def dashboard(request):
+    return render(request, "dashboard.html")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ render() combines a template with context data and returns an HTML response. 
+    </div>
+    <h3>Check permission</h3>
+    <pre>if request.user.has_perm("books.delete_book"):
+    # allow delete
+    pass</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ delete() removes matching database rows. Be careful with bulk deletes because they can remove many records at once. 
+    </div>
+    <h3>Common mental model</h3>
+    <pre>Login form
+  -&gt; Django checks username/password
+  -&gt; Django creates session
+  -&gt; Browser stores session cookie
+  -&gt; Future requests include session cookie
+  -&gt; Django knows who the user is</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="django-middleware-deep-dive">36. Django Middleware Deep Dive</h2>
+    <h3>Concept</h3>
+    <p>Middleware is code that runs before and after the view.</p>
+    <pre>Request
+  -&gt; Middleware 1
+  -&gt; Middleware 2
+  -&gt; Middleware 3
+  -&gt; View
+  -&gt; Middleware 3
+  -&gt; Middleware 2
+  -&gt; Middleware 1
+  -&gt; Response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is Django's request lifecycle. For beginners, remember the core path: URL finds a view, the view does work, then returns a response. 
+    </div>
+    <h3>Common middleware</h3>
+    <table>
+      <tr>
+        <th>Middleware</th>
+        <th>Purpose</th>
+      </tr>
+      <tr>
+        <td><code>SecurityMiddleware</code></td>
+        <td>Security-related headers/settings</td>
+      </tr>
+      <tr>
+        <td><code>SessionMiddleware</code></td>
+        <td>Enables sessions</td>
+      </tr>
+      <tr>
+        <td><code>CsrfViewMiddleware</code></td>
+        <td>Protects POST forms</td>
+      </tr>
+      <tr>
+        <td><code>AuthenticationMiddleware</code></td>
+        <td>Adds <code>request.user</code></td>
+      </tr>
+      <tr>
+        <td><code>MessageMiddleware</code></td>
+        <td>Temporary messages</td>
+      </tr>
+    </table>
+    <h3>Custom middleware</h3>
+    <pre>class SimpleLogMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        print("Before view:", request.path)
+
+        response = self.get_response(request)
+
+        print("After view:", response.status_code)
+        return response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is Django's request lifecycle. For beginners, remember the core path: URL finds a view, the view does work, then returns a response. 
+    </div>
+    <h3>Register middleware</h3>
+    <pre>MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "myapp.middleware.SimpleLogMiddleware",
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Middleware order matters. Requests go from top to bottom, and responses come back from bottom to top. 
+    </div>
+    <h2 id="cookies-vs-sessions-vs-jwt">37. Cookies vs Sessions vs JWT</h2>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Stored where?</th>
+        <th>Used for</th>
+      </tr>
+      <tr>
+        <td>Cookie</td>
+        <td>Browser</td>
+        <td>Small client-side data</td>
+      </tr>
+      <tr>
+        <td>Session</td>
+        <td>Server + cookie ID in browser</td>
+        <td>Web login state</td>
+      </tr>
+      <tr>
+        <td>JWT</td>
+        <td>Browser/mobile app</td>
+        <td>API authentication token</td>
+      </tr>
+    </table>
+    <h3>Cookie</h3>
+    <pre>Browser stores:
+theme=dark</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Session</h3>
+    <pre>Browser cookie:
+sessionid=abc123
+
+Server stores:
+abc123 -&gt; user_id = 5</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Cookies are automatically sent back to the server by the browser. Django uses this pattern for sessions and login state. 
+    </div>
+    <h3>JWT</h3>
+    <pre>Authorization: Bearer eyJhbGciOi...</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JWT and bearer tokens are common for APIs where the client sends a token instead of relying on a normal browser session. 
+    </div>
+    <h3>When to use</h3>
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Common choice</th>
+      </tr>
+      <tr>
+        <td>Traditional Django website</td>
+        <td>Session authentication</td>
+      </tr>
+      <tr>
+        <td>Mobile app API</td>
+        <td>Token or JWT</td>
+      </tr>
+      <tr>
+        <td>Single-page app</td>
+        <td>Session or JWT, depending on design</td>
+      </tr>
+    </table>
+    <h2 id="csrf-protection-internals">38. CSRF Protection Internals</h2>
+    <h3>Concept</h3>
+    <p>CSRF means Cross-Site Request Forgery. It prevents another website from secretly submitting a form as the logged-in user.</p>
+    <h3>Normal protected form</h3>
+    <pre>&lt;form method="post"&gt;
+    {% csrf_token %}
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+&lt;/form&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The csrf_token tag adds a hidden security value to the form. Django checks it when the form is submitted. 
+    </div>
+    <h3>What happens</h3>
+    <pre>1. Django creates CSRF token.
+2. Template puts token inside form.
+3. Browser submits form with token.
+4. Django checks token.
+5. If token is valid, request continues.
+6. If token is missing or wrong, Django returns 403.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>AJAX/Fetch example</h3>
+    <pre>fetch("/books/create/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken
+    },
+    body: JSON.stringify({
+        title: "Python Book"
+    })
+});</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ For JavaScript POST requests, include the CSRF token in a header so Django accepts the request. 
+    </div>
+    <h3>Common error</h3>
+    <pre>403 Forbidden
+CSRF verification failed</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <p>Usually means missing <code>{% csrf_token %}</code> or missing <code>X-CSRFToken</code> header.</p>
+    <h2 id="django-request-lifecycle-detailed">39. Django Request Lifecycle Detailed</h2>
+    <pre>Browser
+  -&gt; DNS lookup
+  -&gt; TCP connection
+  -&gt; TLS handshake if HTTPS
+  -&gt; HTTP request
+  -&gt; Nginx / Apache
+  -&gt; Gunicorn / uWSGI / ASGI server
+  -&gt; Django handler
+  -&gt; Middleware request phase
+  -&gt; URL resolver
+  -&gt; View
+  -&gt; ORM/database
+  -&gt; Template rendering
+  -&gt; HttpResponse
+  -&gt; Middleware response phase
+  -&gt; Web server
+  -&gt; Browser</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Follow the arrows from top to bottom: a request starts in the browser, passes through web server layers, reaches Django, and may finally read or write database data. 
+    </div>
+    <h3>Inside Django</h3>
+    <pre>URL path: /books/5/
+
+Django checks urlpatterns:
+path("books/&lt;int:book_id&gt;/", views.book_detail)
+
+Django calls:
+book_detail(request, book_id=5)
+
+View returns:
+HttpResponse</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ urlpatterns maps URL patterns to views. The name value is useful later when templates or redirects need to refer to a URL. 
+    </div>
+    <h2 id="class-based-views">40. Class-Based Views</h2>
+    <h3>Concept</h3>
+    <p>Class-Based Views, or CBVs, let you organize view logic inside Python classes.</p>
+    <h3>Simple CBV</h3>
+    <pre>from django.views import View
+from django.http import HttpResponse
+
+
+class HelloView(View):
+    def get(self, request):
+        return HttpResponse("Hello from class-based view")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ HttpResponse is the simplest response object. It sends plain text or custom content directly back to the browser. 
+    </div>
+    <h3>URL</h3>
+    <pre>from django.urls import path
+from .views import HelloView
+
+urlpatterns = [
+    path("hello/", HelloView.as_view(), name="hello"),
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ urlpatterns maps URL patterns to views. The name value is useful later when templates or redirects need to refer to a URL. 
+    </div>
+    <h3>GET and POST in CBV</h3>
+    <pre>class ContactView(View):
+    def get(self, request):
+        return render(request, "contact.html")
+
+    def post(self, request):
+        name = request.POST.get("name")
+        return HttpResponse(f"Thank you {name}")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The request object contains everything Django knows about the incoming HTTP request, including method, path, form data, files, cookies, and user. 
+    </div>
+    <h2 id="function-based-views-vs-class-based-views">41. Function-Based Views vs Class-Based Views</h2>
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Good for</th>
+        <th>Style</th>
+      </tr>
+      <tr>
+        <td>Function-Based View</td>
+        <td>Simple logic</td>
+        <td>Easy to read</td>
+      </tr>
+      <tr>
+        <td>Class-Based View</td>
+        <td>Reusable patterns</td>
+        <td>More structured</td>
+      </tr>
+    </table>
+    <h3>Function-based</h3>
+    <pre>def book_list(request):
+    books = Book.objects.all()
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Class-based</h3>
+    <pre>from django.views.generic import ListView
+
+class BookListView(ListView):
+    model = Book
+    template_name = "books/book_list.html"
+    context_object_name = "books"</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Generic views provide common behavior so you write less code for standard list, detail, create, update, and delete pages. 
+    </div>
+    <h3>Mental rule</h3>
+    <pre>Use FBV when learning.
+Use CBV when you see repeated patterns.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="generic-views">42. Generic Views</h2>
+    <h3>Concept</h3>
+    <p>Generic views are pre-built class-based views for common tasks.</p>
+    <table>
+      <tr>
+        <th>Generic View</th>
+        <th>Purpose</th>
+      </tr>
+      <tr>
+        <td><code>ListView</code></td>
+        <td>Display list of objects</td>
+      </tr>
+      <tr>
+        <td><code>DetailView</code></td>
+        <td>Display one object</td>
+      </tr>
+      <tr>
+        <td><code>CreateView</code></td>
+        <td>Create object</td>
+      </tr>
+      <tr>
+        <td><code>UpdateView</code></td>
+        <td>Update object</td>
+      </tr>
+      <tr>
+        <td><code>DeleteView</code></td>
+        <td>Delete object</td>
+      </tr>
+    </table>
+    <h3>ListView</h3>
+    <pre>from django.views.generic import ListView
+from .models import Book
+
+
+class BookListView(ListView):
+    model = Book
+    template_name = "books/book_list.html"
+    context_object_name = "books"</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Generic views provide common behavior so you write less code for standard list, detail, create, update, and delete pages. 
+    </div>
+    <h3>DetailView</h3>
+    <pre>from django.views.generic import DetailView
+
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = "books/book_detail.html"
+    context_object_name = "book"</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Generic views provide common behavior so you write less code for standard list, detail, create, update, and delete pages. 
+    </div>
+    <h3>CreateView</h3>
+    <pre>from django.views.generic import CreateView
+from django.urls import reverse_lazy
+
+
+class BookCreateView(CreateView):
+    model = Book
+    fields = ["title", "price", "published_date", "author"]
+    template_name = "books/book_form.html"
+    success_url = reverse_lazy("book_list")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Generic views provide common behavior so you write less code for standard list, detail, create, update, and delete pages. 
+    </div>
+    <h2 id="forms-vs-modelforms">43. Forms vs ModelForms</h2>
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Use when</th>
+      </tr>
+      <tr>
+        <td><code>forms.Form</code></td>
+        <td>Form is not directly tied to a model</td>
+      </tr>
+      <tr>
+        <td><code>forms.ModelForm</code></td>
+        <td>Form creates/updates a model</td>
+      </tr>
+    </table>
+    <h3>Normal Form</h3>
+    <pre>from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Use a normal Form when the submitted data is not directly saved as one database model. 
+    </div>
+    <h3>ModelForm</h3>
+    <pre>from django import forms
+from .models import Book
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ["title", "price", "author"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A ModelForm builds a form from a model, validates user input, and can save a model object with form.save(). 
+    </div>
+    <h3>Validation</h3>
+    <pre>class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ["title", "price", "author"]
+
+    def clean_price(self):
+        price = self.cleaned_data["price"]
+
+        if price &lt;= 0:
+            raise forms.ValidationError("Price must be positive.")
+
+        return price</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A ModelForm builds a form from a model, validates user input, and can save a model object with form.save(). 
+    </div>
+    <h2 id="model-managers-and-querysets">44. Model Managers and QuerySets</h2>
+    <h3>Concept</h3>
+    <pre>Manager  = entry point to ORM queries
+QuerySet = collection of database results, lazy until evaluated</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The manager starts queries, and the QuerySet represents the results. QuerySets are lazy, so they do not hit the database immediately. 
+    </div>
+    <h3>Default manager</h3>
+    <pre>Book.objects.all()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ all() returns a QuerySet for every row in that table. It is lazy until Django actually needs the results. 
+    </div>
+    <h3>Custom QuerySet</h3>
+    <pre>class BookQuerySet(models.QuerySet):
+    def expensive(self):
+        return self.filter(price__gt=100)
+
+    def cheap(self):
+        return self.filter(price__lt=20)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    objects = BookQuerySet.as_manager()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <h3>Use it</h3>
+    <pre>Book.objects.expensive()
+Book.objects.cheap()</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Lazy QuerySet</h3>
+    <pre>books = Book.objects.filter(price__gt=10)
+# No database query yet
+
+for book in books:
+    print(book.title)
+# Database query happens here</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ filter() returns all rows matching the condition. Lookup parts after double underscores, like __gt or __icontains, change the comparison. 
+    </div>
+    <h2 id="transactions-and-atomic-operations">45. Transactions and Atomic Operations</h2>
+    <h3>Concept</h3>
+    <p>A transaction groups database operations together. Either all succeed, or all fail.</p>
+    <pre>Success:
+    create order
+    create payment
+    reduce inventory
+    commit everything
+
+Failure:
+    create order
+    payment fails
+    rollback everything</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Atomic transaction</h3>
+    <pre>from django.db import transaction
+
+def create_order(request):
+    with transaction.atomic():
+        order = Order.objects.create(user=request.user)
+        Payment.objects.create(order=order, amount=100)
+        Inventory.objects.filter(id=1).update(quantity=F("quantity") - 1)
+
+    return redirect("order_success")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h3>Why useful</h3>
+    <pre>Prevents half-saved data.
+Keeps database consistent.
+Important for payments, inventory, banking, booking systems.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="signals">46. Signals</h2>
+    <h3>Concept</h3>
+    <p>Signals let one part of your app react when something happens elsewhere.</p>
+    <pre>Book saved
+  -&gt; Signal fires
+  -&gt; Run extra function</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>post_save example</h3>
+    <pre>from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Book
+
+
+@receiver(post_save, sender=Book)
+def book_saved(sender, instance, created, **kwargs):
+    if created:
+        print("New book created:", instance.title)
+    else:
+        print("Book updated:", instance.title)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This function automatically runs after a Book is saved. Signals are useful, but too many can make behavior hard to trace. 
+    </div>
+    <h3>Common signals</h3>
+    <table>
+      <tr>
+        <th>Signal</th>
+        <th>When</th>
+      </tr>
+      <tr>
+        <td><code>pre_save</code></td>
+        <td>Before saving model</td>
+      </tr>
+      <tr>
+        <td><code>post_save</code></td>
+        <td>After saving model</td>
+      </tr>
+      <tr>
+        <td><code>pre_delete</code></td>
+        <td>Before deleting model</td>
+      </tr>
+      <tr>
+        <td><code>post_delete</code></td>
+        <td>After deleting model</td>
+      </tr>
+      <tr>
+        <td><code>m2m_changed</code></td>
+        <td>Many-to-many relation changes</td>
+      </tr>
+    </table>
+    <h3>Warning</h3>
+    <pre>Signals can make code harder to follow.
+Use them carefully.
+Do not hide important business logic in too many signals.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <h2 id="caching">47. Caching</h2>
+    <h3>Concept</h3>
+    <p>Caching stores expensive results temporarily so the app can respond faster.</p>
+    <pre>Without cache:
+Request -&gt; View -&gt; Database -&gt; Response
+
+With cache:
+Request -&gt; Cache -&gt; Response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Cache example</h3>
+    <pre>from django.core.cache import cache
+
+def book_count(request):
+    count = cache.get("book_count")
+
+    if count is None:
+        count = Book.objects.count()
+        cache.set("book_count", count, 60)
+
+    return HttpResponse(f"Book count: {count}")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These are common QuerySet operations: ordering sorts results, count counts rows, exists checks if any row matches, and slicing limits results. 
+    </div>
+    <h3>Cache backends</h3>
+    <table>
+      <tr>
+        <th>Backend</th>
+        <th>Purpose</th>
+      </tr>
+      <tr>
+        <td>Local memory</td>
+        <td>Simple development cache</td>
+      </tr>
+      <tr>
+        <td>File cache</td>
+        <td>Store cache on disk</td>
+      </tr>
+      <tr>
+        <td>Database cache</td>
+        <td>Store cache in DB table</td>
+      </tr>
+      <tr>
+        <td>Redis</td>
+        <td>Common production cache</td>
+      </tr>
+      <tr>
+        <td>Memcached</td>
+        <td>Fast production cache</td>
+      </tr>
+    </table>
+    <h3>Cache whole view</h3>
+    <pre>from django.views.decorators.cache import cache_page
+
+@cache_page(60 * 15)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h2 id="async-django">48. Async Django</h2>
+    <h3>Concept</h3>
+    <p>Async allows a view to wait for slow I/O without blocking the whole worker.</p>
+    <pre>Good for:
+    calling external APIs
+    waiting for network I/O
+    WebSocket-style work
+
+Not automatically faster for:
+    normal database-heavy pages
+    CPU-heavy calculations</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WebSockets keep the connection open, so both client and server can send messages without a new HTTP request each time. 
+    </div>
+    <h3>Async view</h3>
+    <pre>from django.http import JsonResponse
+
+async def async_status(request):
+    return JsonResponse({"status": "ok"})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JsonResponse converts a Python dict or list into JSON and sets the response content type correctly. 
+    </div>
+    <h3>ASGI server</h3>
+    <pre>Uvicorn / Daphne
+  -&gt; ASGI
+  -&gt; Django async support</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h3>Warning</h3>
+    <pre>If you call slow synchronous code inside async view,
+you can still block performance.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="django-rest-framework">49. Django REST Framework</h2>
+    <h3>Concept</h3>
+    <p>Django REST Framework, often called DRF, helps build JSON APIs.</p>
+    <pre>Client / Mobile App / Frontend
+  -&gt; HTTP JSON request
+  -&gt; DRF ViewSet / APIView
+  -&gt; Serializer
+  -&gt; ORM
+  -&gt; Database
+  -&gt; JSON response</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ APIView is a DRF class for JSON API endpoints. Response returns data that DRF renders as JSON. 
+    </div>
+    <h3>Install</h3>
+    <pre>pip install djangorestframework</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This installs Django into the active virtual environment so commands like django-admin and manage.py can work. 
+    </div>
+    <h3>settings.py</h3>
+    <pre>INSTALLED_APPS = [
+    # ...
+    "rest_framework",
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Registering the app tells Django to include that app's models, templates, migrations, and other features. 
+    </div>
+    <h3>Simple APIView</h3>
+    <pre>from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+class HelloApiView(APIView):
+    def get(self, request):
+        return Response({"message": "Hello API"})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ APIView is a DRF class for JSON API endpoints. Response returns data that DRF renders as JSON. 
+    </div>
+    <h2 id="serializers">50. Serializers</h2>
+    <h3>Concept</h3>
+    <p>A serializer converts between model objects and JSON.</p>
+    <pre>Model object -&gt; Serializer -&gt; JSON
+JSON -&gt; Serializer validation -&gt; Model object</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Serializer example</h3>
+    <pre>from rest_framework import serializers
+from .models import Book
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ["id", "title", "price", "published_date", "author"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ ModelSerializer can generate serializer fields from a model, similar to how ModelForm builds form fields from a model. 
+    </div>
+    <h3>Use in API view</h3>
+    <pre>from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+class BookListApiView(APIView):
+    def get(self, request):
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ all() returns a QuerySet for every row in that table. It is lazy until Django actually needs the results. 
+    </div>
+    <h3>Validate input</h3>
+    <pre>class BookCreateApiView(APIView):
+    def post(self, request):
+        serializer = BookSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=400)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h2 id="authentication-for-apis">51. Authentication for APIs</h2>
+    <h3>Common API authentication types</h3>
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>How client sends it</th>
+        <th>Common use</th>
+      </tr>
+      <tr>
+        <td>Session auth</td>
+        <td>Cookie</td>
+        <td>Browser apps</td>
+      </tr>
+      <tr>
+        <td>Token auth</td>
+        <td><code>Authorization: Token abc</code></td>
+        <td>APIs</td>
+      </tr>
+      <tr>
+        <td>JWT auth</td>
+        <td><code>Authorization: Bearer jwt</code></td>
+        <td>Mobile/SPAs</td>
+      </tr>
+      <tr>
+        <td>Basic auth</td>
+        <td>Username/password encoded</td>
+        <td>Testing only mostly</td>
+      </tr>
+    </table>
+    <h3>Permission example</h3>
+    <pre>from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+class ProfileApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            "username": request.user.username
+        })</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ APIView is a DRF class for JSON API endpoints. Response returns data that DRF renders as JSON. 
+    </div>
+    <h3>Header example</h3>
+    <pre>Authorization: Token abc123</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <p>or:</p>
+    <pre>Authorization: Bearer eyJhbGciOi...</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JWT and bearer tokens are common for APIs where the client sends a token instead of relying on a normal browser session. 
+    </div>
+    <h2 id="jwt-authentication">52. JWT Authentication</h2>
+    <h3>Concept</h3>
+    <p>JWT means JSON Web Token. It is commonly used for API login.</p>
+    <pre>1. User sends username/password.
+2. Server validates login.
+3. Server returns access token and refresh token.
+4. Client stores token.
+5. Client sends token in Authorization header.
+6. Server validates token for each request.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Header</h3>
+    <pre>Authorization: Bearer access_token_here</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JWT and bearer tokens are common for APIs where the client sends a token instead of relying on a normal browser session. 
+    </div>
+    <h3>Access token vs refresh token</h3>
+    <table>
+      <tr>
+        <th>Token</th>
+        <th>Purpose</th>
+        <th>Lifetime</th>
+      </tr>
+      <tr>
+        <td>Access token</td>
+        <td>Used for API calls</td>
+        <td>Short</td>
+      </tr>
+      <tr>
+        <td>Refresh token</td>
+        <td>Gets new access token</td>
+        <td>Longer</td>
+      </tr>
+    </table>
+    <h3>Common package</h3>
+    <pre>pip install djangorestframework-simplejwt</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This installs Django into the active virtual environment so commands like django-admin and manage.py can work. 
+    </div>
+    <h3>URL setup example</h3>
+    <pre>from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ urlpatterns maps URL patterns to views. The name value is useful later when templates or redirects need to refer to a URL. 
+    </div>
+    <h2 id="pagination">53. Pagination</h2>
+    <h3>Concept</h3>
+    <p>Pagination splits large result sets into pages.</p>
+    <pre>Instead of returning 10,000 books,
+return 20 books per page.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Normal Django pagination</h3>
+    <pre>from django.core.paginator import Paginator
+
+def book_list(request):
+    books = Book.objects.all()
+    paginator = Paginator(books, 20)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "books/book_list.html", {"page_obj": page_obj})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Template</h3>
+    <pre>{% for book in page_obj %}
+    &lt;p&gt;{{ book.title }}&lt;/p&gt;
+{% endfor %}
+
+{% if page_obj.has_previous %}
+    &lt;a href="?page={{ page_obj.previous_page_number }}"&gt;Previous&lt;/a&gt;
+{% endif %}
+
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+{% if page_obj.has_next %}
+    &lt;a href="?page={{ page_obj.next_page_number }}"&gt;Next&lt;/a&gt;
+{% endif %}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h3>DRF pagination setting</h3>
+    <pre>REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This DRF setting applies default pagination to API responses so large lists are split into pages. 
+    </div>
+    <h2 id="filtering">54. Filtering</h2>
+    <h3>Concept</h3>
+    <p>Filtering lets users narrow results.</p>
+    <pre>/books/?q=python
+/books/?author=5
+/books/?min_price=10&amp;max_price=50</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This view starts with all books, then narrows the QuerySet only when matching query parameters are present. 
+    </div>
+    <h3>Manual filtering</h3>
+    <pre>def book_list(request):
+    books = Book.objects.all()
+
+    q = request.GET.get("q")
+    if q:
+        books = books.filter(title__icontains=q)
+
+    min_price = request.GET.get("min_price")
+    if min_price:
+        books = books.filter(price__gte=min_price)
+
+    max_price = request.GET.get("max_price")
+    if max_price:
+        books = books.filter(price__lte=max_price)
+
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Search form</h3>
+    <pre>&lt;form method="get"&gt;
+    &lt;input type="text" name="q" value="{{ request.GET.q }}"&gt;
+    &lt;button type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Double curly braces print values from the view context. Template tags inside {% ... %} add logic such as if statements and loops. 
+    </div>
+    <h2 id="docker-deployment">55. Docker Deployment</h2>
+    <h3>Concept</h3>
+    <p>Docker packages your app and dependencies into a container.</p>
+    <pre>Your computer:
+    Python version A
+
+Server:
+    Python version B
+
+Docker:
+    same app environment everywhere</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Simple Dockerfile</h3>
+    <pre>FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["gunicorn", "mysite.wsgi:application", "--bind", "0.0.0.0:8000"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The Dockerfile describes how to build an image containing Python, dependencies, your app code, and the command to run it. 
+    </div>
+    <h3>docker-compose example</h3>
+    <pre>services:
+  web:
+    build: .
+    command: gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The Dockerfile describes how to build an image containing Python, dependencies, your app code, and the command to run it. 
+    </div>
+    <h2 id="gunicorn">56. Gunicorn</h2>
+    <h3>Concept</h3>
+    <p>Gunicorn is a Python WSGI HTTP server. In production, it commonly runs Django behind Nginx.</p>
+    <pre>Browser
+  -&gt; Nginx
+  -&gt; Gunicorn
+  -&gt; Django</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Install</h3>
+    <pre>pip install gunicorn</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Run</h3>
+    <pre>gunicorn mysite.wsgi:application --bind 0.0.0.0:8000</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Workers</h3>
+    <pre>gunicorn mysite.wsgi:application --workers 3 --bind 0.0.0.0:8000</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Mental model</h3>
+    <pre>Django runserver = development only
+Gunicorn = production app server</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <div class="note">
+      <strong>Why does Nginx not forward requests directly to Django runserver?</strong>
+ Technically it can, but it is not recommended. 
+      <code>runserver</code>
+ was built for development and testing. Gunicorn was built to run Python web applications in production. Gunicorn provides: 
+      <pre>Worker process management
+Better concurrency
+Automatic worker restart
+Timeout controls
+Production-grade reliability</pre>
+ Typical production setup: 
+      <pre>Browser
+  -&gt; Nginx (:443)
+  -&gt; Gunicorn (:8000 or gunicorn.sock)
+  -&gt; Django</pre>
+ Think of Gunicorn as a manager that runs and supervises multiple Django worker processes. 
+    </div>
+    <h2 id="nginx-reverse-proxy">57. Nginx Reverse Proxy</h2>
+    <h3>Concept</h3>
+    <p>Nginx sits in front of Django/Gunicorn.</p>
+    <pre>Browser HTTPS 443
+  -&gt; Nginx
+      -&gt; serves static files
+      -&gt; handles TLS/SSL
+      -&gt; proxies dynamic requests to Gunicorn
+  -&gt; Gunicorn
+  -&gt; Django</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Simple Nginx config idea</h3>
+    <pre>server {
+    listen 80;
+    server_name example.com;
+
+    location /static/ {
+        alias /app/staticfiles/;
+    }
+
+    location /media/ {
+        alias /app/media/;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This address means your own computer. Port 8000 is the default port Django uses during local development. 
+    </div>
+    <h3>Why use Nginx</h3>
+    <pre>Handles HTTPS
+Serves static files efficiently
+Can compress responses
+Can limit request size
+Can load balance
+Can proxy to app server</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <div class="note">
+      <strong>Public ports vs internal ports:</strong>
+ Nginx usually listens on public web ports: 
+      <pre>Port 80  = HTTP
+Port 443 = HTTPS</pre>
+ Gunicorn usually listens internally on: 
+      <pre>Port 8000
+# or a Unix socket, for example:
+/run/gunicorn.sock</pre>
+ The browser normally never talks directly to Gunicorn. Instead: 
+      <pre>Browser
+  -&gt; Nginx
+  -&gt; Gunicorn
+  -&gt; Django</pre>
+ This improves security and lets Nginx handle HTTPS, static files, compression, request limits, and proxying. 
+    </div>
+    <h2 id="asgi-vs-wsgi">58. ASGI vs WSGI</h2>
+    <table>
+      <tr>
+        <th>Interface</th>
+        <th>Meaning</th>
+        <th>Good for</th>
+      </tr>
+      <tr>
+        <td>WSGI</td>
+        <td>Web Server Gateway Interface</td>
+        <td>Traditional sync HTTP apps</td>
+      </tr>
+      <tr>
+        <td>ASGI</td>
+        <td>Asynchronous Server Gateway Interface</td>
+        <td>Async, WebSockets, long connections</td>
+      </tr>
+    </table>
+    <h3>WSGI flow</h3>
+    <pre>Nginx
+  -&gt; Gunicorn
+  -&gt; mysite.wsgi
+  -&gt; Django</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>ASGI flow</h3>
+    <pre>Nginx
+  -&gt; Uvicorn / Daphne
+  -&gt; mysite.asgi
+  -&gt; Django</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h3>Files</h3>
+    <pre>mysite/wsgi.py
+mysite/asgi.py</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h3>Simple rule</h3>
+    <pre>Normal Django website/API:
+    WSGI is fine.
+
+WebSockets or async-heavy app:
+    ASGI is needed.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h2 id="websocket-and-django-channels">59. WebSocket and Django Channels</h2>
+    <h3>Concept</h3>
+    <p>HTTP is request/response. WebSocket is a long-lived two-way connection.</p>
+    <pre>HTTP:
+Client -&gt; request
+Server -&gt; response
+Connection usually ends
+
+WebSocket:
+Client &lt;-&gt; Server
+Connection stays open</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WebSockets keep the connection open, so both client and server can send messages without a new HTTP request each time. 
+    </div>
+    <h3>Use cases</h3>
+    <pre>Chat app
+Live notifications
+Live dashboard
+Game updates
+Real-time collaboration</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Django Channels</h3>
+    <p>Django Channels adds WebSocket support to Django.</p>
+    <pre>pip install channels</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Mental architecture</h3>
+    <pre>Browser WebSocket
+  -&gt; ASGI server
+  -&gt; Django Channels routing
+  -&gt; Consumer
+  -&gt; Redis channel layer
+  -&gt; Other consumers</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ WSGI is the classic synchronous interface. ASGI supports async features and WebSockets. 
+    </div>
+    <h2 id="testing">60. Testing</h2>
+    <h3>Concept</h3>
+    <p>Tests verify your app works correctly.</p>
+    <h3>Model test</h3>
+    <pre>from django.test import TestCase
+from .models import Author
+
+
+class AuthorModelTest(TestCase):
+    def test_author_string(self):
+        author = Author.objects.create(
+            name="John",
+            email="john@example.com"
+        )
+
+        self.assertEqual(str(author), "John")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ create() saves immediately. Building an object and calling save() gives you a chance to change values before saving. 
+    </div>
+    <h3>View test</h3>
+    <pre>from django.test import TestCase
+from django.urls import reverse
+
+
+class BookListViewTest(TestCase):
+    def test_book_list_page_loads(self):
+        response = self.client.get(reverse("book_list"))
+
+        self.assertEqual(response.status_code, 200)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Generic views provide common behavior so you write less code for standard list, detail, create, update, and delete pages. 
+    </div>
+    <h3>Run tests</h3>
+    <pre>python manage.py test</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This command runs Django's test suite and reports which tests pass or fail. 
+    </div>
+    <h3>What to test</h3>
+    <pre>Models
+Views
+Forms
+Permissions
+APIs
+Business rules
+Edge cases</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="logging">61. Logging</h2>
+    <h3>Concept</h3>
+    <p>Logging records what your app is doing. It helps debugging and production monitoring.</p>
+    <h3>Use logger</h3>
+    <pre>import logging
+
+logger = logging.getLogger(__name__)
+
+
+def book_list(request):
+    logger.info("Book list requested")
+    books = Book.objects.all()
+    return render(request, "books/book_list.html", {"books": books})</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A view is a Python function that receives request and returns a response. Here, views query books, render templates, or save form data. 
+    </div>
+    <h3>Log levels</h3>
+    <table>
+      <tr>
+        <th>Level</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td><code>DEBUG</code></td>
+        <td>Detailed developer info</td>
+      </tr>
+      <tr>
+        <td><code>INFO</code></td>
+        <td>Normal app events</td>
+      </tr>
+      <tr>
+        <td><code>WARNING</code></td>
+        <td>Something unusual</td>
+      </tr>
+      <tr>
+        <td><code>ERROR</code></td>
+        <td>Something failed</td>
+      </tr>
+      <tr>
+        <td><code>CRITICAL</code></td>
+        <td>Severe failure</td>
+      </tr>
+    </table>
+    <h3>Simple settings.py logging idea</h3>
+    <pre>LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This basic logging setup sends logs to the console. Production apps often add files or external monitoring systems. 
+    </div>
+    <h2 id="production-architecture">62. Production Architecture</h2>
+    <h3>Common production architecture</h3>
+    <pre>Internet
+  -&gt; DNS
+  -&gt; Load balancer
+  -&gt; Nginx
+  -&gt; Gunicorn workers
+  -&gt; Django app
+  -&gt; PostgreSQL database
+  -&gt; Redis cache
+  -&gt; Object storage for media files
+  -&gt; Logging/monitoring system</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Production responsibilities</h3>
+    <table>
+      <tr>
+        <th>Component</th>
+        <th>Responsibility</th>
+      </tr>
+      <tr>
+        <td>DNS</td>
+        <td>Maps domain to server/load balancer</td>
+      </tr>
+      <tr>
+        <td>Load balancer</td>
+        <td>Distributes traffic</td>
+      </tr>
+      <tr>
+        <td>Nginx</td>
+        <td>Reverse proxy, static files, TLS</td>
+      </tr>
+      <tr>
+        <td>Gunicorn</td>
+        <td>Runs Django WSGI app</td>
+      </tr>
+      <tr>
+        <td>Django</td>
+        <td>Business logic</td>
+      </tr>
+      <tr>
+        <td>PostgreSQL</td>
+        <td>Persistent data</td>
+      </tr>
+      <tr>
+        <td>Redis</td>
+        <td>Cache, queues, sessions, channel layer</td>
+      </tr>
+      <tr>
+        <td>Storage</td>
+        <td>User-uploaded files</td>
+      </tr>
+      <tr>
+        <td>Monitoring</td>
+        <td>Errors, metrics, logs</td>
+      </tr>
+    </table>
+    <h2 id="performance-optimization">63. Performance Optimization</h2>
+    <h3>Common bottlenecks</h3>
+    <pre>Too many database queries
+Slow database queries
+Missing indexes
+Large template rendering
+Large files
+No caching
+Slow external API calls
+Too few workers
+Bad frontend assets</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Database optimization</h3>
+    <pre>Use select_related
+Use prefetch_related
+Add indexes
+Avoid loading unnecessary columns
+Use pagination
+Avoid N+1 queries</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ select_related joins related tables in one query. Use it when following ForeignKey or OneToOne relationships. 
+    </div>
+    <h3>ORM tips</h3>
+    <pre>Book.objects.only("id", "title")
+Book.objects.defer("description")
+Book.objects.values("id", "title")
+Book.objects.select_related("author")
+Book.objects.prefetch_related("categories")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ select_related joins related tables in one query. Use it when following ForeignKey or OneToOne relationships. 
+    </div>
+    <h3>Cache expensive work</h3>
+    <pre>cache.set("homepage_books", books, 60)
+books = cache.get("homepage_books")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The first request calculates and stores the value. Later requests can reuse the cached value until it expires. 
+    </div>
+    <h2 id="database-indexes">64. Database Indexes</h2>
+    <h3>Concept</h3>
+    <p>An index helps the database find rows faster, like an index in a book.</p>
+    <pre>Without index:
+Database scans many rows.
+
+With index:
+Database quickly finds matching rows.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Field index</h3>
+    <pre>class Book(models.Model):
+    title = models.CharField(max_length=200, db_index=True)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <h3>Meta indexes</h3>
+    <pre>class Book(models.Model):
+    title = models.CharField(max_length=200)
+    published_date = models.DateField()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["title"]),
+            models.Index(fields=["published_date"]),
+            models.Index(fields=["title", "published_date"]),
+        ]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Each model class becomes a database table. Each field becomes a database column. The ForeignKey connects Book rows to Author rows. 
+    </div>
+    <h3>Good index candidates</h3>
+    <pre>Fields used often in WHERE filters
+Fields used often in ORDER BY
+Foreign keys
+Frequently searched columns</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Warning</h3>
+    <pre>Indexes speed up reads.
+Indexes can slow down writes.
+Do not index every field.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="postgresql-best-practices">65. PostgreSQL Best Practices</h2>
+    <h3>Why PostgreSQL with Django</h3>
+    <pre>Reliable
+Powerful
+Good JSON support
+Good indexing
+Good full-text search
+Common production choice</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h3>Install driver</h3>
+    <pre>pip install psycopg[binary]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ psycopg is the Python driver Django uses to connect to PostgreSQL. 
+    </div>
+    <h3>settings.py example</h3>
+    <pre>DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "mydb",
+        "USER": "myuser",
+        "PASSWORD": "mypassword",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These settings tell Django how to connect to the database. In real projects, secrets should come from environment variables. 
+    </div>
+    <h3>Good habits</h3>
+    <pre>Use migrations
+Use indexes for common queries
+Use transactions for multi-step writes
+Back up database regularly
+Do not store secrets in code
+Use environment variables
+Monitor slow queries</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <h2 id="security-best-practices">66. Security Best Practices</h2>
+    <h3>Production settings</h3>
+    <pre>DEBUG = False
+ALLOWED_HOSTS = ["example.com"]
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ redirect() sends the browser to another route. This is common after a successful form submit. 
+    </div>
+    <h3>Secrets</h3>
+    <p>Bad:</p>
+    <pre>SECRET_KEY = "hard-coded-secret"</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Never commit real secrets to source code. Read them from environment variables or a secure secret manager. 
+    </div>
+    <p>Better:</p>
+    <pre>import os
+
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Never commit real secrets to source code. Read them from environment variables or a secure secret manager. 
+    </div>
+    <h3>Common protections</h3>
+    <table>
+      <tr>
+        <th>Risk</th>
+        <th>Protection</th>
+      </tr>
+      <tr>
+        <td>SQL injection</td>
+        <td>Use ORM, parameterized queries</td>
+      </tr>
+      <tr>
+        <td>XSS</td>
+        <td>Template auto-escaping</td>
+      </tr>
+      <tr>
+        <td>CSRF</td>
+        <td><code>{% csrf_token %}</code></td>
+      </tr>
+      <tr>
+        <td>Session theft</td>
+        <td>Secure cookies, HTTPS</td>
+      </tr>
+      <tr>
+        <td>Secret leak</td>
+        <td>Environment variables</td>
+      </tr>
+      <tr>
+        <td>Debug leak</td>
+        <td><code>DEBUG = False</code></td>
+      </tr>
+    </table>
+    <h3>Never trust user input</h3>
+    <pre>Validate forms.
+Check permissions.
+Limit file uploads.
+Sanitize dangerous data.
+Use HTTPS.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Beginner tip: read this block from top to bottom and connect it to the request flow: browser sends data, Django processes it, and a response comes back. 
+    </div>
+    <h2 id="common-interview-questions">67. Common Interview Questions</h2>
+    <h3>Questions and short answers</h3>
+    <table>
+      <tr>
+        <th>Question</th>
+        <th>Short answer</th>
+      </tr>
+      <tr>
+        <td>What is Django?</td>
+        <td>A Python web framework for building server-side web apps.</td>
+      </tr>
+      <tr>
+        <td>What is MTV?</td>
+        <td>Model, Template, View.</td>
+      </tr>
+      <tr>
+        <td>What is ORM?</td>
+        <td>Object Relational Mapper; maps Python objects to database tables.</td>
+      </tr>
+      <tr>
+        <td>What is middleware?</td>
+        <td>Code that runs around request/response processing.</td>
+      </tr>
+      <tr>
+        <td>What is CSRF?</td>
+        <td>A web attack where another site tricks a browser into submitting a request.</td>
+      </tr>
+      <tr>
+        <td>What is migration?</td>
+        <td>A versioned database schema change.</td>
+      </tr>
+      <tr>
+        <td>What is QuerySet?</td>
+        <td>A lazy collection of database query results.</td>
+      </tr>
+      <tr>
+        <td>select_related vs prefetch_related?</td>
+        <td><code>select_related</code> for FK/OneToOne; <code>prefetch_related</code> for M2M/reverse FK.</td>
+      </tr>
+      <tr>
+        <td>What is WSGI?</td>
+        <td>Python interface for traditional sync web apps.</td>
+      </tr>
+      <tr>
+        <td>What is ASGI?</td>
+        <td>Python interface for async apps and WebSockets.</td>
+      </tr>
+    </table>
+    <h2 id="real-enterprise-architecture-example">68. Real Enterprise Architecture Example</h2>
+    <h3>Scenario</h3>
+    <p>A company builds a book management system with a web UI and mobile API.</p>
+    <h3>Architecture</h3>
+    <pre>Users
+  -&gt; Browser web app
+  -&gt; Mobile app
+
+Browser:
+  -&gt; HTTPS request
+  -&gt; HTML/CSS/JS
+
+Mobile app:
+  -&gt; HTTPS request
+  -&gt; JSON API
+
+Network:
+  -&gt; DNS
+  -&gt; Load balancer
+  -&gt; Nginx
+
+Application:
+  -&gt; Gunicorn for normal Django HTTP
+  -&gt; Django project
+  -&gt; Django apps:
+       books
+       users
+       orders
+       reports
+
+Data:
+  -&gt; PostgreSQL
+  -&gt; Redis cache
+  -&gt; Object storage for uploaded files
+
+Background:
+  -&gt; Celery worker
+  -&gt; Redis/RabbitMQ queue
+
+Operations:
+  -&gt; Logging
+  -&gt; Error monitoring
+  -&gt; Metrics
+  -&gt; Backups</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Gunicorn runs the Django app in production. Nginx often sits in front of it to handle public web traffic. 
+    </div>
+    <h3>Request example: browser page</h3>
+    <pre>GET /books/ HTTP/1.1
+Host: example.com
+Cookie: sessionid=abc123
+
+Django:
+  URL -&gt; book_list view
+  View -&gt; ORM query
+  ORM -&gt; PostgreSQL
+  View -&gt; template
+  Response -&gt; HTML page</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is a browser page request. The path tells Django what page is being requested, and headers provide extra details like cookies and browser type. 
+    </div>
+    <h3>Request example: mobile API</h3>
+    <pre>GET /api/books/ HTTP/1.1
+Host: api.example.com
+Authorization: Bearer jwt_token
+
+Django REST Framework:
+  URL -&gt; ViewSet
+  ViewSet -&gt; Serializer
+  Serializer -&gt; ORM
+  ORM -&gt; PostgreSQL
+  Response -&gt; JSON</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is an API-style request. The client sends JSON data, and the Authorization header is commonly used to prove who the caller is. 
+    </div>
+    <h3>Final mental model</h3>
+    <pre>Django is the server-side brain.
+
+Browser/mobile sends HTTP.
+Django receives HTTP.
+Django routes request to view.
+View uses ORM and business logic.
+Template or serializer creates response.
+Server sends HTTP response back.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This example is meant to show the basic pattern. Focus first on where data comes from, what Django does with it, and what response goes back. 
+    </div>
+    <h2 id="django-unit-testing-deep-dive">69. Django Unit Testing Deep Dive</h2>
+    <h3>Concept</h3>
+    <p>Django unit tests verify small parts of your app, such as models, forms, views, APIs, permissions, and business rules.</p>
+    <pre>Unit test:
+    Test one small behavior.
+
+Integration test:
+    Test several pieces working together.
+
+Django test:
+    Uses a separate test database.
+    Runs tests safely without changing production/dev data.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Django creates a test database, runs your tests, and destroys the test database when finished. This keeps tests isolated from real data. 
+    </div>
+    <h3>Where tests live</h3>
+    <pre>books/
+    tests.py
+
+# or for bigger apps:
+
+books/
+    tests/
+        __init__.py
+        test_models.py
+        test_forms.py
+        test_views.py
+        test_api.py
+        test_permissions.py</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A small app can use tests.py. A larger app is easier to maintain when tests are split into separate files. 
+    </div>
+    <h3>Run all tests</h3>
+    <pre>python manage.py test</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This command discovers tests in installed apps and runs them using Django's test runner. 
+    </div>
+    <h3>Run tests for one app</h3>
+    <pre>python manage.py test books</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This runs only tests inside the books app. 
+    </div>
+    <h3>Run one test class or one test method</h3>
+    <pre>python manage.py test books.tests.BookModelTest
+python manage.py test books.tests.BookModelTest.test_book_string</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Running one test is useful when debugging a failing test. 
+    </div>
+    <h3>Basic model test</h3>
+    <pre>from django.test import TestCase
+from .models import Author, Book
+
+
+class BookModelTest(TestCase):
+    def test_book_string_returns_title(self):
+        author = Author.objects.create(
+            name="John",
+            email="john@example.com"
+        )
+
+        book = Book.objects.create(
+            title="Python Book",
+            price=29.99,
+            author=author
+        )
+
+        self.assertEqual(str(book), "Python Book")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This test creates records in the test database and checks that the model's __str__ method works correctly. 
+    </div>
+    <h3>setUp test data</h3>
+    <pre>class BookTest(TestCase):
+    def setUp(self):
+        self.author = Author.objects.create(
+            name="John",
+            email="john@example.com"
+        )
+
+    def test_create_book(self):
+        book = Book.objects.create(
+            title="Django Book",
+            price=20,
+            author=self.author
+        )
+
+        self.assertEqual(book.author.name, "John")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ setUp runs before each test method, so each test starts with fresh predictable data. 
+    </div>
+    <h3>setUpTestData for faster shared setup</h3>
+    <pre>class BookTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = Author.objects.create(
+            name="John",
+            email="john@example.com"
+        )
+
+    def test_author_exists(self):
+        self.assertEqual(self.author.name, "John")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ setUpTestData runs once for the whole test class. It is faster when many tests use the same initial data. 
+    </div>
+    <h3>Form test</h3>
+    <pre>from django.test import TestCase
+from .forms import BookForm
+
+
+class BookFormTest(TestCase):
+    def test_form_valid_with_required_fields(self):
+        form = BookForm(data={
+            "title": "Python Book",
+            "price": "29.99",
+            "published_date": "2026-06-02",
+            "author": 1,
+        })
+
+        # This may require creating Author first.
+        self.assertFalse(form.is_valid())</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Form tests check validation rules. For a ModelForm with ForeignKey fields, create related objects before testing valid data. 
+    </div>
+    <h3>View test</h3>
+    <pre>from django.test import TestCase
+from django.urls import reverse
+
+
+class BookListViewTest(TestCase):
+    def test_book_list_returns_200(self):
+        response = self.client.get(reverse("book_list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "books/book_list.html")</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ self.client is Django's test HTTP client. It lets tests call views without opening a real browser. 
+    </div>
+    <h3>Test redirect after POST</h3>
+    <pre>class BookCreateViewTest(TestCase):
+    def test_create_book_redirects_after_success(self):
+        author = Author.objects.create(
+            name="John",
+            email="john@example.com"
+        )
+
+        response = self.client.post(reverse("book_create"), {
+            "title": "New Book",
+            "price": "19.99",
+            "published_date": "2026-06-02",
+            "author": author.id,
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Book.objects.filter(title="New Book").exists())</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Many Django form views redirect after a successful POST. This is called the POST/Redirect/GET pattern. 
+    </div>
+    <h3>Login required test</h3>
+    <pre>class DashboardTest(TestCase):
+    def test_dashboard_requires_login(self):
+        response = self.client.get(reverse("dashboard"))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/login/", response.url)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ A protected page usually redirects anonymous users to the login page. 
+    </div>
+    <h3>Test logged-in user</h3>
+    <pre>from django.contrib.auth.models import User
+
+
+class DashboardTest(TestCase):
+    def test_dashboard_allows_logged_in_user(self):
+        user = User.objects.create_user(
+            username="loc",
+            password="testpass123"
+        )
+
+        self.client.login(username="loc", password="testpass123")
+
+        response = self.client.get(reverse("dashboard"))
+
+        self.assertEqual(response.status_code, 200)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ self.client.login simulates a browser session where the user is already authenticated. 
+    </div>
+    <h3>Permission test</h3>
+    <pre>from django.contrib.auth.models import Permission, User
+
+
+class PermissionTest(TestCase):
+    def test_user_with_permission_can_delete_book(self):
+        user = User.objects.create_user(
+            username="manager",
+            password="testpass123"
+        )
+
+        permission = Permission.objects.get(codename="delete_book")
+        user.user_permissions.add(permission)
+
+        self.client.login(username="manager", password="testpass123")
+
+        response = self.client.post(reverse("book_delete", args=[1]))
+
+        # Expected result depends on whether book id 1 exists.
+        self.assertIn(response.status_code, [302, 404])</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Permission tests make sure authorization rules are enforced, not just authentication. 
+    </div>
+    <h3>API test with Django REST Framework</h3>
+    <pre>from rest_framework.test import APITestCase
+from rest_framework import status
+from django.urls import reverse
+
+
+class BookApiTest(APITestCase):
+    def test_book_list_api_returns_200(self):
+        response = self.client.get(reverse("book-list"))
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ APITestCase is useful for DRF APIs because it understands JSON requests and responses. 
+    </div>
+    <h3>API JWT test idea</h3>
+    <pre>from rest_framework.test import APITestCase
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.models import User
+
+
+class ProtectedApiTest(APITestCase):
+    def test_authenticated_request_with_jwt(self):
+        user = User.objects.create_user(
+            username="loc",
+            password="testpass123"
+        )
+
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {access_token}"
+        )
+
+        response = self.client.get("/api/profile/")
+
+        self.assertNotEqual(response.status_code, 401)</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JWT API tests usually attach the Authorization header before calling the protected endpoint. 
+    </div>
+    <h3>Common assertions</h3>
+    <table>
+      <tr>
+        <th>Assertion</th>
+        <th>Purpose</th>
+      </tr>
+      <tr>
+        <td><code>assertEqual(a, b)</code></td>
+        <td>Check two values are equal</td>
+      </tr>
+      <tr>
+        <td><code>assertTrue(value)</code></td>
+        <td>Check value is true</td>
+      </tr>
+      <tr>
+        <td><code>assertFalse(value)</code></td>
+        <td>Check value is false</td>
+      </tr>
+      <tr>
+        <td><code>assertContains(response, text)</code></td>
+        <td>Check response body contains text</td>
+      </tr>
+      <tr>
+        <td><code>assertRedirects(response, url)</code></td>
+        <td>Check redirect target</td>
+      </tr>
+      <tr>
+        <td><code>assertTemplateUsed(response, template)</code></td>
+        <td>Check which template rendered</td>
+      </tr>
+      <tr>
+        <td><code>assertRaises(Error)</code></td>
+        <td>Check expected exception</td>
+      </tr>
+    </table>
+    <h3>Testing best practices</h3>
+    <pre>Test behavior, not implementation details.
+Use clear test names.
+Keep each test small.
+Create only the data needed for the test.
+Test success cases and failure cases.
+Test permissions.
+Test important business rules.
+Run tests before deployment.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Good tests make refactoring safer because they tell you quickly when important behavior breaks. 
+    </div>
+    <h3>Testing mental model</h3>
+    <pre>Arrange:
+    Create test data.
+
+Act:
+    Call function, view, form, or API.
+
+Assert:
+    Check the expected result.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Arrange, Act, Assert is a simple pattern that keeps tests readable. 
+    </div>
+    <h2 id="spa-architecture-with-django-api-and-react">70. SPA Architecture with Django API and React</h2>
+    <h3>Concept: SPA vs MPA</h3>
+    <table>
+      <tr>
+        <th>Architecture</th>
+        <th>Meaning</th>
+        <th>Who renders the UI?</th>
+      </tr>
+      <tr>
+        <td>MPA</td>
+        <td>Multi-page application</td>
+        <td>Django templates render full HTML pages</td>
+      </tr>
+      <tr>
+        <td>SPA</td>
+        <td>Single-page application</td>
+        <td>React renders UI in the browser</td>
+      </tr>
+    </table>
+    <pre>MPA:
+Browser requests /books/
+Django returns complete HTML page.
+
+SPA:
+Browser loads React app once.
+React calls Django API for JSON.
+React updates the page without full reload.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ In an SPA, Django usually becomes the API backend, and React becomes the frontend UI layer. 
+    </div>
+    <h3>SPA high-level architecture</h3>
+    <pre>Browser
+  -&gt; Loads HTML shell
+  -&gt; Downloads JavaScript bundle
+  -&gt; React app starts
+  -&gt; React Router controls screens
+  -&gt; fetch/axios calls Django API
+  -&gt; Django REST Framework returns JSON
+  -&gt; React updates UI</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The first page load downloads the SPA. After that, most screen changes happen inside JavaScript without a full page reload. 
+    </div>
+    <h3>Django role in SPA</h3>
+    <pre>Django backend responsibilities:
+    API endpoints
+    Authentication
+    Authorization
+    Business rules
+    ORM/database access
+    Validation
+    File upload handling
+    Email/background jobs
+    Admin site
+    Logging/security</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Django does not usually render every page in an SPA. Instead, it exposes API endpoints that return JSON. 
+    </div>
+    <h3>React role in SPA</h3>
+    <pre>React frontend responsibilities:
+    Components
+    Pages/screens
+    Client-side routing
+    Forms
+    UI state
+    API calls
+    Error messages
+    Loading spinners
+    Browser storage
+    Rendering JSON data as UI</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ React is responsible for what the user sees and how the browser UI changes after API responses. 
+    </div>
+    <h3>Client, API, and Database</h3>
+    <pre>Client:
+    React app in browser
+
+API:
+    Django REST Framework endpoints
+
+Database:
+    PostgreSQL / MySQL / SQLite
+
+Flow:
+    React component
+      -&gt; fetch("/api/books/")
+      -&gt; Django API view
+      -&gt; Serializer
+      -&gt; ORM
+      -&gt; Database
+      -&gt; JSON response
+      -&gt; React state
+      -&gt; UI updates</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ In SPA architecture, React never talks directly to the database. It talks to Django APIs, and Django talks to the database. 
+    </div>
+    <h3>Common API methods in SPA</h3>
+    <table>
+      <tr>
+        <th>HTTP Method</th>
+        <th>Common SPA use</th>
+        <th>Example endpoint</th>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td>Load data</td>
+        <td><code>/api/books/</code></td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td>Create data or login</td>
+        <td><code>/api/books/</code></td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td>Replace full object</td>
+        <td><code>/api/books/5/</code></td>
+      </tr>
+      <tr>
+        <td><code>PATCH</code></td>
+        <td>Update part of object</td>
+        <td><code>/api/books/5/</code></td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td>Delete object</td>
+        <td><code>/api/books/5/</code></td>
+      </tr>
+    </table>
+    <h3>JSON request and response</h3>
+    <pre>Request:
+POST /api/books/
+Content-Type: application/json
+Authorization: Bearer access_token_here
+
+{
+  "title": "Python Book",
+  "price": 29.99
+}
+
+Response:
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 5,
+  "title": "Python Book",
+  "price": "29.99"
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JSON is the common data format between React and Django APIs. 
+    </div>
+    <h3>React fetch example</h3>
+    <pre>async function loadBooks() {
+    const response = await fetch("/api/books/", {
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to load books");
+    }
+
+    const data = await response.json();
+    return data;
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ fetch sends an HTTP request from the browser. response.json() converts the JSON response into a JavaScript object. 
+    </div>
+    <h3>React POST JSON example</h3>
+    <pre>async function createBook(book, accessToken) {
+    const response = await fetch("/api/books/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(book)
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to create book");
+    }
+
+    return await response.json();
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JSON.stringify converts a JavaScript object into JSON text for the request body. 
+    </div>
+    <h3>Authentication vs Authorization in SPA</h3>
+    <pre>Authentication:
+    Who is this user?
+    Example: login with username/password.
+
+Authorization:
+    What can this user do?
+    Example: user can view books but cannot delete books.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Authentication proves identity. Authorization checks permissions after identity is known. 
+    </div>
+    <h3>JWT login flow</h3>
+    <pre>1. React sends username/password to Django.
+2. Django validates credentials.
+3. Django returns access token and refresh token.
+4. React stores token depending on security design.
+5. React sends access token with API requests.
+6. Django validates token.
+7. Django checks permissions.
+8. Django returns JSON response.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ JWT is common in SPAs, but token storage must be designed carefully to reduce XSS and CSRF risks. 
+    </div>
+    <h3>Authorization header</h3>
+    <pre>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The Authorization header is how many API clients send bearer tokens such as JWT access tokens. 
+    </div>
+    <h3>Django REST Framework JWT setup idea</h3>
+    <pre>pip install djangorestframework
+pip install djangorestframework-simplejwt</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ DRF builds the API layer. Simple JWT adds JWT token endpoints and authentication classes. 
+    </div>
+    <pre>REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ These settings make DRF expect JWT authentication by default and require users to be authenticated unless a view overrides permission_classes. 
+    </div>
+    <h3>JWT token endpoints</h3>
+    <pre>from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    path("api/token/", TokenObtainPairView.as_view()),
+    path("api/token/refresh/", TokenRefreshView.as_view()),
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ React can call /api/token/ to log in and /api/token/refresh/ to get a new access token. 
+    </div>
+    <h3>Public vs protected API endpoints</h3>
+    <table>
+      <tr>
+        <th>Endpoint type</th>
+        <th>Example</th>
+        <th>Permission</th>
+      </tr>
+      <tr>
+        <td>Public</td>
+        <td><code>/api/public-books/</code></td>
+        <td>Anyone can call</td>
+      </tr>
+      <tr>
+        <td>Authenticated</td>
+        <td><code>/api/profile/</code></td>
+        <td>Must be logged in</td>
+      </tr>
+      <tr>
+        <td>Role-based</td>
+        <td><code>/api/admin/reports/</code></td>
+        <td>Must have role/group/permission</td>
+      </tr>
+    </table>
+    <h3>Role-based authorization</h3>
+    <pre>Common role examples:
+    Admin
+    Manager
+    Staff
+    Customer
+    Read-only user
+
+Django options:
+    Groups
+    Permissions
+    Custom permission classes
+    Object-level permissions</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Do not rely only on hiding buttons in React. Always enforce permissions on the Django API server. 
+    </div>
+    <h3>DRF permission example</h3>
+    <pre>from rest_framework.permissions import BasePermission
+
+
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        return (
+            request.user.is_authenticated
+            and request.user.groups.filter(name="Manager").exists()
+        )</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Custom permission classes let Django enforce role-based rules at the API layer. 
+    </div>
+    <h3>CORS in SPA</h3>
+    <p>CORS means Cross-Origin Resource Sharing. It matters when React and Django run on different origins.</p>
+    <pre>React dev server:
+    http://localhost:5173
+
+Django API:
+    http://localhost:8000
+
+Different port = different origin.
+CORS rules apply.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ During development, React and Django often run on different ports, so CORS configuration may be needed. 
+    </div>
+    <h3>Common CORS package</h3>
+    <pre>pip install django-cors-headers</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ django-cors-headers is commonly used to allow the React development origin to call the Django API. 
+    </div>
+    <pre>INSTALLED_APPS = [
+    # ...
+    "corsheaders",
+]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    # ...
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Only allow trusted frontend origins. Do not use wildcard CORS for private authenticated APIs unless you fully understand the risk. 
+    </div>
+    <h3>CSRF in SPA</h3>
+    <table>
+      <tr>
+        <th>Auth design</th>
+        <th>CSRF concern</th>
+      </tr>
+      <tr>
+        <td>Session cookie auth</td>
+        <td>CSRF protection is important</td>
+      </tr>
+      <tr>
+        <td>JWT in Authorization header</td>
+        <td>CSRF is usually less central, but XSS becomes very important</td>
+      </tr>
+      <tr>
+        <td>JWT in HttpOnly cookie</td>
+        <td>CSRF protection may still be needed</td>
+      </tr>
+    </table>
+    <pre>Session-auth SPA:
+    Browser automatically sends cookies.
+    Use CSRF token for unsafe methods.
+
+Bearer-token SPA:
+    React manually sends Authorization header.
+    Protect token from XSS.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ The safest design depends on your threat model. Do not treat token storage as a small detail. 
+    </div>
+    <h3>Token storage choices</h3>
+    <table>
+      <tr>
+        <th>Storage</th>
+        <th>Benefit</th>
+        <th>Risk</th>
+      </tr>
+      <tr>
+        <td>Memory</td>
+        <td>Harder to steal persistently</td>
+        <td>Lost on refresh</td>
+      </tr>
+      <tr>
+        <td>localStorage</td>
+        <td>Easy to use</td>
+        <td>Vulnerable if XSS exists</td>
+      </tr>
+      <tr>
+        <td>sessionStorage</td>
+        <td>Cleared when tab/session ends</td>
+        <td>Still vulnerable to XSS</td>
+      </tr>
+      <tr>
+        <td>HttpOnly cookie</td>
+        <td>JavaScript cannot read token</td>
+        <td>Needs CSRF strategy</td>
+      </tr>
+    </table>
+    <h3>React Router</h3>
+    <pre>Client-side routing:
+    /books
+    /books/5
+    /profile
+
+The browser may stay on the same HTML page.
+React decides which component to show.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ In an SPA, routes like /books/5 may be handled by React Router instead of Django URL patterns. 
+    </div>
+    <h3>Django URLs vs React routes</h3>
+    <table>
+      <tr>
+        <th>Route type</th>
+        <th>Example</th>
+        <th>Handled by</th>
+      </tr>
+      <tr>
+        <td>Frontend route</td>
+        <td><code>/books/5</code></td>
+        <td>React Router</td>
+      </tr>
+      <tr>
+        <td>API route</td>
+        <td><code>/api/books/5/</code></td>
+        <td>Django urls.py / DRF</td>
+      </tr>
+      <tr>
+        <td>Admin route</td>
+        <td><code>/admin/</code></td>
+        <td>Django admin</td>
+      </tr>
+    </table>
+    <h3>JavaScript bundle tool</h3>
+    <p>A bundle tool compiles and packages frontend code for the browser.</p>
+    <pre>Source files:
+    React components
+    JavaScript / TypeScript
+    CSS
+    Images
+
+Bundle tool:
+    Vite / Webpack / Parcel / Rollup
+
+Output:
+    dist/
+        index.html
+        assets/index-abc123.js
+        assets/index-def456.css</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Browsers do not directly understand every development feature. Bundle tools prepare optimized browser-ready files. 
+    </div>
+    <h3>Role of Node.js in JavaScript bundling</h3>
+    <pre>Node.js is not usually your production Django backend.
+
+Node.js is used for frontend tooling:
+    npm install packages
+    run dev server
+    run Vite/Webpack
+    compile React
+    bundle JavaScript
+    minify assets
+    run frontend tests
+
+Common commands:
+    npm install
+    npm run dev
+    npm run build</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ In a Django + React SPA, Python runs Django. Node.js usually runs the frontend build tools. 
+    </div>
+    <h3>Vite React example</h3>
+    <pre>npm create vite@latest frontend -- --template react
+cd frontend
+npm install
+npm run dev
+npm run build</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Vite is a common modern development server and bundler for React projects. 
+    </div>
+    <h3>Development architecture</h3>
+    <pre>Terminal 1:
+    python manage.py runserver
+    Django API at http://localhost:8000
+
+Terminal 2:
+    npm run dev
+    React app at http://localhost:5173
+
+Browser:
+    http://localhost:5173
+        -&gt; React UI
+        -&gt; calls http://localhost:8000/api/...</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This setup is common during development because React hot reload and Django API can run separately. 
+    </div>
+    <h3>Production architecture option 1: separate frontend and backend</h3>
+    <pre>Browser
+  -&gt; CDN / static hosting
+  -&gt; React built files
+
+React app
+  -&gt; HTTPS API calls
+  -&gt; Django API server
+  -&gt; Database</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ This is common when the frontend is deployed to a CDN/static host and the backend is deployed as an API service. 
+    </div>
+    <h3>Production architecture option 2: Django serves built React files</h3>
+    <pre>npm run build
+  -&gt; creates frontend/dist
+
+Django / Nginx serves:
+    index.html
+    JS bundle
+    CSS bundle
+
+React calls:
+    /api/books/</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Django or Nginx can serve the final built SPA files, while Django still handles /api/ endpoints. 
+    </div>
+    <h3>Important SPA backend rules</h3>
+    <pre>Always validate data on the Django side.
+Always enforce permissions on the Django side.
+Never trust the React client.
+Never expose secrets in React code.
+Use HTTPS in production.
+Use pagination for large lists.
+Return useful error messages.
+Version APIs when needed.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Frontend checks improve user experience, but backend checks provide real security. 
+    </div>
+    <h3>Environment variables</h3>
+    <pre>React/Vite:
+    VITE_API_BASE_URL=https://api.example.com
+
+Django:
+    DJANGO_SECRET_KEY=...
+    DATABASE_URL=...
+    ALLOWED_HOSTS=example.com</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ React environment variables are included in frontend build output if referenced. Do not put secrets in React env variables. 
+    </div>
+    <h3>Common SPA mistakes</h3>
+    <pre>Putting secrets in frontend code
+Trusting hidden React buttons for security
+Forgetting CORS in development
+Forgetting CSRF when using cookies
+Returning too much data from APIs
+No pagination
+No loading/error UI
+Not refreshing expired JWT access tokens
+Not handling 401/403 globally
+Mixing frontend routes and API routes confusingly</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Most SPA problems come from unclear boundaries between frontend UI responsibility and backend security/data responsibility. 
+    </div>
+    <h3>Final SPA mental model</h3>
+    <pre>React is the browser UI.
+Django is the API and business logic.
+DRF converts models to JSON.
+JWT/session identifies the user.
+Permissions authorize actions.
+Node.js builds the JavaScript bundle.
+Nginx/CDN serves static frontend files.
+Django/Gunicorn serves API requests.
+Database stores permanent data.</pre>
+    <div class="explain">
+      <strong>Note:</strong>
+ Keep this separation clear: React renders screens, Django protects and processes data, and the database is never exposed directly to the browser. 
+    </div>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

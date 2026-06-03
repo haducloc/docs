@@ -1,0 +1,475 @@
+/* Shared CSS for Cheatsheet Pages */
+
+:root {
+  --text: #1f2937;
+  --muted: #4b5563;
+  --border: #d1d5db;
+  --bg: #ffffff;
+  --soft-bg: #f9fafb;
+  --code-bg: #f3f4f6;
+  --code-text: #0b1020;
+  --header-bg: #111827;
+  --header-text: #ffffff;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-border: #bfdbfe;
+  --note-bg: #eff6ff;
+  --explain-border: #64748b;
+
+  /* Backward-compatible aliases used by older files */
+  --header: var(--header-bg);
+  --soft: var(--soft-bg);
+  --code: var(--code-bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+h1 {
+  font-size: 32px;
+  border-bottom: 4px solid var(--header-bg);
+  padding-bottom: 12px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 42px;
+  padding: 10px 14px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  border-radius: 6px;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h3 {
+  font-size: 19px;
+  margin-top: 26px;
+  border-left: 5px solid var(--accent);
+  padding-left: 10px;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h4 {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+a {
+  color: var(--accent);
+}
+
+ul,
+ol {
+  margin-top: 8px;
+}
+
+li {
+  margin: 5px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 22px;
+  border: 1px solid var(--border);
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #e5e7eb;
+  font-weight: 700;
+}
+
+pre,
+pre.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  padding: 14px;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 13px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  white-space: pre-wrap;
+  line-height: 1.45;
+  margin: 14px 0 16px;
+}
+
+code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+pre code,
+pre.code-block code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  white-space: inherit;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 34px 0 16px;
+}
+
+footer {
+  margin-top: 40px;
+  color: var(--muted);
+  font-size: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+/* Shared document blocks */
+.toc {
+  border: 1px solid var(--border);
+  padding: 16px 22px;
+  border-radius: 8px;
+  background: var(--soft-bg);
+  margin: 24px 0 32px;
+}
+
+.toc h2,
+.toc h3 {
+  margin-top: 0;
+}
+
+.toc ol {
+  margin-bottom: 0;
+}
+
+.toc > ol,
+.toc ol {
+  column-count: 2;
+  column-gap: 36px;
+}
+
+.toc li {
+  break-inside: avoid;
+}
+
+.toc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.toplink {
+  margin-bottom: 14px;
+}
+
+.toplink a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.backtop {
+  text-align: right;
+  font-size: 13px;
+  margin: -6px 0 18px;
+}
+
+.backtop a {
+  text-decoration: none;
+}
+
+.small,
+.muted,
+small {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 0;
+}
+
+.note,
+.callout {
+  background: var(--note-bg);
+  border-left: 5px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 0;
+  margin: 16px 0;
+}
+
+.callout {
+  background: #f7f9ff;
+}
+
+.explain {
+  background: #f8fafc;
+  border-left: 4px solid var(--explain-border);
+  padding: 9px 12px;
+  margin: 10px 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.explain strong {
+  color: var(--text);
+}
+
+/* Bilingual / card layouts */
+.pair,
+.formula {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px 0 18px;
+  background: #ffffff;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.pair .row,
+.formula .body {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.pair .row:last-child {
+  border-bottom: none;
+}
+
+.formula .head {
+  background: var(--code-bg);
+  padding: 10px 14px;
+  font-weight: bold;
+}
+
+.vi {
+  font-weight: 650;
+}
+
+.en {
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.math,
+.eq {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--soft-bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Access VBA X framework layout */
+.part-heading {
+  margin-top: 46px;
+  margin-bottom: 20px;
+  padding: 18px 20px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-left: 8px solid var(--accent);
+  border-radius: 12px;
+}
+
+.part-heading h2 {
+  background: none;
+  color: var(--header-bg);
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  font-size: 26px;
+}
+
+.part-heading p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--header-bg);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 38px;
+  margin-bottom: 14px;
+}
+
+.section-title h2 {
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: #fff;
+  border-radius: 0;
+  flex: 1;
+  font-size: 22px;
+}
+
+.badge {
+  min-width: 46px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Index page */
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Responsive / print */
+@media (max-width: 760px) {
+  body {
+    padding: 18px;
+  }
+
+  .toc > ol,
+  .toc ol {
+    column-count: 1;
+  }
+
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media print {
+  body {
+    max-width: none;
+    padding: 12mm;
+    font-size: 11pt;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  pre,
+  table,
+  .pair,
+  .formula,
+  .toc,
+  .note,
+  .callout,
+  .part-heading,
+  .section-title {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  .toplink,
+  .backtop {
+    display: none;
+  }
+}
+
+/* Extra safety for wide tables and code blocks */
+table {
+  table-layout: auto;
+}
+
+td pre,
+td pre.code-block {
+  max-width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+td code {
+  word-break: normal;
+}
+
+@media (max-width: 760px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
+  }
+
+  thead,
+  tbody,
+  tr {
+    width: 100%;
+  }
+}

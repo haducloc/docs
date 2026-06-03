@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Power BI Dashboard Cheat Sheet (Beginner)</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <!-- Docs Home link at the very top -->
+    <div class="toplink">
+      <a href="https://haducloc.github.io/docs/">🏠 Docs Home</a>
+    </div>
+    <h1>Power BI Dashboard Cheat Sheet (Beginner)</h1>
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#core">Power BI Core Concepts (Big Picture)</a></li>
+        <li><a href="#datasources">Data Sources (Where Data Comes From)</a></li>
+        <li><a href="#modeling">Dataset &amp; Data Modeling</a></li>
+        <li><a href="#charts">Charts &amp; When to Use What</a></li>
+        <li><a href="#widgets">Widgets / Visual Elements</a></li>
+        <li><a href="#filters">Filters &amp; Parameters</a></li>
+        <li><a href="#buttons">Buttons &amp; Interactions</a></li>
+        <li><a href="#reportvsdash">Report vs Dashboard</a></li>
+        <li><a href="#refresh">Refresh &amp; Performance</a></li>
+        <li><a href="#layout">Beginner Dashboard Layout Template</a></li>
+        <li><a href="#mistakes">Common Beginner Mistakes (And Better Choices)</a></li>
+      </ol>
+    </div>
+    <h2 id="core">1) Power BI Core Concepts (Big Picture)</h2>
+    <table>
+      <tr>
+        <th style="width:18%">Term</th>
+        <th style="width:22%">What it is</th>
+        <th style="width:30%">Beginner explanation</th>
+        <th style="width:30%">When you use it</th>
+      </tr>
+      <tr>
+        <td><b>Power BI Desktop</b></td>
+        <td>Authoring tool</td>
+        <td>App to build reports on your computer</td>
+        <td>Always (starting point)</td>
+      </tr>
+      <tr>
+        <td><b>Power BI Service</b></td>
+        <td>Cloud service</td>
+        <td>Website where reports &amp; dashboards live</td>
+        <td>Sharing, dashboards</td>
+      </tr>
+      <tr>
+        <td><b>Workspace</b></td>
+        <td>Container</td>
+        <td>Folder for reports, dashboards, datasets</td>
+        <td>Team collaboration</td>
+      </tr>
+      <tr>
+        <td><b>Dataset</b></td>
+        <td>Data model</td>
+        <td>Cleaned, modeled data (tables + relationships)</td>
+        <td>Base of all reports</td>
+      </tr>
+      <tr>
+        <td><b>Report</b></td>
+        <td>Multi-page visuals</td>
+        <td>Interactive pages with charts &amp; tables</td>
+        <td>Analysis &amp; exploration</td>
+      </tr>
+      <tr>
+        <td><b>Dashboard</b></td>
+        <td>Single-page view</td>
+        <td>Pins from reports (read-only)</td>
+        <td>High-level monitoring</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+ You create multiple reports, then pin key visuals—such as charts, KPI cards, tables, and maps—as tiles into a single dashboard to provide a consolidated, high-level view. You can also pin entire report pages as live tiles (interactive), while most other visuals appear as static tiles that refresh with the data. 
+        </td>
+      </tr>
+    </table>
+    <p><b>Key idea:</b> Dataset → Report → Dashboard</p>
+    <hr/>
+    <h2 id="datasources">2) Data Sources (Where Data Comes From)</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Data Source Type</th>
+        <th style="width:28%">Examples</th>
+        <th style="width:25%">Use case</th>
+        <th style="width:25%">Notes</th>
+      </tr>
+      <tr>
+        <td><b>Files</b></td>
+        <td>Excel, CSV, TXT, PDF</td>
+        <td>Small/medium data</td>
+        <td>Best for beginners</td>
+      </tr>
+      <tr>
+        <td><b>Databases</b></td>
+        <td>SQL Server, Oracle, MySQL</td>
+        <td>Large structured data</td>
+        <td>Common enterprise source</td>
+      </tr>
+      <tr>
+        <td><b>Cloud Services</b></td>
+        <td>SharePoint, OneDrive, Salesforce</td>
+        <td>Online systems</td>
+        <td>Often supports auto-refresh</td>
+      </tr>
+      <tr>
+        <td><b>Web</b></td>
+        <td>APIs, Web URLs</td>
+        <td>External/live data</td>
+        <td>May need cleaning and careful refresh</td>
+      </tr>
+      <tr>
+        <td><b>Azure</b></td>
+        <td>Azure SQL, Data Lake</td>
+        <td>Big data</td>
+        <td>More advanced setups</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="modeling">3) Dataset &amp; Data Modeling</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Concept</th>
+        <th style="width:38%">Meaning</th>
+        <th style="width:40%">Beginner tip</th>
+      </tr>
+      <tr>
+        <td><b>Table</b></td>
+        <td>Rows &amp; columns of data</td>
+        <td>Like Excel sheets</td>
+      </tr>
+      <tr>
+        <td><b>Column</b></td>
+        <td>Field</td>
+        <td>Used for charts and slicers</td>
+      </tr>
+      <tr>
+        <td><b>Row</b></td>
+        <td>Record</td>
+        <td>One transaction/event</td>
+      </tr>
+      <tr>
+        <td><b>Relationship</b></td>
+        <td>Link between tables</td>
+        <td>Use star schema (facts in center)</td>
+      </tr>
+      <tr>
+        <td><b>Fact Table</b></td>
+        <td>Measurable data</td>
+        <td>Sales, Orders, Amounts</td>
+      </tr>
+      <tr>
+        <td><b>Dimension Table</b></td>
+        <td>Descriptive/Category data</td>
+        <td>Date, Customer, Product</td>
+      </tr>
+      <tr>
+        <td><b>Calculated Column</b></td>
+        <td>Column using DAX</td>
+        <td>Row-level logic (use sparingly)</td>
+      </tr>
+      <tr>
+        <td><b>Measure</b></td>
+        <td>Dynamic calculation</td>
+        <td>Preferred for KPIs/totals</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="charts">4) Charts &amp; When to Use What</h2>
+    <h3>Fast Chart Picker</h3>
+    <table>
+      <tr>
+        <th>What question are you answering?</th>
+        <th>Use this chart</th>
+      </tr>
+      <tr>
+        <td>Compare categories</td>
+        <td><b>Bar / Column</b></td>
+      </tr>
+      <tr>
+        <td>Trend over time</td>
+        <td><b>Line / Area</b></td>
+      </tr>
+      <tr>
+        <td>Parts of a whole</td>
+        <td><b>Pie / Donut / Treemap</b></td>
+      </tr>
+      <tr>
+        <td>Single KPI</td>
+        <td><b>Card / KPI</b></td>
+      </tr>
+      <tr>
+        <td>Detail records</td>
+        <td><b>Table / Matrix</b></td>
+      </tr>
+      <tr>
+        <td>Actual vs target</td>
+        <td><b>KPI / Gauge</b></td>
+      </tr>
+      <tr>
+        <td>Relationship (correlation)</td>
+        <td><b>Scatter</b></td>
+      </tr>
+      <tr>
+        <td>Geography</td>
+        <td><b>Map</b></td>
+      </tr>
+      <tr>
+        <td>Hierarchy</td>
+        <td><b>Matrix / Treemap</b></td>
+      </tr>
+    </table>
+    <h3>Rule of Thumb</h3>
+    <ul>
+      <li>If your data has <b>time</b> → use <b>line/column</b> .</li>
+      <li>If your data has <b>categories</b> → use <b>bar</b> .</li>
+      <li>If you need <b>exact numbers</b> → use <b>table/matrix</b> .</li>
+      <li>If it’s <b>share of total</b> → use <b>treemap</b> or <b>pie (≤5)</b> .</li>
+    </ul>
+    <table>
+      <tr>
+        <th style="width:16%">Chart</th>
+        <th style="width:26%">Best for</th>
+        <th style="width:34%">When to use</th>
+        <th style="width:24%">Avoid when</th>
+      </tr>
+      <tr>
+        <td><b>Bar</b></td>
+        <td>Comparing categories</td>
+        <td>Sales by product/category; long labels</td>
+        <td>Too many categories (over ~15)</td>
+      </tr>
+      <tr>
+        <td><b>Column</b></td>
+        <td>Comparison or time buckets</td>
+        <td>Monthly totals; yearly comparison</td>
+        <td>Very long category names (use bar)</td>
+      </tr>
+      <tr>
+        <td><b>Line</b></td>
+        <td>Trends over time</td>
+        <td>Revenue over months/years; multiple series (few)</td>
+        <td>Too many lines (messy)</td>
+      </tr>
+      <tr>
+        <td><b>Area</b></td>
+        <td>Volume over time</td>
+        <td>Emphasize magnitude/cumulative feel</td>
+        <td>Precise comparison needed</td>
+      </tr>
+      <tr>
+        <td><b>Pie / Donut</b></td>
+        <td>Parts of whole (simple)</td>
+        <td>Only when ≤ 5 categories and story is simple</td>
+        <td>Many slices; precision required</td>
+      </tr>
+      <tr>
+        <td><b>Treemap</b></td>
+        <td>Parts of whole (many)</td>
+        <td>Contribution by category/subcategory</td>
+        <td>Time trends</td>
+      </tr>
+      <tr>
+        <td><b>Table</b></td>
+        <td>Exact values</td>
+        <td>Detail pages, exports, record lists</td>
+        <td>Trend storytelling</td>
+      </tr>
+      <tr>
+        <td><b>Matrix</b></td>
+        <td>Hierarchy &amp; drill</td>
+        <td>Category → product breakdown; drill-down</td>
+        <td>Simple totals only</td>
+      </tr>
+      <tr>
+        <td><b>Card</b></td>
+        <td>Single KPI</td>
+        <td>Total sales, total tickets, average handle time</td>
+        <td>When context is needed</td>
+      </tr>
+      <tr>
+        <td><b>KPI</b></td>
+        <td>Performance vs target</td>
+        <td>Show value + trend + goal status</td>
+        <td>When no target exists</td>
+      </tr>
+      <tr>
+        <td><b>Gauge</b></td>
+        <td>Progress vs target</td>
+        <td>Simple “how close are we?” indicator</td>
+        <td>Overuse (takes space)</td>
+      </tr>
+      <tr>
+        <td><b>Scatter</b></td>
+        <td>Relationship</td>
+        <td>Spend vs sales; correlation detection</td>
+        <td>Totals-only stories</td>
+      </tr>
+      <tr>
+        <td><b>Map</b></td>
+        <td>Geography</td>
+        <td>Sales by state/county/region</td>
+        <td>Geography not meaningful</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="widgets">5) Widgets / Visual Elements</h2>
+    <table>
+      <tr>
+        <th style="width:20%">Element</th>
+        <th style="width:40%">Purpose</th>
+        <th style="width:40%">Example</th>
+      </tr>
+      <tr>
+        <td><b>Visual</b></td>
+        <td>Chart or table</td>
+        <td>Bar chart</td>
+      </tr>
+      <tr>
+        <td><b>Slicer</b></td>
+        <td>User filter</td>
+        <td>Date slicer</td>
+      </tr>
+      <tr>
+        <td><b>Button</b></td>
+        <td>Action</td>
+        <td>Navigate to details page</td>
+      </tr>
+      <tr>
+        <td><b>Text Box (Label)</b></td>
+        <td>Explain / title</td>
+        <td>Section header, notes</td>
+      </tr>
+      <tr>
+        <td><b>Image</b></td>
+        <td>Branding</td>
+        <td>Logo</td>
+      </tr>
+      <tr>
+        <td><b>Shape</b></td>
+        <td>Layout &amp; grouping</td>
+        <td>Dividers, panels</td>
+      </tr>
+      <tr>
+        <td><b>Tooltip</b></td>
+        <td>Extra info on hover</td>
+        <td>Hover to see breakdown</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="filters">6) Filters &amp; Parameters</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Feature</th>
+        <th style="width:40%">What it does</th>
+        <th style="width:38%">Use case</th>
+      </tr>
+      <tr>
+        <td><b>Visual Filter</b></td>
+        <td>Filters one visual only</td>
+        <td>Highlight one chart</td>
+      </tr>
+      <tr>
+        <td><b>Page Filter</b></td>
+        <td>Filters a single page</td>
+        <td>Page-level control</td>
+      </tr>
+      <tr>
+        <td><b>Report Filter</b></td>
+        <td>Filters all pages</td>
+        <td>Global filtering rules</td>
+      </tr>
+      <tr>
+        <td><b>Slicer</b></td>
+        <td>User-controlled filter</td>
+        <td>Interactive selection</td>
+      </tr>
+      <tr>
+        <td><b>Field Parameter</b></td>
+        <td>Switch fields dynamically</td>
+        <td>Let user choose metric/category</td>
+      </tr>
+      <tr>
+        <td><b>What-if Parameter</b></td>
+        <td>User input value</td>
+        <td>Scenario planning / forecasting</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="buttons">7) Buttons &amp; Interactions</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Button Type</th>
+        <th style="width:78%">Typical action</th>
+      </tr>
+      <tr>
+        <td><b>Page Navigation</b></td>
+        <td>Move between report pages</td>
+      </tr>
+      <tr>
+        <td><b>Bookmark</b></td>
+        <td>Save a view state (filters/visibility)</td>
+      </tr>
+      <tr>
+        <td><b>Drill-through</b></td>
+        <td>Go to detail page with context</td>
+      </tr>
+      <tr>
+        <td><b>Reset Filters</b></td>
+        <td>Clear slicers back to default</td>
+      </tr>
+      <tr>
+        <td><b>URL</b></td>
+        <td>Open a webpage or document link</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="reportvsdash">8) Report vs Dashboard</h2>
+    <table>
+      <tr>
+        <th style="width:20%">Feature</th>
+        <th style="width:40%">Report</th>
+        <th style="width:40%">Dashboard</th>
+      </tr>
+      <tr>
+        <td><b>Pages</b></td>
+        <td>Multiple</td>
+        <td>Single page</td>
+      </tr>
+      <tr>
+        <td><b>Data Source</b></td>
+        <td>One dataset</td>
+        <td>Can pin from multiple datasets</td>
+      </tr>
+      <tr>
+        <td><b>Interactivity</b></td>
+        <td>High</td>
+        <td>Limited (pinned tiles)</td>
+      </tr>
+      <tr>
+        <td><b>Editable</b></td>
+        <td>Yes (Desktop/Service)</td>
+        <td>No (tiles are pinned views)</td>
+      </tr>
+      <tr>
+        <td><b>Best for</b></td>
+        <td>Analysis</td>
+        <td>Monitoring KPIs</td>
+      </tr>
+    </table>
+    <p><b>Shortcut:</b> Reports = explore. Dashboards = watch.</p>
+    <hr/>
+    <h2 id="refresh">9) Refresh &amp; Performance</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Concept</th>
+        <th style="width:78%">Explanation</th>
+      </tr>
+      <tr>
+        <td><b>Import Mode</b></td>
+        <td>Data stored in Power BI for fast visuals</td>
+      </tr>
+      <tr>
+        <td><b>DirectQuery</b></td>
+        <td>Queries run live against the source database</td>
+      </tr>
+      <tr>
+        <td><b>Scheduled Refresh</b></td>
+        <td>Automatic updates at set times in Service</td>
+      </tr>
+      <tr>
+        <td><b>Incremental Refresh</b></td>
+        <td>Refresh only new/changed data (better for big datasets)</td>
+      </tr>
+      <tr>
+        <td><b>Gateway</b></td>
+        <td>Required to refresh on-prem data sources in the cloud</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="layout">10) Beginner Dashboard Layout Template</h2>
+    <table>
+      <tr>
+        <th style="width:22%">Section</th>
+        <th style="width:78%">What to put there</th>
+      </tr>
+      <tr>
+        <td><b>Header</b></td>
+        <td>Title + logo + last refresh time</td>
+      </tr>
+      <tr>
+        <td><b>KPIs</b></td>
+        <td>Cards: Total Sales, Profit, Orders, SLA</td>
+      </tr>
+      <tr>
+        <td><b>Trends</b></td>
+        <td>Line/column: trend over time</td>
+      </tr>
+      <tr>
+        <td><b>Breakdown</b></td>
+        <td>Bar/treemap: top categories, top contributors</td>
+      </tr>
+      <tr>
+        <td><b>Details</b></td>
+        <td>Table/matrix: drillable details</td>
+      </tr>
+      <tr>
+        <td><b>Filters</b></td>
+        <td>Slicers on the left or top (keep few)</td>
+      </tr>
+    </table>
+    <hr/>
+    <h2 id="mistakes">11) Common Beginner Mistakes (And Better Choices)</h2>
+    <table>
+      <tr>
+        <th style="width:48%">Mistake</th>
+        <th style="width:52%">Better choice</th>
+      </tr>
+      <tr>
+        <td>Pie chart with 10 slices</td>
+        <td>Treemap or bar chart</td>
+      </tr>
+      <tr>
+        <td>Too many visuals on one page</td>
+        <td>Focus on KPIs + 2–4 supporting visuals</td>
+      </tr>
+      <tr>
+        <td>Using tables for trends</td>
+        <td>Line or column chart</td>
+      </tr>
+      <tr>
+        <td>Gauge everywhere</td>
+        <td>KPI visual or card + target indicator</td>
+      </tr>
+      <tr>
+        <td>Confusing time vs category axes</td>
+        <td>Separate: trend chart for time, bar for categories</td>
+      </tr>
+    </table>
+    <footer>
+ Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print. 
+    </footer>
+  </body>
+</html>

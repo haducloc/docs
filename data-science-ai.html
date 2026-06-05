@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI / Data Science Cheat Sheet for Software Developers</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9e2ec;
+      --accent: #2563eb;
+      --accent-soft: #e8f0ff;
+      --code-bg: #101827;
+      --code-ink: #e5e7eb;
+      --table-head: #eef4ff;
+      --section-bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      color: white;
+      padding: 42px;
+      border-radius: 22px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2.45rem;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 1.08rem;
+      max-width: 850px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+    }
+
+    nav h2 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+      color: #0f172a;
+    }
+
+    nav ol {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    nav li {
+      margin: 7px 0;
+      font-size: 0.93rem;
+    }
+
+    nav a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 34px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    section {
+      padding: 22px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      line-height: 1.2;
+      color: #0f172a;
+      margin: 0 0 16px;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      color: #1e3a8a;
+      margin: 26px 0 12px;
+    }
+
+    h4 {
+      font-size: 1.08rem;
+      color: #0f172a;
+      margin: 22px 0 10px;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    .note {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .quote {
+      background: #f8fafc;
+      border-left: 5px solid #94a3b8;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-style: italic;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 16px 18px;
+      border-radius: 14px;
+      overflow-x: auto;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 22px;
+      font-size: 0.96rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--table-head);
+      color: #0f172a;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background: #fcfdff;
+    }
+
+    ul, ol {
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--section-bg);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero, nav, main {
+        box-shadow: none;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      nav {
+        position: static;
+        max-height: none;
+        margin-bottom: 20px;
+      }
+
+      section {
+        page-break-inside: avoid;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+        max-height: none;
+      }
+
+      main {
+        padding: 24px;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <h1>AI / Data Science Cheat Sheet for Software Developers</h1>
+      <p>A practical, logically ordered reference covering data science, traditional machine learning, deep learning, generative AI, RAG, AI agents, tools, workflows, metrics, and real-world examples.</p>
+    </header>
+
+    <div class="layout">
+      <nav aria-label="Table of contents">
+        <h2>Table of Contents</h2>
+        <ol>
+          <li><a href="#big-picture">Big Picture</a></li>
+          <li><a href="#core-terms">Core Terms</a></li>
+          <li><a href="#workflow">Data Science Workflow</a></li>
+          <li><a href="#model-building">Model-Building / Training Process</a></li>
+          <li><a href="#ml-types">Types of Machine Learning</a></li>
+          <li><a href="#traditional-algorithms">Traditional Algorithms</a></li>
+          <li><a href="#modern-ai">Modern AI / Deep Learning Models</a></li>
+          <li><a href="#generative-ai">Generative AI Concepts</a></li>
+          <li><a href="#ai-agents">AI Agents</a></li>
+          <li><a href="#model-selection">Model Selection: When to Use What</a></li>
+          <li><a href="#metrics">Metrics Cheat Sheet</a></li>
+          <li><a href="#important-concepts">Important Concepts</a></li>
+          <li><a href="#tools">Tools Cheat Sheet</a></li>
+          <li><a href="#real-world">Real-World Examples</a></li>
+          <li><a href="#comparison">Traditional ML vs Deep Learning vs LLM</a></li>
+          <li><a href="#learning-order">Practical Learning Order</a></li>
+          <li><a href="#decision-tree">Simple Decision Tree</a></li>
+          <li><a href="#projects">Best Beginner Projects</a></li>
+          <li><a href="#default-stack">Recommended Default Stack</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <section id="big-picture">
+          <h2>1. Big Picture</h2>
+          <pre><code>Data Science
+├── Data analysis
+├── Statistics
+├── Machine learning
+│   ├── Supervised learning
+│   ├── Unsupervised learning
+│   └── Reinforcement learning
+├── Deep learning
+├── Generative AI
+├── RAG
+├── AI agents
+└── MLOps</code></pre>
+
+          <p><strong>Data Science</strong> is about using data to understand, predict, explain, or automate decisions.</p>
+          <p><strong>Machine Learning</strong> means a model learns patterns from examples instead of being manually programmed.</p>
+          <p><strong>Deep Learning</strong> is machine learning using neural networks.</p>
+          <p><strong>Generative AI</strong> creates new content: text, code, images, audio, video.</p>
+          <p><strong>AI Agents</strong> are AI systems that can reason, call tools, search files, use APIs, write code, or perform multi-step tasks.</p>
+        </section>
+
+        <section id="core-terms">
+          <h2>2. Core Terms</h2>
+          <table>
+            <thead>
+              <tr><th>Term</th><th>Meaning</th><th>Developer analogy</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Dataset</td><td>Collection of examples</td><td>Table, JSON array, logs</td></tr>
+              <tr><td>Row / sample</td><td>One example</td><td>One object/record</td></tr>
+              <tr><td>Feature</td><td>Input variable</td><td>Field / property</td></tr>
+              <tr><td>Label / target</td><td>Correct answer</td><td>Expected output</td></tr>
+              <tr><td>Model</td><td>Learned function</td><td>Function generated from data</td></tr>
+              <tr><td>Training</td><td>Learning from examples</td><td>Build process</td></tr>
+              <tr><td>Inference</td><td>Using the model</td><td>Runtime prediction</td></tr>
+              <tr><td>Loss</td><td>Error score during training</td><td>Test failure score</td></tr>
+              <tr><td>Metric</td><td>Human-facing quality score</td><td>Accuracy, F1, RMSE</td></tr>
+              <tr><td>Epoch</td><td>One pass through training data</td><td>One full loop</td></tr>
+              <tr><td>Batch</td><td>Small group of training examples</td><td>Chunk of records</td></tr>
+              <tr><td>Parameter</td><td>Learned internal value</td><td>Model weight</td></tr>
+              <tr><td>Hyperparameter</td><td>Manually configured setting</td><td>Config option</td></tr>
+              <tr><td>Overfitting</td><td>Model memorizes training data</td><td>Works in dev, fails in prod</td></tr>
+              <tr><td>Underfitting</td><td>Model too simple</td><td>Bad everywhere</td></tr>
+              <tr><td>Embedding</td><td>Numeric vector representing meaning</td><td>Semantic fingerprint</td></tr>
+              <tr><td>Token</td><td>Text unit for LLMs</td><td>Word/subword chunk</td></tr>
+              <tr><td>Prompt</td><td>Input instruction to LLM</td><td>API request</td></tr>
+              <tr><td>RAG</td><td>LLM + search/retrieval</td><td>Chatbot with database/docs</td></tr>
+              <tr><td>Fine-tuning</td><td>Further train an existing model</td><td>Customize behavior</td></tr>
+              <tr><td>Agent</td><td>LLM + tools + loop</td><td>AI-powered service worker</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="workflow">
+          <h2>3. Data Science Workflow</h2>
+          <pre><code>Business problem
+→ Data collection
+→ Data cleaning
+→ Exploratory data analysis
+→ Feature engineering
+→ Train/test split
+→ Model selection
+→ Training
+→ Evaluation
+→ Tuning
+→ Deployment
+→ Monitoring</code></pre>
+
+          <div class="quote">Example: Predict whether a customer will cancel subscription.</div>
+
+          <table>
+            <thead>
+              <tr><th>Step</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Problem</td><td>Predict churn</td></tr>
+              <tr><td>Data</td><td>payments, usage, login history</td></tr>
+              <tr><td>Features</td><td>monthly usage, failed payments, account age</td></tr>
+              <tr><td>Label</td><td>canceled yes/no</td></tr>
+              <tr><td>Model</td><td>logistic regression, random forest, XGBoost</td></tr>
+              <tr><td>Metric</td><td>precision, recall, F1, AUC</td></tr>
+              <tr><td>Deployment</td><td>REST API</td></tr>
+              <tr><td>Monitoring</td><td>drift, bad predictions, latency</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="model-building">
+          <h2>4. Model-Building / Training Process</h2>
+
+          <h3>Step 1: Define the problem</h3>
+          <table>
+            <thead><tr><th>Question</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>What are we predicting?</td><td>Fraud or not fraud</td></tr>
+              <tr><td>Is it classification or regression?</td><td>Classification</td></tr>
+              <tr><td>What data is available?</td><td>Transactions</td></tr>
+              <tr><td>What is success?</td><td>Catch 95% of fraud</td></tr>
+              <tr><td>What is costly?</td><td>False positives annoy customers</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Step 2: Collect data</h3>
+          <table>
+            <thead><tr><th>Source</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Database</td><td>SQL Server, PostgreSQL</td></tr>
+              <tr><td>Logs</td><td>application logs</td></tr>
+              <tr><td>APIs</td><td>payment provider API</td></tr>
+              <tr><td>Files</td><td>CSV, Excel, JSON</td></tr>
+              <tr><td>Documents</td><td>PDFs, Word docs</td></tr>
+              <tr><td>Images</td><td>camera/photos</td></tr>
+              <tr><td>User behavior</td><td>clicks, searches</td></tr>
+            </tbody>
+          </table>
+          <p>Bad data usually causes bad models.</p>
+
+          <h3>Step 3: Clean data</h3>
+          <table>
+            <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td>Missing values</td><td>fill, remove, impute</td></tr>
+              <tr><td>Duplicate rows</td><td>remove duplicates</td></tr>
+              <tr><td>Wrong types</td><td>convert string to date/number</td></tr>
+              <tr><td>Outliers</td><td>inspect/remove/cap</td></tr>
+              <tr><td>Inconsistent labels</td><td>normalize values</td></tr>
+              <tr><td>Bad text</td><td>trim, lowercase, normalize</td></tr>
+            </tbody>
+          </table>
+          <pre><code>" YES ", "Yes", "yes", "Y"
+→ normalize to true</code></pre>
+
+          <h3>Step 4: Exploratory Data Analysis</h3>
+          <p>EDA means understanding the data before modeling.</p>
+          <table>
+            <thead><tr><th>Check</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td>Row count</td><td>Enough data?</td></tr>
+              <tr><td>Missing values</td><td>Data quality</td></tr>
+              <tr><td>Class balance</td><td>Fraud may be rare</td></tr>
+              <tr><td>Distributions</td><td>Detect skew/outliers</td></tr>
+              <tr><td>Correlations</td><td>Find useful features</td></tr>
+              <tr><td>Leakage</td><td>Avoid cheating</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Tool</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td>pandas</td><td>inspect data</td></tr>
+              <tr><td>matplotlib</td><td>charts</td></tr>
+              <tr><td>seaborn</td><td>statistical plots</td></tr>
+              <tr><td>Jupyter</td><td>interactive analysis</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Step 5: Feature engineering</h3>
+          <p>Feature engineering means creating useful inputs.</p>
+          <table>
+            <thead><tr><th>Raw data</th><th>Better feature</th></tr></thead>
+            <tbody>
+              <tr><td>Date</td><td>day of week, month, holiday</td></tr>
+              <tr><td>Login records</td><td>logins last 7 days</td></tr>
+              <tr><td>Address</td><td>distance to office</td></tr>
+              <tr><td>Text</td><td>TF-IDF or embedding</td></tr>
+              <tr><td>Transaction history</td><td>average amount, max amount</td></tr>
+              <tr><td>User actions</td><td>number of clicks</td></tr>
+            </tbody>
+          </table>
+          <p>For traditional ML, feature engineering is very important.</p>
+          <p>For deep learning and LLMs, models can learn more features automatically, but good input design still matters.</p>
+
+          <h3>Step 6: Split data</h3>
+          <table>
+            <thead><tr><th>Split</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Training set</td><td>Fit model</td></tr>
+              <tr><td>Validation set</td><td>Tune model</td></tr>
+              <tr><td>Test set</td><td>Final unbiased evaluation</td></tr>
+            </tbody>
+          </table>
+          <pre><code>70% training
+15% validation
+15% test</code></pre>
+          <p>For time series, do <strong>not</strong> randomly shuffle future and past.</p>
+          <pre><code>past data → train
+future data → test</code></pre>
+
+          <h3>Step 7: Choose baseline model</h3>
+          <p>Always start simple.</p>
+          <table>
+            <thead><tr><th>Problem</th><th>Good baseline</th></tr></thead>
+            <tbody>
+              <tr><td>Regression</td><td>Linear regression</td></tr>
+              <tr><td>Classification</td><td>Logistic regression</td></tr>
+              <tr><td>Tabular data</td><td>Random forest / XGBoost</td></tr>
+              <tr><td>Text classification</td><td>TF-IDF + logistic regression</td></tr>
+              <tr><td>Forecasting</td><td>seasonal average</td></tr>
+              <tr><td>Image</td><td>pretrained CNN</td></tr>
+              <tr><td>Document Q&A</td><td>basic RAG</td></tr>
+            </tbody>
+          </table>
+          <p>A simple baseline tells you whether complex models are actually helping.</p>
+
+          <h3>Step 8: Train model</h3>
+          <p>Training means the algorithm adjusts internal parameters to reduce error.</p>
+          <p>For traditional ML:</p>
+          <pre><code>model.fit(X_train, y_train)</code></pre>
+          <p>For deep learning:</p>
+          <pre><code>for each epoch:
+    for each batch:
+        predict
+        calculate loss
+        backpropagate
+        update weights</code></pre>
+          <p class="small">PyTorch tutorials cover loading data, building neural networks, training, visualization, and saving models.</p>
+
+          <h3>Step 9: Evaluate model</h3>
+          <p>Use metrics that match the business problem.</p>
+          <table>
+            <thead><tr><th>Metric</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td>Recall</td><td>Catch fraud</td></tr>
+              <tr><td>Precision</td><td>Avoid false alarms</td></tr>
+              <tr><td>F1</td><td>Balance precision/recall</td></tr>
+              <tr><td>AUC</td><td>Ranking quality</td></tr>
+            </tbody>
+          </table>
+          <p>Do not rely only on accuracy if data is imbalanced.</p>
+          <pre><code>99% transactions are not fraud.
+A model that always says "not fraud" has 99% accuracy.
+But it is useless.</code></pre>
+
+          <h3>Step 10: Tune model</h3>
+          <p>Tuning means changing hyperparameters.</p>
+          <table>
+            <thead><tr><th>Model</th><th>Hyperparameters</th></tr></thead>
+            <tbody>
+              <tr><td>Random Forest</td><td>number of trees, max depth</td></tr>
+              <tr><td>XGBoost</td><td>learning rate, depth, estimators</td></tr>
+              <tr><td>Neural Network</td><td>layers, learning rate, batch size</td></tr>
+              <tr><td>LLM RAG</td><td>chunk size, top-k retrieval, prompt</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Technique</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Grid search</td><td>Try all combinations</td></tr>
+              <tr><td>Random search</td><td>Try random combinations</td></tr>
+              <tr><td>Bayesian optimization</td><td>Smarter search</td></tr>
+              <tr><td>Cross-validation</td><td>Train/test multiple splits</td></tr>
+            </tbody>
+          </table>
+          <p class="small">Scikit-learn includes tools for model selection, validation, supervised learning, unsupervised learning, preprocessing, and metrics.</p>
+
+          <h3>Step 11: Deploy model</h3>
+          <table>
+            <thead><tr><th>Style</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Batch job</td><td>Score customers nightly</td></tr>
+              <tr><td>REST API</td><td><code>/predict</code> endpoint</td></tr>
+              <tr><td>Streaming</td><td>Real-time fraud detection</td></tr>
+              <tr><td>Embedded</td><td>Mobile app model</td></tr>
+              <tr><td>LLM app</td><td>Chat endpoint with tools</td></tr>
+            </tbody>
+          </table>
+          <p>Typical developer stack:</p>
+          <pre><code>FastAPI
+Docker
+PostgreSQL
+Redis
+MLflow
+Cloud service
+Monitoring</code></pre>
+
+          <h3>Step 12: Monitor model</h3>
+          <p>After deployment, models can degrade.</p>
+          <table>
+            <thead><tr><th>Issue</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Data drift</td><td>Input data changes</td></tr>
+              <tr><td>Concept drift</td><td>Relationship changes</td></tr>
+              <tr><td>Latency</td><td>Model too slow</td></tr>
+              <tr><td>Cost</td><td>Inference too expensive</td></tr>
+              <tr><td>Accuracy drop</td><td>Predictions worse</td></tr>
+              <tr><td>Bias/fairness</td><td>Bad behavior for groups</td></tr>
+              <tr><td>Hallucination</td><td>LLM makes unsupported claims</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="ml-types">
+          <h2>5. Types of Machine Learning</h2>
+
+          <h3>A. Supervised Learning</h3>
+          <p>You have examples with correct answers.</p>
+          <pre><code>Input X → known label y</code></pre>
+          <table>
+            <thead><tr><th>Input</th><th>Label</th></tr></thead>
+            <tbody>
+              <tr><td>Email text</td><td>spam/not spam</td></tr>
+              <tr><td>House features</td><td>price</td></tr>
+              <tr><td>Transaction</td><td>fraud/not fraud</td></tr>
+              <tr><td>Image</td><td>cat/dog</td></tr>
+            </tbody>
+          </table>
+          <p>Use supervised learning when you have historical examples.</p>
+          <p class="small">Scikit-learn’s supervised learning section includes linear models, SVMs, nearest neighbors, decision trees, ensembles, feature selection, calibration, and neural network models.</p>
+
+          <h3>B. Unsupervised Learning</h3>
+          <p>You have data but no labels.</p>
+          <table>
+            <thead><tr><th>Task</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Clustering</td><td>group similar customers</td></tr>
+              <tr><td>Dimensionality reduction</td><td>compress features</td></tr>
+              <tr><td>Anomaly detection</td><td>detect strange activity</td></tr>
+              <tr><td>Topic grouping</td><td>group documents</td></tr>
+            </tbody>
+          </table>
+          <p>Use unsupervised learning when you want to discover structure.</p>
+
+          <h3>C. Reinforcement Learning</h3>
+          <p>An agent learns by interacting with an environment.</p>
+          <pre><code>state → action → reward → new state</code></pre>
+          <table>
+            <thead><tr><th>Use case</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Game AI</td><td>AlphaGo</td></tr>
+              <tr><td>Robotics</td><td>robot movement</td></tr>
+              <tr><td>Routing</td><td>warehouse optimization</td></tr>
+              <tr><td>Ads</td><td>bidding strategy</td></tr>
+            </tbody>
+          </table>
+          <p>Use reinforcement learning when decisions happen over time and rewards come later.</p>
+        </section>
+
+        <section id="traditional-algorithms">
+          <h2>6. Traditional Algorithms</h2>
+
+          <h3>Regression</h3>
+          <p>Regression predicts a number.</p>
+          <table>
+            <thead><tr><th>Problem</th><th>Target</th></tr></thead>
+            <tbody>
+              <tr><td>House price</td><td>dollars</td></tr>
+              <tr><td>Temperature</td><td>degrees</td></tr>
+              <tr><td>Sales forecast</td><td>units</td></tr>
+              <tr><td>Delivery time</td><td>minutes</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Model</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td>Linear Regression</td><td>relationship is simple</td></tr>
+              <tr><td>Ridge</td><td>many features, reduce overfitting</td></tr>
+              <tr><td>Lasso</td><td>want feature selection</td></tr>
+              <tr><td>Elastic Net</td><td>mix Ridge + Lasso</td></tr>
+              <tr><td>Decision Tree Regressor</td><td>nonlinear rules</td></tr>
+              <tr><td>Random Forest Regressor</td><td>strong baseline</td></tr>
+              <tr><td>Gradient Boosting</td><td>high accuracy</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Classification</h3>
+          <p>Classification predicts a category.</p>
+          <table>
+            <thead><tr><th>Problem</th><th>Target</th></tr></thead>
+            <tbody>
+              <tr><td>Spam detection</td><td>spam/not spam</td></tr>
+              <tr><td>Fraud detection</td><td>fraud/not fraud</td></tr>
+              <tr><td>Disease prediction</td><td>sick/not sick</td></tr>
+              <tr><td>Document routing</td><td>category</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Model</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td>Logistic Regression</td><td>simple, explainable</td></tr>
+              <tr><td>Naive Bayes</td><td>text/spam</td></tr>
+              <tr><td>Decision Tree</td><td>business rules</td></tr>
+              <tr><td>Random Forest</td><td>general tabular data</td></tr>
+              <tr><td>XGBoost/LightGBM</td><td>best for structured data</td></tr>
+              <tr><td>SVM</td><td>medium-sized data</td></tr>
+              <tr><td>Neural Network</td><td>large complex data</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Clustering</h3>
+          <p>Clustering groups similar things.</p>
+          <table>
+            <thead><tr><th>Use</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Customer segmentation</td><td>budget, premium, inactive</td></tr>
+              <tr><td>Document grouping</td><td>topics</td></tr>
+              <tr><td>Image grouping</td><td>similar photos</td></tr>
+              <tr><td>Behavior grouping</td><td>user patterns</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Model</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td>k-Means</td><td>simple clusters</td></tr>
+              <tr><td>DBSCAN</td><td>irregular clusters</td></tr>
+              <tr><td>HDBSCAN</td><td>unknown cluster count</td></tr>
+              <tr><td>Hierarchical</td><td>tree-like grouping</td></tr>
+              <tr><td>Gaussian Mixture</td><td>probability-based clusters</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Dimensionality Reduction</h3>
+          <p>Reduces many features into fewer features.</p>
+          <table>
+            <thead><tr><th>Use</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Visualization</td><td>100 dimensions → 2D</td></tr>
+              <tr><td>Compression</td><td>reduce storage</td></tr>
+              <tr><td>Noise reduction</td><td>remove weak signals</td></tr>
+              <tr><td>Preprocessing</td><td>simplify model</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Model</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td>PCA</td><td>general numeric compression</td></tr>
+              <tr><td>t-SNE</td><td>visualization</td></tr>
+              <tr><td>UMAP</td><td>visualization/embeddings</td></tr>
+              <tr><td>Autoencoder</td><td>neural compression</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Time Series</h3>
+          <p>Time series data is ordered by time.</p>
+          <table>
+            <thead><tr><th>Data</th><th>Prediction</th></tr></thead>
+            <tbody>
+              <tr><td>daily sales</td><td>next week sales</td></tr>
+              <tr><td>CPU usage</td><td>next hour usage</td></tr>
+              <tr><td>traffic</td><td>tomorrow volume</td></tr>
+              <tr><td>electricity</td><td>next month demand</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Model</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td>Moving Average</td><td>simple smoothing</td></tr>
+              <tr><td>ARIMA</td><td>classical forecasting</td></tr>
+              <tr><td>Prophet</td><td>business seasonality</td></tr>
+              <tr><td>XGBoost with lag features</td><td>practical strong baseline</td></tr>
+              <tr><td>LSTM</td><td>sequence learning</td></tr>
+              <tr><td>Transformer</td><td>complex forecasting</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="modern-ai">
+          <h2>7. Modern AI / Deep Learning Models</h2>
+
+          <h3>Neural Networks</h3>
+          <p>A neural network learns complex patterns through layers.</p>
+          <pre><code>input layer
+→ hidden layers
+→ output layer</code></pre>
+          <table>
+            <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Weight</td><td>learned number</td></tr>
+              <tr><td>Bias</td><td>learned offset</td></tr>
+              <tr><td>Activation</td><td>nonlinear function</td></tr>
+              <tr><td>Backpropagation</td><td>learning algorithm</td></tr>
+              <tr><td>Optimizer</td><td>updates weights</td></tr>
+              <tr><td>Learning rate</td><td>update size</td></tr>
+            </tbody>
+          </table>
+
+          <h3>CNN — Convolutional Neural Network</h3>
+          <p>Best for image-like data.</p>
+          <table>
+            <thead><tr><th>Task</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Image classification</td><td>cat/dog</td></tr>
+              <tr><td>Object detection</td><td>cars, people</td></tr>
+              <tr><td>Medical imaging</td><td>tumor detection</td></tr>
+              <tr><td>OCR</td><td>reading scanned forms</td></tr>
+              <tr><td>Quality inspection</td><td>defective products</td></tr>
+            </tbody>
+          </table>
+
+          <h3>RNN / LSTM / GRU</h3>
+          <p>Older sequence models.</p>
+          <table>
+            <thead><tr><th>Task</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Time series</td><td>sensor data</td></tr>
+              <tr><td>Text sequence</td><td>old NLP</td></tr>
+              <tr><td>Speech</td><td>audio sequence</td></tr>
+              <tr><td>Event logs</td><td>sequence prediction</td></tr>
+            </tbody>
+          </table>
+          <p>Today, transformers often replace them.</p>
+
+          <h3>Transformer</h3>
+          <p>The foundation of modern AI.</p>
+          <table>
+            <thead><tr><th>Task</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Text generation</td><td>ChatGPT</td></tr>
+              <tr><td>Code generation</td><td>Copilot-style tools</td></tr>
+              <tr><td>Summarization</td><td>document summary</td></tr>
+              <tr><td>Translation</td><td>English → Vietnamese</td></tr>
+              <tr><td>Search</td><td>semantic retrieval</td></tr>
+              <tr><td>Vision-language</td><td>image understanding</td></tr>
+            </tbody>
+          </table>
+          <p>Transformers are powerful because they use <strong>attention</strong>, which helps the model focus on relevant parts of the input.</p>
+
+          <h3>LLM — Large Language Model</h3>
+          <p>LLMs are transformer-based models trained on massive text/code data.</p>
+          <table>
+            <thead><tr><th>Task</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Writing</td><td>emails, docs</td></tr>
+              <tr><td>Coding</td><td>generate/debug code</td></tr>
+              <tr><td>Summarizing</td><td>long documents</td></tr>
+              <tr><td>Explaining</td><td>technical concepts</td></tr>
+              <tr><td>Extraction</td><td>pull fields from text</td></tr>
+              <tr><td>Reasoning</td><td>multi-step problems</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>Weakness</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Hallucination</td><td>invents facts</td></tr>
+              <tr><td>Stale knowledge</td><td>may not know latest info</td></tr>
+              <tr><td>Math mistakes</td><td>unless using tools</td></tr>
+              <tr><td>Security risk</td><td>prompt injection</td></tr>
+              <tr><td>Cost</td><td>tokens/API calls</td></tr>
+              <tr><td>Non-determinism</td><td>different answers</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="generative-ai">
+          <h2>8. Generative AI Concepts</h2>
+
+          <h3>Prompt Engineering</h3>
+          <pre><code>Role: You are a senior data scientist.
+Task: Explain XGBoost.
+Context: I am a software developer.
+Format: Use tables and examples.
+Constraints: Avoid heavy math.</code></pre>
+          <table>
+            <thead><tr><th>Pattern</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Role</td><td>“Act as a data scientist”</td></tr>
+              <tr><td>Context</td><td>“I know Java but not ML”</td></tr>
+              <tr><td>Task</td><td>“Explain when to use clustering”</td></tr>
+              <tr><td>Format</td><td>“Use table + examples”</td></tr>
+              <tr><td>Constraints</td><td>“No heavy math”</td></tr>
+              <tr><td>Examples</td><td>“Follow this sample format”</td></tr>
+            </tbody>
+          </table>
+
+          <h3>RAG — Retrieval-Augmented Generation</h3>
+          <p>RAG combines search with an LLM.</p>
+          <pre><code>User asks question
+→ retrieve relevant docs
+→ send docs to LLM
+→ answer using docs</code></pre>
+          <table>
+            <thead><tr><th>Situation</th><th>Use RAG</th></tr></thead>
+            <tbody>
+              <tr><td>private company docs</td><td>yes</td></tr>
+              <tr><td>policies/procedures</td><td>yes</td></tr>
+              <tr><td>changing information</td><td>yes</td></tr>
+              <tr><td>internal code docs</td><td>yes</td></tr>
+              <tr><td>huge knowledge base</td><td>yes</td></tr>
+            </tbody>
+          </table>
+          <pre><code>documents
+→ chunking
+→ embeddings
+→ vector database
+→ retrieval
+→ prompt
+→ LLM answer
+→ citations/evaluation</code></pre>
+
+          <h3>Fine-tuning</h3>
+          <p>Fine-tuning trains an existing model further.</p>
+          <table>
+            <thead><tr><th>Good use</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>style</td><td>always answer in company format</td></tr>
+              <tr><td>classification</td><td>classify ticket type</td></tr>
+              <tr><td>structured output</td><td>produce strict JSON</td></tr>
+              <tr><td>repeated behavior</td><td>domain-specific tone</td></tr>
+            </tbody>
+          </table>
+          <p>Usually do <strong>not</strong> use fine-tuning to add changing company knowledge. Use RAG for that.</p>
+        </section>
+
+        <section id="ai-agents">
+          <h2>9. AI Agents</h2>
+          <p>An AI agent is:</p>
+          <pre><code>LLM
++ instructions
++ tools
++ memory/state
++ planning
++ validation</code></pre>
+          <p>OpenAI describes function/tool calling as a way for models to interface with external systems and access data outside their training data.</p>
+          <table>
+            <thead><tr><th>Tool</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Search</td><td>search documents/web</td></tr>
+              <tr><td>Database</td><td>run SQL</td></tr>
+              <tr><td>Code execution</td><td>run Python</td></tr>
+              <tr><td>API calls</td><td>create ticket</td></tr>
+              <tr><td>File tools</td><td>read/write files</td></tr>
+              <tr><td>Browser</td><td>interact with websites</td></tr>
+              <tr><td>Email/calendar</td><td>schedule/respond</td></tr>
+            </tbody>
+          </table>
+          <p>OpenAI’s Agents SDK documentation describes tools as ways for agents to take actions such as fetching data, running code, calling APIs, using a computer, wrapping functions, or calling other agents.</p>
+        </section>
+
+        <section id="model-selection">
+          <h2>10. Model Selection: When to Use What</h2>
+          <table>
+            <thead><tr><th>Problem</th><th>Start with</th></tr></thead>
+            <tbody>
+              <tr><td>Structured table prediction</td><td>XGBoost / LightGBM / Random Forest</td></tr>
+              <tr><td>Simple numeric prediction</td><td>Linear Regression</td></tr>
+              <tr><td>Binary classification</td><td>Logistic Regression</td></tr>
+              <tr><td>Text classification</td><td>TF-IDF + Logistic Regression</td></tr>
+              <tr><td>Image classification</td><td>CNN / Vision Transformer</td></tr>
+              <tr><td>Document Q&A</td><td>RAG + LLM</td></tr>
+              <tr><td>Chatbot</td><td>LLM</td></tr>
+              <tr><td>Company knowledge assistant</td><td>RAG + LLM</td></tr>
+              <tr><td>Code assistant</td><td>LLM + tools</td></tr>
+              <tr><td>Forecasting</td><td>Baseline + ARIMA/Prophet/XGBoost</td></tr>
+              <tr><td>Anomaly detection</td><td>Isolation Forest</td></tr>
+              <tr><td>Recommendation</td><td>Collaborative filtering / embeddings</td></tr>
+              <tr><td>Search</td><td>Embeddings + vector database</td></tr>
+              <tr><td>Multi-step automation</td><td>AI agent</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="metrics">
+          <h2>11. Metrics Cheat Sheet</h2>
+
+          <h3>Classification</h3>
+          <table>
+            <thead><tr><th>Metric</th><th>Meaning</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td>Accuracy</td><td>overall correct</td><td>balanced classes</td></tr>
+              <tr><td>Precision</td><td>predicted positives that are correct</td><td>avoid false positives</td></tr>
+              <tr><td>Recall</td><td>actual positives found</td><td>avoid false negatives</td></tr>
+              <tr><td>F1</td><td>precision/recall balance</td><td>imbalanced data</td></tr>
+              <tr><td>ROC-AUC</td><td>ranking quality</td><td>binary classification</td></tr>
+              <tr><td>Confusion Matrix</td><td>TP/FP/TN/FN</td><td>debug errors</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Regression</h3>
+          <table>
+            <thead><tr><th>Metric</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>MAE</td><td>average absolute error</td></tr>
+              <tr><td>MSE</td><td>squared error</td></tr>
+              <tr><td>RMSE</td><td>error in original unit</td></tr>
+              <tr><td>R²</td><td>variance explained</td></tr>
+            </tbody>
+          </table>
+
+          <h3>LLM / RAG</h3>
+          <table>
+            <thead><tr><th>Metric</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Faithfulness</td><td>answer supported by sources</td></tr>
+              <tr><td>Relevance</td><td>answer matches question</td></tr>
+              <tr><td>Retrieval recall</td><td>found correct documents</td></tr>
+              <tr><td>Hallucination rate</td><td>unsupported claims</td></tr>
+              <tr><td>Latency</td><td>response speed</td></tr>
+              <tr><td>Cost</td><td>token/API cost</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="important-concepts">
+          <h2>12. Important Concepts</h2>
+
+          <h3>Bias-Variance Tradeoff</h3>
+          <table>
+            <thead><tr><th>Problem</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>High bias</td><td>model too simple</td></tr>
+              <tr><td>High variance</td><td>model overfits</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Regularization</h3>
+          <p>Reduces overfitting.</p>
+          <table>
+            <thead><tr><th>Type</th><th>Used in</th></tr></thead>
+            <tbody>
+              <tr><td>L1</td><td>Lasso</td></tr>
+              <tr><td>L2</td><td>Ridge</td></tr>
+              <tr><td>Dropout</td><td>neural networks</td></tr>
+              <tr><td>Early stopping</td><td>boosting/deep learning</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Data Leakage</h3>
+          <p>Data leakage means the model sees information it should not know.</p>
+          <div class="quote">Example: Predict loan default using a field that is only created after default.</div>
+          <p>This gives fake high accuracy.</p>
+
+          <h3>Cross-validation</h3>
+          <p>Cross-validation tests a model on multiple train/test splits.</p>
+          <p>Useful when data is limited.</p>
+
+          <h3>Class imbalance</h3>
+          <pre><code>Fraud = 1%
+Not fraud = 99%</code></pre>
+          <p>Accuracy becomes misleading.</p>
+          <pre><code>precision
+recall
+F1
+AUC</code></pre>
+        </section>
+
+        <section id="tools">
+          <h2>13. Tools Cheat Sheet</h2>
+
+          <h3>Python Data Science</h3>
+          <table>
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>NumPy</td><td>numeric arrays</td></tr>
+              <tr><td>pandas</td><td>tables/dataframes</td></tr>
+              <tr><td>Matplotlib</td><td>charts</td></tr>
+              <tr><td>Seaborn</td><td>statistical charts</td></tr>
+              <tr><td>scikit-learn</td><td>traditional ML</td></tr>
+              <tr><td>XGBoost</td><td>strong tabular models</td></tr>
+              <tr><td>LightGBM</td><td>fast gradient boosting</td></tr>
+              <tr><td>statsmodels</td><td>statistics</td></tr>
+              <tr><td>Jupyter</td><td>notebooks</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Deep Learning</h3>
+          <table>
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>PyTorch</td><td>deep learning</td></tr>
+              <tr><td>TensorFlow/Keras</td><td>deep learning</td></tr>
+              <tr><td>Hugging Face Transformers</td><td>pretrained models</td></tr>
+              <tr><td>CUDA</td><td>GPU acceleration</td></tr>
+              <tr><td>TensorBoard</td><td>training visualization</td></tr>
+            </tbody>
+          </table>
+
+          <h3>LLM / GenAI</h3>
+          <table>
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>OpenAI API</td><td>LLMs, embeddings, tools</td></tr>
+              <tr><td>LangChain</td><td>agents/RAG</td></tr>
+              <tr><td>LlamaIndex</td><td>document/RAG apps</td></tr>
+              <tr><td>Semantic Kernel</td><td>Microsoft agent framework</td></tr>
+              <tr><td>Haystack</td><td>search/RAG</td></tr>
+              <tr><td>Ollama</td><td>local models</td></tr>
+              <tr><td>vLLM</td><td>serve open LLMs</td></tr>
+              <tr><td>pgvector</td><td>vector search in PostgreSQL</td></tr>
+              <tr><td>Qdrant</td><td>vector database</td></tr>
+              <tr><td>Pinecone</td><td>managed vector DB</td></tr>
+              <tr><td>Weaviate</td><td>vector DB</td></tr>
+              <tr><td>Milvus</td><td>vector DB</td></tr>
+            </tbody>
+          </table>
+
+          <h3>MLOps</h3>
+          <table>
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>MLflow</td><td>experiment tracking, model registry</td></tr>
+              <tr><td>DVC</td><td>data/model versioning</td></tr>
+              <tr><td>Airflow</td><td>pipelines</td></tr>
+              <tr><td>Kubeflow</td><td>ML workflows</td></tr>
+              <tr><td>Docker</td><td>packaging</td></tr>
+              <tr><td>Kubernetes</td><td>deployment</td></tr>
+              <tr><td>Prometheus/Grafana</td><td>monitoring</td></tr>
+            </tbody>
+          </table>
+          <p class="small">MLflow supports experiment tracking, model evaluation, model registry, deployment, LLM tracing, prompt management, and agent evaluation.</p>
+        </section>
+
+        <section id="real-world">
+          <h2>14. Real-World Examples</h2>
+
+          <h3>Fraud Detection</h3>
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th></tr></thead>
+            <tbody>
+              <tr><td>Data</td><td>transactions</td></tr>
+              <tr><td>Model</td><td>XGBoost, Random Forest</td></tr>
+              <tr><td>Metric</td><td>recall, precision</td></tr>
+              <tr><td>Challenge</td><td>imbalanced data</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Recommendation System</h3>
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th></tr></thead>
+            <tbody>
+              <tr><td>Data</td><td>users, items, clicks</td></tr>
+              <tr><td>Model</td><td>collaborative filtering, embeddings</td></tr>
+              <tr><td>Example</td><td>Netflix, Amazon</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Document Chatbot</h3>
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th></tr></thead>
+            <tbody>
+              <tr><td>Data</td><td>PDFs, docs, wiki</td></tr>
+              <tr><td>Model</td><td>RAG + LLM</td></tr>
+              <tr><td>Tools</td><td>embeddings, vector DB, LLM</td></tr>
+              <tr><td>Example</td><td>internal company assistant</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Image Inspection</h3>
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th></tr></thead>
+            <tbody>
+              <tr><td>Data</td><td>product images</td></tr>
+              <tr><td>Model</td><td>CNN / Vision Transformer</td></tr>
+              <tr><td>Example</td><td>detect defects</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Code Assistant</h3>
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th></tr></thead>
+            <tbody>
+              <tr><td>Model</td><td>LLM</td></tr>
+              <tr><td>Tools</td><td>repo search, tests, terminal</td></tr>
+              <tr><td>Example</td><td>generate code, fix bugs, explain PRs</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="comparison">
+          <h2>15. Traditional ML vs Deep Learning vs LLM</h2>
+          <table>
+            <thead>
+              <tr><th>Category</th><th>Traditional ML</th><th>Deep Learning</th><th>LLM / GenAI</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Best data</td><td>tables</td><td>images/audio/text</td><td>text/code/docs</td></tr>
+              <tr><td>Data needed</td><td>small-medium</td><td>large</td><td>pretrained</td></tr>
+              <tr><td>Interpretability</td><td>higher</td><td>lower</td><td>medium-low</td></tr>
+              <tr><td>Cost</td><td>low</td><td>medium-high</td><td>API/GPU cost</td></tr>
+              <tr><td>Speed</td><td>fast</td><td>medium</td><td>depends</td></tr>
+              <tr><td>Example</td><td>fraud model</td><td>image classifier</td><td>chatbot</td></tr>
+              <tr><td>Start here?</td><td>yes</td><td>later</td><td>yes for apps</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="learning-order">
+          <h2>16. Practical Learning Order</h2>
+          <p>For you as a software developer:</p>
+          <ol>
+            <li>Python basics for data</li>
+            <li>pandas / NumPy</li>
+            <li>Statistics basics</li>
+            <li>Data visualization</li>
+            <li>Supervised learning</li>
+            <li>Model evaluation</li>
+            <li>Feature engineering</li>
+            <li>Tree models / XGBoost</li>
+            <li>Unsupervised learning</li>
+            <li>Deep learning basics</li>
+            <li>Transformers / LLMs</li>
+            <li>Embeddings / vector search</li>
+            <li>RAG</li>
+            <li>AI agents</li>
+            <li>MLOps / deployment</li>
+          </ol>
+        </section>
+
+        <section id="decision-tree">
+          <h2>17. Simple Decision Tree</h2>
+          <pre><code>Do you have labels?
+├── Yes
+│   ├── Predict number? → Regression
+│   └── Predict category? → Classification
+│
+├── No
+│   ├── Find groups? → Clustering
+│   ├── Reduce features? → PCA/UMAP
+│   └── Find unusual records? → Anomaly detection
+│
+├── Need text/code generation?
+│   └── LLM
+│
+├── Need answer from private docs?
+│   └── RAG
+│
+└── Need multi-step tool-using automation?
+    └── AI agent</code></pre>
+        </section>
+
+        <section id="projects">
+          <h2>18. Best Beginner Projects</h2>
+          <table>
+            <thead><tr><th>Project</th><th>What you learn</th></tr></thead>
+            <tbody>
+              <tr><td>House price predictor</td><td>regression</td></tr>
+              <tr><td>Spam detector</td><td>classification</td></tr>
+              <tr><td>Customer segmentation</td><td>clustering</td></tr>
+              <tr><td>Sales forecast</td><td>time series</td></tr>
+              <tr><td>PDF Q&A chatbot</td><td>RAG</td></tr>
+              <tr><td>Code review assistant</td><td>LLM + tools</td></tr>
+              <tr><td>Log anomaly detector</td><td>anomaly detection</td></tr>
+              <tr><td>Resume parser</td><td>NLP + extraction</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="default-stack">
+          <h2>19. Recommended Default Stack</h2>
+          <p>For a software developer starting today:</p>
+          <table>
+            <thead><tr><th>Need</th><th>Stack</th></tr></thead>
+            <tbody>
+              <tr><td>Data analysis</td><td>Python, pandas, Jupyter</td></tr>
+              <tr><td>Traditional ML</td><td>scikit-learn</td></tr>
+              <tr><td>Best tabular models</td><td>XGBoost / LightGBM</td></tr>
+              <tr><td>Deep learning</td><td>PyTorch</td></tr>
+              <tr><td>LLM app</td><td>OpenAI API or other LLM API</td></tr>
+              <tr><td>RAG</td><td>LlamaIndex or LangChain</td></tr>
+              <tr><td>Vector search</td><td>pgvector or Qdrant</td></tr>
+              <tr><td>Experiment tracking</td><td>MLflow</td></tr>
+              <tr><td>Deployment</td><td>FastAPI + Docker</td></tr>
+              <tr><td>Monitoring</td><td>logs + metrics + evaluation set</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

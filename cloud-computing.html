@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Cloud Computing Cheatsheet</title>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+<span id="top" style="display:none;"></span>
+<div class="toplink"><a href="https://haducloc.github.io/docs/">🏠 Docs Home</a></div>
+<h1>Cloud Computing Cheatsheet</h1>
+
+
+
+<p class="subtitle">Beginner → Intermediate → Advanced → Cloud Engineer</p>
+<div class="note small"><strong>Purpose:</strong> Quick reference for cloud fundamentals, service models, deployment models, providers, networking, security, high availability, disaster recovery, cloud-native architecture, DevOps, observability, FinOps, and cloud engineer interview preparation.</div>
+<div class="toc"><h3>Table of Contents</h3><ol>
+<li><a href="#part-1-cloud-fundamentals">PART 1 — CLOUD FUNDAMENTALS</a><ul>
+<li><a href="#what-is-cloud-computing">What is Cloud Computing?</a></li>
+</ul></li>
+<li><a href="#part-2-essential-cloud-characteristics">PART 2 — ESSENTIAL CLOUD CHARACTERISTICS</a><ul>
+</ul></li>
+<li><a href="#part-3-cloud-service-models">PART 3 — CLOUD SERVICE MODELS</a><ul>
+<li><a href="#iaas-infrastructure-as-a-service">IaaS (Infrastructure as a Service)</a></li>
+<li><a href="#paas-platform-as-a-service">PaaS (Platform as a Service)</a></li>
+<li><a href="#saas-software-as-a-service">SaaS (Software as a Service)</a></li>
+<li><a href="#faas-serverless">FaaS / Serverless</a></li>
+</ul></li>
+<li><a href="#part-4-cloud-deployment-models">PART 4 — CLOUD DEPLOYMENT MODELS</a><ul>
+<li><a href="#public-cloud">Public Cloud</a></li>
+<li><a href="#private-cloud">Private Cloud</a></li>
+<li><a href="#hybrid-cloud">Hybrid Cloud</a></li>
+<li><a href="#multi-cloud">Multi-Cloud</a></li>
+</ul></li>
+<li><a href="#part-5-cloud-providers">PART 5 — CLOUD PROVIDERS</a><ul>
+<li><a href="#aws">AWS</a></li>
+<li><a href="#azure">Azure</a></li>
+<li><a href="#google-cloud-platform-gcp">Google Cloud Platform (GCP)</a></li>
+</ul></li>
+<li><a href="#part-6-aws-azure-gcp-service-mapping">PART 6 — AWS, AZURE, GCP SERVICE MAPPING</a><ul>
+</ul></li>
+<li><a href="#part-7-virtualization">PART 7 — VIRTUALIZATION</a><ul>
+<li><a href="#what-is-virtualization">What is Virtualization?</a></li>
+<li><a href="#hypervisor">Hypervisor</a></li>
+<li><a href="#virtual-machine">Virtual Machine</a></li>
+</ul></li>
+<li><a href="#part-8-compute-services">PART 8 — COMPUTE SERVICES</a><ul>
+</ul></li>
+<li><a href="#part-9-storage-services">PART 9 — STORAGE SERVICES</a><ul>
+<li><a href="#object-storage">Object Storage</a></li>
+<li><a href="#block-storage">Block Storage</a></li>
+<li><a href="#file-storage">File Storage</a></li>
+</ul></li>
+<li><a href="#part-10-networking-fundamentals">PART 10 — NETWORKING FUNDAMENTALS</a><ul>
+<li><a href="#vpc-virtual-private-cloud">VPC (Virtual Private Cloud)</a></li>
+<li><a href="#subnet">Subnet</a></li>
+<li><a href="#public-subnet">Public Subnet</a></li>
+<li><a href="#private-subnet">Private Subnet</a></li>
+</ul></li>
+<li><a href="#part-11-advanced-networking">PART 11 — ADVANCED NETWORKING</a><ul>
+<li><a href="#cidr">CIDR</a></li>
+<li><a href="#routing-tables">Routing Tables</a></li>
+<li><a href="#internet-gateway-igw">Internet Gateway (IGW)</a></li>
+<li><a href="#nat-gateway">NAT Gateway</a></li>
+<li><a href="#vpc-peering">VPC Peering</a></li>
+<li><a href="#transit-gateway">Transit Gateway</a></li>
+</ul></li>
+<li><a href="#part-12-dns">PART 12 — DNS</a><ul>
+<li><a href="#dns">DNS</a></li>
+</ul></li>
+<li><a href="#part-13-vpn">PART 13 — VPN</a><ul>
+</ul></li>
+<li><a href="#part-14-load-balancing">PART 14 — LOAD BALANCING</a><ul>
+</ul></li>
+<li><a href="#part-15-identity-and-access-management-iam">PART 15 — IDENTITY &amp; ACCESS MANAGEMENT (IAM)</a><ul>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#authorization">Authorization</a></li>
+<li><a href="#least-privilege">Least Privilege</a></li>
+</ul></li>
+<li><a href="#part-16-cloud-security">PART 16 — CLOUD SECURITY</a><ul>
+<li><a href="#shared-responsibility-model">Shared Responsibility Model</a></li>
+<li><a href="#encryption">Encryption</a></li>
+<li><a href="#security-groups">Security Groups</a></li>
+<li><a href="#network-acl">Network ACL</a></li>
+<li><a href="#mfa">MFA</a></li>
+</ul></li>
+<li><a href="#part-17-deep-security">PART 17 — DEEP SECURITY</a><ul>
+<li><a href="#zero-trust">Zero Trust</a></li>
+<li><a href="#pki">PKI</a></li>
+<li><a href="#tls-certificates">TLS Certificates</a></li>
+<li><a href="#oauth2">OAuth2</a></li>
+<li><a href="#oidc-openid-connect">OIDC (OpenID Connect)</a></li>
+<li><a href="#saml">SAML</a></li>
+<li><a href="#secrets-management">Secrets Management</a></li>
+</ul></li>
+<li><a href="#part-18-high-availability">PART 18 — HIGH AVAILABILITY</a><ul>
+<li><a href="#availability-zone-az">Availability Zone (AZ)</a></li>
+<li><a href="#region">Region</a></li>
+</ul></li>
+<li><a href="#part-19-disaster-recovery">PART 19 — DISASTER RECOVERY</a><ul>
+<li><a href="#backup">Backup</a></li>
+<li><a href="#rpo">RPO</a></li>
+<li><a href="#rto">RTO</a></li>
+<li><a href="#dr-strategies">DR Strategies</a></li>
+</ul></li>
+<li><a href="#part-20-containers">PART 20 — CONTAINERS</a><ul>
+<li><a href="#container">Container</a></li>
+<li><a href="#docker">Docker</a></li>
+</ul></li>
+<li><a href="#part-21-kubernetes">PART 21 — KUBERNETES</a><ul>
+<li><a href="#pod">Pod</a></li>
+<li><a href="#service">Service</a></li>
+<li><a href="#ingress">Ingress</a></li>
+</ul></li>
+<li><a href="#part-22-cloud-native-architecture">PART 22 — CLOUD NATIVE ARCHITECTURE</a><ul>
+<li><a href="#monolith">Monolith</a></li>
+<li><a href="#microservices">Microservices</a></li>
+<li><a href="#twelve-factor-apps">Twelve-Factor Apps</a></li>
+</ul></li>
+<li><a href="#part-23-message-queues">PART 23 — MESSAGE QUEUES</a><ul>
+<li><a href="#queue-pattern">Queue Pattern</a></li>
+</ul></li>
+<li><a href="#part-24-event-driven-architecture">PART 24 — EVENT DRIVEN ARCHITECTURE</a><ul>
+</ul></li>
+<li><a href="#part-25-pub-sub">PART 25 — PUB/SUB</a><ul>
+</ul></li>
+<li><a href="#part-26-caching">PART 26 — CACHING</a><ul>
+</ul></li>
+<li><a href="#part-27-cdn">PART 27 — CDN</a><ul>
+</ul></li>
+<li><a href="#part-28-serverless">PART 28 — SERVERLESS</a><ul>
+</ul></li>
+<li><a href="#part-29-databases">PART 29 — DATABASES</a><ul>
+</ul></li>
+<li><a href="#part-30-infrastructure-as-code">PART 30 — INFRASTRUCTURE AS CODE</a><ul>
+<li><a href="#why-iac">Why IaC?</a></li>
+<li><a href="#terraform">Terraform</a></li>
+<li><a href="#cloudformation">CloudFormation</a></li>
+<li><a href="#bicep">Bicep</a></li>
+</ul></li>
+<li><a href="#part-31-devops-and-ci-cd">PART 31 — DEVOPS &amp; CI/CD</a><ul>
+</ul></li>
+<li><a href="#part-32-observability">PART 32 — OBSERVABILITY</a><ul>
+</ul></li>
+<li><a href="#part-33-monitoring-and-logging">PART 33 — MONITORING &amp; LOGGING</a><ul>
+</ul></li>
+<li><a href="#part-34-finops">PART 34 — FINOPS</a><ul>
+</ul></li>
+<li><a href="#part-35-real-world-enterprise-architecture">PART 35 — REAL WORLD ENTERPRISE ARCHITECTURE</a><ul>
+</ul></li>
+<li><a href="#part-36-common-cloud-patterns">PART 36 — COMMON CLOUD PATTERNS</a><ul>
+</ul></li>
+<li><a href="#part-37-interview-preparation">PART 37 — INTERVIEW PREPARATION</a><ul>
+<li><a href="#what-is-cloud-computing-2">What is Cloud Computing?</a></li>
+<li><a href="#what-is-a-vpc">What is a VPC?</a></li>
+<li><a href="#what-is-kubernetes">What is Kubernetes?</a></li>
+<li><a href="#what-is-iam">What is IAM?</a></li>
+<li><a href="#difference-between-vm-and-container">Difference Between VM and Container</a></li>
+<li><a href="#vm">Vm</a></li>
+<li><a href="#what-is-high-availability">What is High Availability?</a></li>
+</ul></li>
+<li><a href="#part-38-final-cloud-engineer-mental-model">PART 38 — FINAL CLOUD ENGINEER MENTAL MODEL</a><ul>
+</ul></li>
+</ol></div>
+<div class="part-heading" id="part-1-cloud-fundamentals"><h2>PART 1 — CLOUD FUNDAMENTALS</h2></div>
+<h3 id="what-is-cloud-computing">What is Cloud Computing?</h3>
+
+
+
+
+
+<p>Cloud computing is the delivery of computing resources over the Internet on demand.</p>
+<p>Instead of buying physical servers, organizations rent resources from cloud providers.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Virtual Machines</li>
+<li>Storage</li>
+<li>Databases</li>
+<li>Networking</li>
+<li>AI Services</li>
+<li>Containers</li>
+<li>Serverless Functions</li>
+</ul>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>No physical hardware management</li>
+<li>Pay only for what you use</li>
+<li>Scale quickly</li>
+<li>Global availability</li>
+<li>Built-in redundancy</li>
+<li>Faster deployment</li>
+</ul>
+<p><strong>Mental Model:</strong></p>
+<p>Cloud Computing</p>
+<p>Renting IT infrastructure and services over the Internet.</p>
+<div class="part-heading" id="part-2-essential-cloud-characteristics"><h2>PART 2 — ESSENTIAL CLOUD CHARACTERISTICS</h2></div>
+
+
+
+
+<ol>
+<li>On-Demand Self Service</li>
+</ol>
+<p>Create resources whenever needed.</p>
+<ol>
+<li>Broad Network Access</li>
+</ol>
+<p>Available from anywhere.</p>
+<ol>
+<li>Resource Pooling</li>
+</ol>
+<p>Resources shared among many customers.</p>
+<ol>
+<li>Elasticity</li>
+</ol>
+<p>Scale up or down automatically.</p>
+<ol>
+<li>Measured Service</li>
+</ol>
+<p>Pay-as-you-go billing.</p>
+<div class="part-heading" id="part-3-cloud-service-models"><h2>PART 3 — CLOUD SERVICE MODELS</h2></div>
+<h3 id="iaas-infrastructure-as-a-service">IaaS (Infrastructure as a Service)</h3>
+
+
+
+
+
+<p><strong>You Manage:</strong></p>
+<ul>
+<li>Applications</li>
+<li>Data</li>
+<li>Runtime</li>
+<li>OS</li>
+</ul>
+<p><strong>Provider Manages:</strong></p>
+<ul>
+<li>Servers</li>
+<li>Networking</li>
+<li>Storage</li>
+<li>Datacenter</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>AWS EC2</li>
+<li>Azure VM</li>
+<li>Google Compute Engine</li>
+</ul>
+<h3 id="paas-platform-as-a-service">PaaS (Platform as a Service)</h3>
+
+
+
+
+
+<p><strong>You Manage:</strong></p>
+<ul>
+<li>Application</li>
+<li>Code</li>
+</ul>
+<p><strong>Provider Manages:</strong></p>
+<ul>
+<li>Runtime</li>
+<li>OS</li>
+<li>Infrastructure</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Azure App Service</li>
+<li>Google App Engine</li>
+<li>AWS Elastic Beanstalk</li>
+</ul>
+<h3 id="saas-software-as-a-service">SaaS (Software as a Service)</h3>
+
+
+
+
+
+<p>Provider manages everything.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Microsoft 365</li>
+<li>Salesforce</li>
+<li>Google Workspace</li>
+<li>ChatGPT</li>
+</ul>
+<h3 id="faas-serverless">FaaS / Serverless</h3>
+
+
+
+
+
+<p>Run code without managing servers.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>AWS Lambda</li>
+<li>Azure Functions</li>
+<li>Google Cloud Functions</li>
+</ul>
+<div class="part-heading" id="part-4-cloud-deployment-models"><h2>PART 4 — CLOUD DEPLOYMENT MODELS</h2></div>
+<h3 id="public-cloud">Public Cloud</h3>
+
+
+
+
+<p>Infrastructure owned by cloud provider.</p>
+<p><strong>Examples:</strong></p>
+<p>AWS Azure GCP</p>
+<h3 id="private-cloud">Private Cloud</h3>
+
+
+
+
+<p>Infrastructure owned by organization.</p>
+<h3 id="hybrid-cloud">Hybrid Cloud</h3>
+
+
+
+
+<p><strong>Combination of:</strong></p>
+<p>On-Premises + Cloud</p>
+<h3 id="multi-cloud">Multi-Cloud</h3>
+
+
+
+
+<p>Using multiple cloud providers.</p>
+<p><strong>Example:</strong></p>
+<p>AWS + Azure AWS + GCP AWS + Azure + GCP</p>
+<div class="part-heading" id="part-5-cloud-providers"><h2>PART 5 — CLOUD PROVIDERS</h2></div>
+<h3 id="aws">AWS</h3>
+
+
+
+
+<p>Amazon Web Services</p>
+<p>Largest cloud provider.</p>
+<h3 id="azure">Azure</h3>
+
+
+
+
+<p>Microsoft Cloud Platform</p>
+<p>Strong enterprise adoption.</p>
+<h3 id="google-cloud-platform-gcp">Google Cloud Platform (GCP)</h3>
+
+
+
+
+<p>Google's cloud platform.</p>
+<p><strong>Strong in:</strong></p>
+<ul>
+<li>Data</li>
+<li>AI</li>
+<li>Kubernetes</li>
+</ul>
+<div class="part-heading" id="part-6-aws-azure-gcp-service-mapping"><h2>PART 6 — AWS, AZURE, GCP SERVICE MAPPING</h2></div>
+<table>
+<thead><tr>
+<th>Category</th>
+<th>AWS</th>
+<th>Azure</th>
+<th>GCP</th>
+</tr></thead><tbody>
+<tr>
+<td>VM</td>
+<td>EC2</td>
+<td>Virtual Machine</td>
+<td>Compute Engine</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>EKS</td>
+<td>AKS</td>
+<td>GKE</td>
+</tr>
+<tr>
+<td>Object Storage</td>
+<td>S3</td>
+<td>Blob Storage</td>
+<td>Cloud Storage</td>
+</tr>
+<tr>
+<td>Managed SQL</td>
+<td>RDS</td>
+<td>Azure SQL</td>
+<td>Cloud SQL</td>
+</tr>
+<tr>
+<td>NoSQL</td>
+<td>DynamoDB</td>
+<td>Cosmos DB</td>
+<td>Firestore</td>
+</tr>
+<tr>
+<td>Load Balancer</td>
+<td>ELB</td>
+<td>Azure LB</td>
+<td>Cloud Load Balancing</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Route53</td>
+<td>Azure DNS</td>
+<td>Cloud DNS</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td>CloudFront</td>
+<td>Azure CDN</td>
+<td>Cloud CDN</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>CloudWatch</td>
+<td>Azure Monitor</td>
+<td>Cloud Monitoring</td>
+</tr>
+<tr>
+<td>Secrets</td>
+<td>Secrets Manager</td>
+<td>Key Vault</td>
+<td>Secret Manager</td>
+</tr>
+</tbody></table>
+<p><strong>Mental Model:</strong></p>
+<p>AWS Azure GCP</p>
+<p>Different names Same concepts</p>
+<div class="part-heading" id="part-7-virtualization"><h2>PART 7 — VIRTUALIZATION</h2></div>
+<h3 id="what-is-virtualization">What is Virtualization?</h3>
+
+
+
+
+<p>Allows multiple virtual machines to run on one physical server.</p>
+<h3 id="hypervisor">Hypervisor</h3>
+
+
+
+
+
+<p>Software that creates VMs.</p>
+<p><strong>Examples:</strong></p>
+<p>VMware Hyper-V KVM</p>
+<p><strong>Architecture:</strong></p>
+<p>Physical Server</p>
+<pre class="code-block"><code>↓
+   Hypervisor
+       ↓
+ VM1 VM2 VM3 VM4</code></pre>
+<h3 id="virtual-machine">Virtual Machine</h3>
+
+
+
+
+
+<p>A complete operating system running on virtual hardware.</p>
+<p><strong>Contains:</strong></p>
+<ul>
+<li>Kernel</li>
+<li>Drivers</li>
+<li>Applications</li>
+</ul>
+<div class="part-heading" id="part-8-compute-services"><h2>PART 8 — COMPUTE SERVICES</h2></div>
+
+
+
+
+<p>Virtual Machines Containers Kubernetes Serverless Batch Jobs GPU Instances</p>
+<div class="part-heading" id="part-9-storage-services"><h2>PART 9 — STORAGE SERVICES</h2></div>
+<h3 id="object-storage">Object Storage</h3>
+
+
+
+
+
+<p><strong>Examples:</strong></p>
+<p>AWS S3 Azure Blob Google Cloud Storage</p>
+<p><strong>Used For:</strong></p>
+<ul>
+<li>Images</li>
+<li>Videos</li>
+<li>Backups</li>
+<li>Documents</li>
+</ul>
+<h3 id="block-storage">Block Storage</h3>
+
+
+
+
+
+<p>Acts like a hard drive.</p>
+<p><strong>Examples:</strong></p>
+<p>AWS EBS Azure Managed Disk GCP Persistent Disk</p>
+<h3 id="file-storage">File Storage</h3>
+
+
+
+
+
+<p>Shared file systems.</p>
+<p><strong>Examples:</strong></p>
+<p>AWS EFS Azure Files Filestore</p>
+<div class="part-heading" id="part-10-networking-fundamentals"><h2>PART 10 — NETWORKING FUNDAMENTALS</h2></div>
+<h3 id="vpc-virtual-private-cloud">VPC (Virtual Private Cloud)</h3>
+
+
+
+
+<p>Your private network in the cloud.</p>
+<p><strong>Architecture:</strong></p>
+<p>Region</p>
+<pre class="code-block"><code>│
+  └── VPC
+       ├── Public Subnet
+       └── Private Subnet</code></pre>
+<h3 id="subnet">Subnet</h3>
+
+
+
+
+<p>Smaller network inside VPC.</p>
+<h3 id="public-subnet">Public Subnet</h3>
+
+
+
+
+<p>Accessible from Internet.</p>
+<h3 id="private-subnet">Private Subnet</h3>
+
+
+
+
+<p>No direct Internet access.</p>
+<div class="part-heading" id="part-11-advanced-networking"><h2>PART 11 — ADVANCED NETWORKING</h2></div>
+<h3 id="cidr">CIDR</h3>
+
+
+
+
+<p><strong>Example:</strong></p>
+<p>10.0.0.0/24</p>
+<p><strong>Meaning:</strong></p>
+<p>10.0.0.0 = Network Address /24      = Prefix Length</p>
+<p><strong>Range:</strong></p>
+<p>10.0.0.1 ... 10.0.0.254</p>
+<p><strong>Common Private Ranges:</strong></p>
+<p>10.0.0.0/8</p>
+<p>172.16.0.0/12</p>
+<p>192.168.0.0/16</p>
+<h3 id="routing-tables">Routing Tables</h3>
+
+
+
+
+<p>Determine where traffic goes.</p>
+<p><strong>Example:</strong></p>
+<p>Destination       Target</p>
+<p>0.0.0.0/0         Internet Gateway 10.0.0.0/16       Local</p>
+<h3 id="internet-gateway-igw">Internet Gateway (IGW)</h3>
+
+
+
+
+<p>Provides Internet access.</p>
+<p>Internet</p>
+<pre class="code-block"><code>│
+   IGW
+    │
+ Public Subnet</code></pre>
+<h3 id="nat-gateway">NAT Gateway</h3>
+
+
+
+
+<p>Allows private servers to access Internet.</p>
+<p>Private Server</p>
+<pre class="code-block"><code>│
+ NAT Gateway
+      │
+  Internet
+
+Important:
+
+Inbound = No
+Outbound = Yes</code></pre>
+<h3 id="vpc-peering">VPC Peering</h3>
+
+
+
+
+<p>Connects two VPCs.</p>
+<pre class="code-block"><code>VPC A &lt;-----&gt; VPC B</code></pre>
+<h3 id="transit-gateway">Transit Gateway</h3>
+
+
+
+
+<p>Enterprise network hub.</p>
+<pre class="code-block"><code>TGW
+      /  |  \
+    VPC VPC VPC</code></pre>
+<div class="part-heading" id="part-12-dns"><h2>PART 12 — DNS</h2></div>
+<h3 id="dns">DNS</h3>
+
+
+
+
+
+<p>Domain Name System</p>
+<p><strong>Converts:</strong></p>
+<p>google.com</p>
+<p>into</p>
+<p>IP Address</p>
+<div class="part-heading" id="part-13-vpn"><h2>PART 13 — VPN</h2></div>
+
+
+
+
+
+
+<p>Secure encrypted tunnel between networks.</p>
+<p><strong>Examples:</strong></p>
+<pre class="code-block"><code>Office ↔ AWS
+Office ↔ Azure
+Office ↔ GCP</code></pre>
+<div class="part-heading" id="part-14-load-balancing"><h2>PART 14 — LOAD BALANCING</h2></div>
+
+
+
+
+
+<p>Distributes traffic.</p>
+<p>Users</p>
+<pre class="code-block"><code>│
+Load Balancer
+ /    |    \
+App1 App2 App3
+
+Benefits:</code></pre>
+<ul>
+<li>High Availability</li>
+<li>Scalability</li>
+<li>Fault Tolerance</li>
+</ul>
+<div class="part-heading" id="part-15-identity-and-access-management-iam"><h2>PART 15 — IDENTITY &amp; ACCESS MANAGEMENT (IAM)</h2></div>
+<h3 id="authentication">Authentication</h3>
+
+
+
+
+<p>Who are you?</p>
+<h3 id="authorization">Authorization</h3>
+
+
+
+
+<p>What are you allowed to do?</p>
+<h3 id="least-privilege">Least Privilege</h3>
+
+
+
+
+<p>Give only required permissions.</p>
+<div class="part-heading" id="part-16-cloud-security"><h2>PART 16 — CLOUD SECURITY</h2></div>
+<h3 id="shared-responsibility-model">Shared Responsibility Model</h3>
+
+
+
+
+
+<p><strong>Provider:</strong></p>
+<ul>
+<li>Physical Security</li>
+<li>Hardware</li>
+<li>Datacenter</li>
+</ul>
+<p><strong>Customer:</strong></p>
+<ul>
+<li>Data</li>
+<li>IAM</li>
+<li>Applications</li>
+<li>Configurations</li>
+</ul>
+<h3 id="encryption">Encryption</h3>
+
+
+
+
+
+<p>At Rest</p>
+<p>Data stored encrypted.</p>
+<p>In Transit</p>
+<p>HTTPS / TLS encryption.</p>
+<h3 id="security-groups">Security Groups</h3>
+
+
+
+
+<p>Virtual firewall.</p>
+<h3 id="network-acl">Network ACL</h3>
+
+
+
+
+<p>Subnet-level firewall.</p>
+<h3 id="mfa">MFA</h3>
+
+
+
+
+<p>Multi-Factor Authentication</p>
+<div class="part-heading" id="part-17-deep-security"><h2>PART 17 — DEEP SECURITY</h2></div>
+<h3 id="zero-trust">Zero Trust</h3>
+
+
+
+
+<p><strong>Traditional:</strong></p>
+<p>Inside Network = Trusted</p>
+<p><strong>Modern:</strong></p>
+<p>Trust Nothing Verify Everything</p>
+<h3 id="pki">PKI</h3>
+
+
+
+
+<p>Public Key Infrastructure</p>
+<p><strong>Components:</strong></p>
+<ul>
+<li>Certificate Authority</li>
+<li>Public Key</li>
+<li>Private Key</li>
+<li>Certificates</li>
+</ul>
+<h3 id="tls-certificates">TLS Certificates</h3>
+
+
+
+
+<p>Used by HTTPS.</p>
+<p><strong>Provides:</strong></p>
+<ul>
+<li>Encryption</li>
+<li>Integrity</li>
+<li>Identity</li>
+</ul>
+<h3 id="oauth2">OAuth2</h3>
+
+
+
+
+<p>Authorization Framework.</p>
+<p><strong>Example:</strong></p>
+<p>Login with Google</p>
+<p><strong>Flow:</strong></p>
+<p>User</p>
+<pre class="code-block"><code>↓
+Google
+ ↓
+Token
+ ↓
+Application</code></pre>
+<h3 id="oidc-openid-connect">OIDC (OpenID Connect)</h3>
+
+
+
+
+<p>Identity layer on top of OAuth2.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Azure AD</li>
+<li>Okta</li>
+<li>Auth0</li>
+<li>Keycloak</li>
+</ul>
+<h3 id="saml">SAML</h3>
+
+
+
+
+<p>Enterprise SSO protocol.</p>
+<p><strong>Used heavily in:</strong></p>
+<ul>
+<li>Government</li>
+<li>Healthcare</li>
+<li>Enterprises</li>
+</ul>
+<h3 id="secrets-management">Secrets Management</h3>
+
+
+
+
+<p><strong>Never hardcode:</strong></p>
+<ul>
+<li>Passwords</li>
+<li>API Keys</li>
+<li>Certificates</li>
+</ul>
+<p><strong>Use:</strong></p>
+<ul>
+<li>AWS Secrets Manager</li>
+<li>Azure Key Vault</li>
+<li>Google Secret Manager</li>
+</ul>
+<div class="part-heading" id="part-18-high-availability"><h2>PART 18 — HIGH AVAILABILITY</h2></div>
+<h3 id="availability-zone-az">Availability Zone (AZ)</h3>
+
+
+
+
+<p>Independent datacenter.</p>
+<h3 id="region">Region</h3>
+
+
+
+
+<p>Geographical location.</p>
+<p>Region</p>
+<pre class="code-block"><code>├── AZ1
+ ├── AZ2
+ └── AZ3</code></pre>
+<div class="part-heading" id="part-19-disaster-recovery"><h2>PART 19 — DISASTER RECOVERY</h2></div>
+<h3 id="backup">Backup</h3>
+
+
+
+
+<p>Copy of data.</p>
+<h3 id="rpo">RPO</h3>
+
+
+
+
+<p>Recovery Point Objective</p>
+<p>Maximum acceptable data loss.</p>
+<p><strong>Example:</strong></p>
+<p>RPO = 15 minutes</p>
+<h3 id="rto">RTO</h3>
+
+
+
+
+<p>Recovery Time Objective</p>
+<p>Maximum acceptable downtime.</p>
+<p><strong>Example:</strong></p>
+<p>RTO = 1 hour</p>
+<h3 id="dr-strategies">DR Strategies</h3>
+
+
+
+
+<ol>
+<li>Backup &amp; Restore</li>
+<li>Pilot Light</li>
+<li>Warm Standby</li>
+<li>Active-Passive</li>
+<li>Active-Active</li>
+</ol>
+<div class="part-heading" id="part-20-containers"><h2>PART 20 — CONTAINERS</h2></div>
+<h3 id="container">Container</h3>
+
+
+
+
+
+<p>Lightweight application runtime.</p>
+<h3 id="docker">Docker</h3>
+
+
+
+
+<p>Most popular container platform.</p>
+<div class="part-heading" id="part-21-kubernetes"><h2>PART 21 — KUBERNETES</h2></div>
+<p>Container Orchestration Platform</p>
+<p>Cluster</p>
+<pre class="code-block"><code>├── Node1
+ ├── Node2
+ └── Node3</code></pre>
+<h3 id="pod">Pod</h3>
+
+
+
+
+<p>Smallest deployable unit.</p>
+<h3 id="service">Service</h3>
+
+
+
+
+<p>Stable access to pods.</p>
+<h3 id="ingress">Ingress</h3>
+
+
+
+
+<p>HTTP/HTTPS entry point.</p>
+<div class="part-heading" id="part-22-cloud-native-architecture"><h2>PART 22 — CLOUD NATIVE ARCHITECTURE</h2></div>
+<h3 id="monolith">Monolith</h3>
+
+
+
+
+<p>Application</p>
+<pre class="code-block"><code>├── UI
+ ├── API
+ └── Database</code></pre>
+<h3 id="microservices">Microservices</h3>
+
+
+
+
+<p>User Service Order Service Billing Service Inventory Service</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Independent deployment</li>
+<li>Independent scaling</li>
+<li>Fault isolation</li>
+</ul>
+<h3 id="twelve-factor-apps">Twelve-Factor Apps</h3>
+
+
+
+
+<p><strong>Principles:</strong></p>
+<ul>
+<li>Stateless</li>
+<li>Environment Variables</li>
+<li>Disposable Processes</li>
+<li>Logs as Streams</li>
+</ul>
+<div class="part-heading" id="part-23-message-queues"><h2>PART 23 — MESSAGE QUEUES</h2></div>
+<h3 id="queue-pattern">Queue Pattern</h3>
+
+
+
+
+
+<p>Producer</p>
+<pre class="code-block"><code>↓
+ Queue
+   ↓
+Consumer
+
+Examples:</code></pre>
+<ul>
+<li>SQS</li>
+<li>Service Bus</li>
+<li>RabbitMQ</li>
+<li>Kafka</li>
+<li>Pub/Sub</li>
+</ul>
+<div class="part-heading" id="part-24-event-driven-architecture"><h2>PART 24 — EVENT DRIVEN ARCHITECTURE</h2></div>
+
+
+
+
+
+
+
+<p><strong>Instead of:</strong></p>
+<p>Service A → Service B</p>
+<p><strong>Use:</strong></p>
+<p>Service A publishes event</p>
+<p><strong>Examples:</strong></p>
+<p>OrderCreated UserCreated PaymentCompleted</p>
+<div class="part-heading" id="part-25-pub-sub"><h2>PART 25 — PUB/SUB</h2></div>
+
+
+
+
+
+
+<p>Publisher</p>
+<pre class="code-block"><code>│
+     ▼
+   Topic
+  /  |  \
+S1  S2  S3</code></pre>
+<div class="part-heading" id="part-26-caching"><h2>PART 26 — CACHING</h2></div>
+
+
+
+
+
+
+<p>Database</p>
+<pre class="code-block"><code>↓
+  Cache
+    ↓
+ Application
+
+Examples:
+
+Redis
+Memcached
+
+Benefits:</code></pre>
+<ul>
+<li>Faster responses</li>
+<li>Lower DB load</li>
+</ul>
+<div class="part-heading" id="part-27-cdn"><h2>PART 27 — CDN</h2></div>
+
+
+
+
+
+
+<p>Content Delivery Network</p>
+<p>User</p>
+<pre class="code-block"><code>↓
+Nearest Edge Location
+ ↓
+Content
+
+Examples:
+
+CloudFront
+Azure CDN
+Cloud CDN
+
+Benefits:</code></pre>
+<ul>
+<li>Reduced latency</li>
+<li>Global distribution</li>
+<li>Faster downloads</li>
+</ul>
+<div class="part-heading" id="part-28-serverless"><h2>PART 28 — SERVERLESS</h2></div>
+
+
+
+
+
+
+
+<p>Request</p>
+<pre class="code-block"><code>↓
+Function
+   ↓
+Response
+
+Benefits:</code></pre>
+<ul>
+<li>No server management</li>
+<li>Auto scaling</li>
+<li>Pay per execution</li>
+</ul>
+<div class="part-heading" id="part-29-databases"><h2>PART 29 — DATABASES</h2></div>
+
+
+
+
+<p>Relational</p>
+<p>MySQL PostgreSQL SQL Server</p>
+<p>NoSQL</p>
+<p>MongoDB DynamoDB Firestore</p>
+<p>In-Memory</p>
+<p>Redis</p>
+<p>Data Warehouse</p>
+<p>Snowflake BigQuery Redshift</p>
+<div class="part-heading" id="part-30-infrastructure-as-code"><h2>PART 30 — INFRASTRUCTURE AS CODE</h2></div>
+<h3 id="why-iac">Why IaC?</h3>
+
+
+
+
+<p><strong>Instead of:</strong></p>
+<p>Clicking Portal</p>
+<p><strong>Use:</strong></p>
+<p>Code</p>
+<h3 id="terraform">Terraform</h3>
+
+
+
+
+<p>Multi-cloud IaC.</p>
+<h3 id="cloudformation">CloudFormation</h3>
+
+
+
+
+<p>AWS Native IaC.</p>
+<h3 id="bicep">Bicep</h3>
+
+
+
+
+<p>Azure Native IaC.</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Automation</li>
+<li>Consistency</li>
+<li>Version Control</li>
+<li>Repeatability</li>
+</ul>
+<div class="part-heading" id="part-31-devops-and-ci-cd"><h2>PART 31 — DEVOPS &amp; CI/CD</h2></div>
+
+
+
+
+<p>Developer</p>
+<pre class="code-block"><code>↓
+Git Commit
+    ↓
+CI Pipeline
+    ↓
+Testing
+    ↓
+Deployment
+    ↓
+Production</code></pre>
+<div class="part-heading" id="part-32-observability"><h2>PART 32 — OBSERVABILITY</h2></div>
+
+
+
+
+
+
+<p><strong>Monitoring answers:</strong></p>
+<p>What happened?</p>
+<p><strong>Observability answers:</strong></p>
+<p>Why did it happen?</p>
+<p>Metrics</p>
+<p>CPU Memory Latency Requests</p>
+<p>Logs</p>
+<p>Application Events</p>
+<p>Traces</p>
+<p>User</p>
+<pre class="code-block"><code>↓
+API
+ ↓
+Service A
+ ↓
+Service B
+ ↓
+Database</code></pre>
+<p>Three Pillars</p>
+<p>Metrics Logs Traces</p>
+<div class="part-heading" id="part-33-monitoring-and-logging"><h2>PART 33 — MONITORING &amp; LOGGING</h2></div>
+
+
+
+
+
+
+<p><strong>Includes:</strong></p>
+<ul>
+<li>Dashboards</li>
+<li>Alerts</li>
+<li>Metrics</li>
+<li>Logs</li>
+<li>Traces</li>
+<li>Incident Detection</li>
+</ul>
+<div class="part-heading" id="part-34-finops"><h2>PART 34 — FINOPS</h2></div>
+
+
+
+
+
+<p>Cloud Financial Management</p>
+<p><strong>Goal:</strong></p>
+<p>Control Cloud Spending</p>
+<p>Cost Drivers</p>
+<ul>
+<li>Compute</li>
+<li>Storage</li>
+<li>Databases</li>
+<li>Network Traffic</li>
+<li>Kubernetes</li>
+</ul>
+<p>Optimization</p>
+<ul>
+<li>Auto Scaling</li>
+<li>Right Sizing</li>
+<li>Reserved Instances</li>
+<li>Spot Instances</li>
+<li>Delete Unused Resources</li>
+</ul>
+<div class="part-heading" id="part-35-real-world-enterprise-architecture"><h2>PART 35 — REAL WORLD ENTERPRISE ARCHITECTURE</h2></div>
+
+
+
+
+
+
+<p>Users</p>
+<pre class="code-block"><code>│
+ CDN
+  │
+ WAF
+  │
+ Load Balancer
+  │
+ Kubernetes Cluster
+  │
+ Microservices
+  │
+ Message Queue
+  │
+ Databases
+  │
+ Object Storage
+
+Supporting Services:</code></pre>
+<ul>
+<li>IAM</li>
+<li>Monitoring</li>
+<li>Logging</li>
+<li>Secrets</li>
+<li>Backup</li>
+<li>DR</li>
+<li>CI/CD</li>
+</ul>
+<div class="part-heading" id="part-36-common-cloud-patterns"><h2>PART 36 — COMMON CLOUD PATTERNS</h2></div>
+
+
+
+<p>3-Tier Architecture</p>
+<p>User</p>
+<pre class="code-block"><code>↓
+Web Tier
+ ↓
+Application Tier
+ ↓
+Database Tier</code></pre>
+<p>Microservices Architecture</p>
+<p>Event Driven Architecture</p>
+<p>Serverless Architecture</p>
+<div class="part-heading" id="part-37-interview-preparation"><h2>PART 37 — INTERVIEW PREPARATION</h2></div>
+<h3 id="what-is-cloud-computing-2">What is Cloud Computing?</h3>
+
+
+
+<p>Cloud computing is the on-demand delivery of compute, storage, networking, databases, and managed services over the Internet using a pay-as-you-go model.</p>
+<h3 id="what-is-a-vpc">What is a VPC?</h3>
+
+
+
+<p>A logically isolated network inside a cloud provider.</p>
+<h3 id="what-is-kubernetes">What is Kubernetes?</h3>
+
+
+
+<p>A platform used to deploy, scale, and manage containers.</p>
+<h3 id="what-is-iam">What is IAM?</h3>
+
+
+
+<p>Identity and Access Management.</p>
+<p>Controls who can access resources.</p>
+<h3 id="difference-between-vm-and-container">Difference Between VM and Container</h3>
+
+
+
+<h3 id="vm">Vm</h3>
+
+
+<ul>
+<li>Own OS</li>
+<li>Own Kernel</li>
+</ul>
+<p>Container</p>
+<ul>
+<li>Shared Kernel</li>
+<li>Lightweight</li>
+</ul>
+<h3 id="what-is-high-availability">What is High Availability?</h3>
+
+
+
+
+<p>Designing systems to continue operating despite failures.</p>
+<div class="part-heading" id="part-38-final-cloud-engineer-mental-model"><h2>PART 38 — FINAL CLOUD ENGINEER MENTAL MODEL</h2></div>
+
+
+
+
+
+<p>Users</p>
+<pre class="code-block"><code>↓
+DNS
+  ↓
+CDN
+  ↓
+WAF
+  ↓
+Load Balancer
+  ↓</code></pre>
+<p>Kubernetes / VMs / Serverless</p>
+<pre class="code-block"><code>↓
+Microservices
+  ↓
+Queues / Events
+  ↓
+Databases
+  ↓
+Storage
+
+Across Every Layer:
+
+IAM
+Security
+Monitoring
+Logging
+Observability
+Backup
+Disaster Recovery
+Automation
+FinOps
+Compliance
+
+ONE SENTENCE MENTAL MODEL</code></pre>
+<p>Cloud Computing</p>
+<p>Renting compute, storage, networking, security, platform services, and managed infrastructure on demand instead of owning physical hardware.</p>
+<footer>Tip: In your browser print dialog, enable “Background graphics” if you want shaded headings and callouts to print.</footer>
+</body>
+</html>

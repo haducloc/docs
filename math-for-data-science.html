@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematics for Data Science</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #64748b;
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --accent: #f59e0b;
+      --line: #dbe4ef;
+      --code-bg: #eef4ff;
+      --success: #047857;
+      --danger: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb, #38bdf8);
+      color: white;
+      border-radius: 22px;
+      padding: 42px 36px;
+      box-shadow: 0 20px 50px rgba(30, 58, 138, 0.22);
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      font-size: 1.08rem;
+      max-width: 900px;
+      color: #e0f2fe;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    nav.toc {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    nav.toc h2 {
+      margin-top: 0;
+      color: var(--primary-dark);
+    }
+
+    .toc-grid {
+      columns: 2;
+      column-gap: 36px;
+    }
+
+    .toc-grid a {
+      display: block;
+      break-inside: avoid;
+      color: var(--primary);
+      text-decoration: none;
+      padding: 4px 0;
+      font-weight: 600;
+    }
+
+    .toc-grid a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      margin: 24px 0;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+      font-size: 1.8rem;
+      border-bottom: 3px solid #bfdbfe;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      color: #0f172a;
+      margin-top: 22px;
+      margin-bottom: 8px;
+      font-size: 1.25rem;
+    }
+
+    h4 {
+      margin: 16px 0 6px;
+      color: #334155;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    .formula {
+      background: var(--code-bg);
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-family: "Cambria Math", "Times New Roman", serif;
+      font-size: 1.12rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .example {
+      background: #fffbeb;
+      border-left: 5px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px 0;
+    }
+
+    .real {
+      background: #ecfdf5;
+      border-left: 5px solid var(--success);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px 0;
+    }
+
+    .warning {
+      background: #fef2f2;
+      border-left: 5px solid var(--danger);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      overflow: hidden;
+      border-radius: 12px;
+      font-size: 0.96rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eff6ff;
+      color: var(--primary-dark);
+    }
+
+    code {
+      background: #eef2ff;
+      padding: 2px 5px;
+      border-radius: 5px;
+      font-family: Consolas, monospace;
+    }
+
+    .priority {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      background: #f8fafc;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary-dark);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 28px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+      header, section, nav.toc {
+        box-shadow: none;
+      }
+      nav.toc a {
+        color: black;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .toc-grid {
+        columns: 1;
+      }
+      section, header, nav.toc {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Mathematics for Data Science</h1>
+      <p>This document combines the full original cheat sheet and the missing topics into one complete study roadmap. It covers algebra, logic, set theory, linear algebra, calculus, probability, statistics, optimization, information theory, machine learning math, graph theory, time series, and computational complexity.</p>
+      <div class="badge-row">
+        <span class="badge">Algebra</span>
+        <span class="badge">Linear Algebra</span>
+        <span class="badge">Calculus</span>
+        <span class="badge">Probability</span>
+        <span class="badge">Statistics</span>
+        <span class="badge">Optimization</span>
+        <span class="badge">AI Math</span>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <h2>Table of Contents</h2>
+      <div class="toc-grid">
+        <a href="#foundation">1. Mathematical Foundations</a>
+        <a href="#set-theory">2. Set Theory</a>
+        <a href="#logic">3. Logic</a>
+        <a href="#proofs">4. Proof Methods</a>
+        <a href="#algebra">5. Algebra</a>
+        <a href="#functions">6. Functions</a>
+        <a href="#sequences">7. Sequences & Series</a>
+        <a href="#trigonometry">8. Trigonometry</a>
+        <a href="#linear-algebra">9. Linear Algebra</a>
+        <a href="#calculus">10. Calculus</a>
+        <a href="#numerical">11. Numerical Methods</a>
+        <a href="#probability">12. Probability</a>
+        <a href="#statistics">13. Statistics</a>
+        <a href="#distributions">14. Distributions</a>
+        <a href="#hypothesis">15. Hypothesis Testing</a>
+        <a href="#information-theory">16. Information Theory</a>
+        <a href="#optimization">17. Optimization</a>
+        <a href="#ml-math">18. Machine Learning Math</a>
+        <a href="#dimensionality">19. Dimensionality Reduction</a>
+        <a href="#time-series">20. Time Series</a>
+        <a href="#graph-theory">21. Graph Theory</a>
+        <a href="#complexity">22. Computational Complexity</a>
+        <a href="#ai-preview">23. AI / Deep Learning Preview</a>
+        <a href="#study-plan">24. Suggested Study Order</a>
+      </div>
+    </nav>
+
+    <section id="foundation">
+      <h2>1. Mathematical Foundations</h2>
+      <h3>Core Terms</h3>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Variable</td><td>Unknown or changeable value.</td></tr>
+        <tr><td>Constant</td><td>Fixed value.</td></tr>
+        <tr><td>Function</td><td>Input → output relationship.</td></tr>
+        <tr><td>Domain</td><td>Allowed inputs.</td></tr>
+        <tr><td>Range</td><td>Possible outputs.</td></tr>
+        <tr><td>Equation</td><td>Two expressions are equal.</td></tr>
+        <tr><td>Inequality</td><td>Comparison using &lt;, &gt;, ≤, or ≥.</td></tr>
+        <tr><td>Theorem</td><td>Proven mathematical statement.</td></tr>
+      </table>
+
+      <h3>Number Systems</h3>
+      <table>
+        <tr><th>Type</th><th>Examples</th></tr>
+        <tr><td>Natural numbers</td><td>1, 2, 3, ...</td></tr>
+        <tr><td>Integers</td><td>..., -2, -1, 0, 1, 2, ...</td></tr>
+        <tr><td>Rational numbers</td><td>a / b</td></tr>
+        <tr><td>Irrational numbers</td><td>π, √2, e</td></tr>
+        <tr><td>Real numbers</td><td>All rational and irrational numbers.</td></tr>
+        <tr><td>Complex numbers</td><td>a + bi, where i² = -1.</td></tr>
+      </table>
+
+      <div class="example"><strong>Example:</strong> If f(x) = x² + 3x + 2, then f(2) = 2² + 3(2) + 2 = 12.</div>
+    </section>
+
+    <section id="set-theory">
+      <h2>2. Set Theory</h2>
+      <p>Set theory is important because probability, statistics, databases, and logic depend on it.</p>
+      <table>
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td>∈</td><td>Element of</td></tr>
+        <tr><td>∉</td><td>Not an element of</td></tr>
+        <tr><td>∅</td><td>Empty set</td></tr>
+        <tr><td>∪</td><td>Union</td></tr>
+        <tr><td>∩</td><td>Intersection</td></tr>
+        <tr><td>⊂</td><td>Subset</td></tr>
+        <tr><td>Aᶜ</td><td>Complement of A</td></tr>
+      </table>
+      <div class="example">
+        <strong>Example:</strong><br>
+        A = {1, 2, 3}<br>
+        B = {3, 4, 5}<br>
+        A ∩ B = {3}<br>
+        A ∪ B = {1, 2, 3, 4, 5}
+      </div>
+      <div class="real"><strong>Real-world example:</strong> In data filtering, set intersection finds records that satisfy both condition A and condition B.</div>
+    </section>
+
+    <section id="logic">
+      <h2>3. Logic</h2>
+      <p>Logic supports proofs, programming conditions, database queries, and AI reasoning.</p>
+      <table>
+        <tr><th>Expression</th><th>Meaning</th></tr>
+        <tr><td>A ∧ B</td><td>A AND B. Both must be true.</td></tr>
+        <tr><td>A ∨ B</td><td>A OR B. At least one is true.</td></tr>
+        <tr><td>¬A</td><td>NOT A.</td></tr>
+        <tr><td>A → B</td><td>If A, then B.</td></tr>
+      </table>
+      <div class="example"><strong>Example:</strong> If a customer has high income AND good credit, approve loan.</div>
+    </section>
+
+    <section id="proofs">
+      <h2>4. Proof Methods</h2>
+      <h3>Direct Proof</h3>
+      <p>Show the statement is true directly from definitions and known facts.</p>
+      <h3>Proof by Contradiction</h3>
+      <p>Assume the opposite is true, then show that assumption leads to an impossible result.</p>
+      <h3>Mathematical Induction</h3>
+      <ol>
+        <li>Prove the base case.</li>
+        <li>Assume true for n.</li>
+        <li>Prove true for n + 1.</li>
+      </ol>
+      <div class="real"><strong>AI connection:</strong> Proof skills improve your ability to reason about algorithms, convergence, and model assumptions.</div>
+    </section>
+
+    <section id="algebra">
+      <h2>5. Algebra</h2>
+      <h3>Linear Equation</h3>
+      <div class="formula">y = mx + b</div>
+      <p>m = slope, b = y-intercept.</p>
+
+      <h3>Slope</h3>
+      <div class="formula">m = (y₂ - y₁) / (x₂ - x₁)</div>
+
+      <h3>Systems of Equations</h3>
+      <div class="formula">x + y = 5<br>x - y = 1</div>
+      <div class="example"><strong>Solution:</strong> Add equations: 2x = 6, so x = 3 and y = 2.</div>
+
+      <h3>Quadratic Equation</h3>
+      <div class="formula">ax² + bx + c = 0</div>
+      <div class="formula">x = (-b ± √(b² - 4ac)) / 2a</div>
+      <div class="example"><strong>Example:</strong> x² - 5x + 6 = 0 gives x = 2 and x = 3.</div>
+
+      <h3>Exponent Rules</h3>
+      <div class="formula">aᵐaⁿ = aᵐ⁺ⁿ</div>
+      <div class="formula">aᵐ / aⁿ = aᵐ⁻ⁿ</div>
+      <div class="formula">(aᵐ)ⁿ = aᵐⁿ</div>
+
+      <h3>Logarithms</h3>
+      <div class="formula">log_b(x) = y means bʸ = x</div>
+      <div class="example"><strong>Example:</strong> log₂(8) = 3 because 2³ = 8.</div>
+
+      <h3>Natural Log</h3>
+      <div class="formula">ln(x) uses base e, where e ≈ 2.71828</div>
+      <div class="real"><strong>AI connection:</strong> Logs appear in likelihood, cross-entropy loss, logistic regression, and information theory.</div>
+    </section>
+
+    <section id="functions">
+      <h2>6. Functions</h2>
+      <p>A function maps input values to output values.</p>
+      <div class="formula">f(x) = output</div>
+      <table>
+        <tr><th>Function Type</th><th>Formula</th><th>Use</th></tr>
+        <tr><td>Linear</td><td>f(x) = mx + b</td><td>Regression, trends.</td></tr>
+        <tr><td>Quadratic</td><td>f(x) = ax² + bx + c</td><td>Curves, optimization examples.</td></tr>
+        <tr><td>Exponential</td><td>f(x) = aˣ</td><td>Growth, decay.</td></tr>
+        <tr><td>Logarithmic</td><td>f(x) = log(x)</td><td>Compression, likelihood.</td></tr>
+        <tr><td>Sigmoid</td><td>σ(x) = 1 / (1 + e⁻ˣ)</td><td>Logistic regression, neural nets.</td></tr>
+      </table>
+    </section>
+
+    <section id="sequences">
+      <h2>7. Sequences & Series</h2>
+      <h3>Arithmetic Sequence</h3>
+      <p>Constant difference.</p>
+      <div class="example">2, 4, 6, 8, ...</div>
+
+      <h3>Geometric Sequence</h3>
+      <p>Constant ratio.</p>
+      <div class="example">2, 4, 8, 16, ...</div>
+
+      <h3>Summation</h3>
+      <div class="formula">Σᵢ₌₁ⁿ xᵢ</div>
+
+      <h3>Infinite Geometric Series</h3>
+      <div class="formula">Σ arⁿ converges when |r| &lt; 1</div>
+      <div class="example">1 + 1/2 + 1/4 + 1/8 + ... = 2</div>
+      <div class="real"><strong>AI connection:</strong> Sequences and convergence matter in optimization and iterative algorithms.</div>
+    </section>
+
+    <section id="trigonometry">
+      <h2>8. Trigonometry</h2>
+      <p>Trigonometry appears in signal processing, Fourier transforms, rotations, and time series.</p>
+      <h3>SOH-CAH-TOA</h3>
+      <div class="formula">sin(θ) = opposite / hypotenuse</div>
+      <div class="formula">cos(θ) = adjacent / hypotenuse</div>
+      <div class="formula">tan(θ) = opposite / adjacent</div>
+      <h3>Important Identity</h3>
+      <div class="formula">sin²(θ) + cos²(θ) = 1</div>
+      <h3>Unit Circle</h3>
+      <p>Know common angles: 0°, 30°, 45°, 60°, and 90°.</p>
+    </section>
+
+    <section id="linear-algebra">
+      <h2>9. Linear Algebra</h2>
+      <p><strong>This is one of the most important areas for AI.</strong> Data, images, embeddings, model weights, and neural networks are all represented with vectors and matrices.</p>
+
+      <h3>Scalar</h3>
+      <div class="formula">5</div>
+
+      <h3>Vector</h3>
+      <div class="formula">v = [1, 2, 3]ᵀ</div>
+      <div class="real"><strong>Real-world example:</strong> One person can be represented as a vector: [age, income, credit score].</div>
+
+      <h3>Matrix</h3>
+      <div class="formula">A = [[1, 2], [3, 4]]</div>
+      <p>A dataset is often a matrix: rows are observations and columns are features.</p>
+
+      <h3>Matrix Dimensions</h3>
+      <div class="formula">m × n = rows × columns</div>
+
+      <h3>Matrix Addition</h3>
+      <p>Add corresponding entries.</p>
+
+      <h3>Matrix Multiplication</h3>
+      <p>The number of columns in the first matrix must equal the number of rows in the second matrix.</p>
+      <div class="formula">[1, 2] · [3, 4]ᵀ = 1(3) + 2(4) = 11</div>
+
+      <h3>Dot Product</h3>
+      <div class="formula">a · b = Σ aᵢbᵢ</div>
+      <div class="real"><strong>AI connection:</strong> Dot products measure similarity in embeddings, search engines, recommendation systems, and attention mechanisms.</div>
+
+      <h3>Vector Magnitude</h3>
+      <div class="formula">||v|| = √(Σvᵢ²)</div>
+
+      <h3>Euclidean Distance</h3>
+      <div class="formula">d = √(Σ(xᵢ - yᵢ)²)</div>
+      <div class="real"><strong>AI connection:</strong> Used in KNN, clustering, anomaly detection, and nearest-neighbor search.</div>
+
+      <h3>Identity Matrix</h3>
+      <div class="formula">I = [[1, 0], [0, 1]]</div>
+
+      <h3>Matrix Inverse</h3>
+      <div class="formula">AA⁻¹ = I</div>
+
+      <h3>Determinant</h3>
+      <div class="formula">For [[a, b], [c, d]], det(A) = ad - bc</div>
+      <p>The determinant tells whether a matrix is invertible and how much a transformation scales area or volume.</p>
+
+      <h3>Linear Independence</h3>
+      <p>Vectors are linearly independent if none can be built from the others.</p>
+      <div class="example">(1,0) and (0,1) are independent. (1,2) and (2,4) are dependent.</div>
+
+      <h3>Basis</h3>
+      <p>A minimal set of vectors that spans a space.</p>
+
+      <h3>Span</h3>
+      <p>All possible linear combinations of a set of vectors.</p>
+
+      <h3>Rank</h3>
+      <p>The number of independent rows or columns.</p>
+
+      <h3>Null Space</h3>
+      <div class="formula">Solutions to Ax = 0</div>
+
+      <h3>Eigenvalues & Eigenvectors</h3>
+      <div class="formula">Av = λv</div>
+      <p>A matrix transforms an eigenvector only by scaling it.</p>
+      <div class="real"><strong>AI connection:</strong> Used in PCA, dimensionality reduction, compression, recommendation systems, and computer vision.</div>
+
+      <h3>Singular Value Decomposition</h3>
+      <div class="formula">A = UΣVᵀ</div>
+      <div class="real"><strong>AI connection:</strong> Used in PCA, recommender systems, compression, search, and embeddings.</div>
+    </section>
+
+    <section id="calculus">
+      <h2>10. Calculus</h2>
+      <p>Calculus explains how machine learning models learn by changing parameters to reduce error.</p>
+
+      <h3>Limits</h3>
+      <div class="formula">limₓ→ₐ f(x)</div>
+
+      <h3>Derivative</h3>
+      <p>A derivative measures rate of change.</p>
+      <div class="formula">If f(x) = x², then f'(x) = 2x</div>
+
+      <h3>Common Derivatives</h3>
+      <table>
+        <tr><th>Function</th><th>Derivative</th></tr>
+        <tr><td>c</td><td>0</td></tr>
+        <tr><td>x</td><td>1</td></tr>
+        <tr><td>xⁿ</td><td>nxⁿ⁻¹</td></tr>
+        <tr><td>eˣ</td><td>eˣ</td></tr>
+        <tr><td>ln(x)</td><td>1 / x</td></tr>
+      </table>
+
+      <h3>Chain Rule</h3>
+      <div class="formula">dy/dx = (dy/du)(du/dx)</div>
+      <div class="example">If y = (3x + 1)², then dy/dx = 6(3x + 1).</div>
+      <div class="real"><strong>AI connection:</strong> Backpropagation is repeated use of the chain rule.</div>
+
+      <h3>Partial Derivatives</h3>
+      <div class="formula">∂f / ∂x</div>
+      <p>Used when a function has multiple variables.</p>
+      <div class="example">For f(x,y) = x² + y², ∂f/∂x = 2x and ∂f/∂y = 2y.</div>
+
+      <h3>Gradient</h3>
+      <div class="formula">∇f = vector of partial derivatives</div>
+      <p>The gradient points in the direction of greatest increase.</p>
+
+      <h3>Jacobian</h3>
+      <p>A matrix of first derivatives. Important for vector-valued functions.</p>
+
+      <h3>Hessian</h3>
+      <p>A matrix of second derivatives. Useful in optimization and Newton-style methods.</p>
+
+      <h3>Integration</h3>
+      <p>Integration measures area under a curve.</p>
+      <div class="formula">∫x² dx = x³/3 + C</div>
+
+      <h3>Fundamental Theorem of Calculus</h3>
+      <p>Connects differentiation and integration.</p>
+    </section>
+
+    <section id="numerical">
+      <h2>11. Numerical Methods</h2>
+      <p>Computers often approximate solutions instead of finding exact symbolic answers.</p>
+
+      <h3>Newton's Method</h3>
+      <div class="formula">x_new = x - f(x) / f'(x)</div>
+      <p>Used to find roots of functions.</p>
+
+      <h3>Finite Differences</h3>
+      <p>Approximate derivatives numerically.</p>
+      <div class="formula">f'(x) ≈ [f(x+h) - f(x)] / h</div>
+      <div class="real"><strong>AI connection:</strong> Numerical approximation helps understand gradients, optimization, and model checking.</div>
+    </section>
+
+    <section id="probability">
+      <h2>12. Probability</h2>
+      <p>Probability is the foundation of uncertainty, statistics, Bayesian reasoning, and machine learning.</p>
+
+      <h3>Probability</h3>
+      <div class="formula">0 ≤ P(A) ≤ 1</div>
+      <div class="example">For a fair coin, P(head) = 0.5.</div>
+
+      <h3>Conditional Probability</h3>
+      <div class="formula">P(A | B)</div>
+      <p>Probability of A given B.</p>
+
+      <h3>Bayes Theorem</h3>
+      <div class="formula">P(A | B) = [P(B | A)P(A)] / P(B)</div>
+      <div class="real"><strong>AI connection:</strong> Used in spam filtering, medical diagnosis, Bayesian inference, and probabilistic models.</div>
+
+      <h3>Random Variables</h3>
+      <table>
+        <tr><th>Type</th><th>Examples</th></tr>
+        <tr><td>Discrete</td><td>Coin flips, dice rolls, number of clicks.</td></tr>
+        <tr><td>Continuous</td><td>Height, weight, temperature, time.</td></tr>
+      </table>
+
+      <h3>Expected Value</h3>
+      <div class="formula">E[X] = Σ xP(x)</div>
+      <div class="example">For a fair die, E[X] = 3.5.</div>
+
+      <h3>Variance</h3>
+      <div class="formula">Var(X) = E[(X - μ)²]</div>
+
+      <h3>Covariance</h3>
+      <div class="formula">Cov(X,Y)</div>
+      <p>Measures whether two variables move together.</p>
+
+      <h3>Correlation</h3>
+      <div class="formula">-1 ≤ ρ ≤ 1</div>
+      <p>Standardized covariance.</p>
+
+      <h3>Law of Large Numbers</h3>
+      <p>As sample size increases, the sample average approaches the true expected value.</p>
+
+      <h3>Central Limit Theorem</h3>
+      <p>Sample means tend to become normally distributed as sample size increases.</p>
+    </section>
+
+    <section id="statistics">
+      <h2>13. Statistics</h2>
+      <h3>Population vs Sample</h3>
+      <p><strong>Population:</strong> entire group. <strong>Sample:</strong> subset of the group.</p>
+
+      <h3>Mean</h3>
+      <div class="formula">x̄ = Σx / n</div>
+
+      <h3>Median</h3>
+      <p>Middle value.</p>
+
+      <h3>Mode</h3>
+      <p>Most frequent value.</p>
+
+      <h3>Variance</h3>
+      <div class="formula">s² = Σ(xᵢ - x̄)² / (n - 1)</div>
+
+      <h3>Standard Deviation</h3>
+      <div class="formula">s = √s²</div>
+
+      <h3>Z-Score</h3>
+      <div class="formula">z = (x - μ) / σ</div>
+      <div class="real"><strong>AI connection:</strong> Z-scores are used for standardization, outlier detection, and feature scaling.</div>
+
+      <h3>Sampling Methods</h3>
+      <ul>
+        <li>Random sampling</li>
+        <li>Stratified sampling</li>
+        <li>Cluster sampling</li>
+        <li>Bootstrap sampling</li>
+      </ul>
+    </section>
+
+    <section id="distributions">
+      <h2>14. Distributions</h2>
+      <h3>Normal Distribution</h3>
+      <p>Bell curve. Important rule:</p>
+      <ul>
+        <li>68% within 1 standard deviation</li>
+        <li>95% within 2 standard deviations</li>
+        <li>99.7% within 3 standard deviations</li>
+      </ul>
+
+      <h3>Uniform Distribution</h3>
+      <p>All outcomes are equally likely.</p>
+
+      <h3>Bernoulli Distribution</h3>
+      <p>Single success/failure trial.</p>
+
+      <h3>Binomial Distribution</h3>
+      <p>Multiple Bernoulli trials.</p>
+      <div class="example">Example: Number of heads in 10 coin flips.</div>
+
+      <h3>Poisson Distribution</h3>
+      <p>Counts events in a fixed interval.</p>
+      <div class="example">Examples: calls per hour, website visits per minute.</div>
+
+      <h3>Exponential Distribution</h3>
+      <p>Models time between events.</p>
+    </section>
+
+    <section id="hypothesis">
+      <h2>15. Hypothesis Testing</h2>
+      <h3>Null Hypothesis</h3>
+      <div class="formula">H₀</div>
+      <p>Default assumption, usually “no effect” or “no difference.”</p>
+
+      <h3>Alternative Hypothesis</h3>
+      <div class="formula">Hₐ</div>
+      <p>The claim you are testing for.</p>
+
+      <h3>p-value</h3>
+      <p>A small p-value gives evidence against H₀. A common threshold is p &lt; 0.05.</p>
+
+      <h3>Confidence Interval</h3>
+      <p>A range of plausible values for the true population parameter.</p>
+
+      <h3>Type I Error</h3>
+      <p>False positive.</p>
+
+      <h3>Type II Error</h3>
+      <p>False negative.</p>
+
+      <h3>Statistical Power</h3>
+      <p>Probability of detecting a real effect.</p>
+    </section>
+
+    <section id="information-theory">
+      <h2>16. Information Theory</h2>
+      <h3>Entropy</h3>
+      <div class="formula">H(X) = -Σ p(x)log p(x)</div>
+      <p>Measures uncertainty.</p>
+      <div class="example">A fair coin has higher entropy than a double-headed coin.</div>
+
+      <h3>Cross Entropy</h3>
+      <p>Measures difference between true labels and predicted probabilities. Used as a neural-network loss function.</p>
+
+      <h3>KL Divergence</h3>
+      <div class="formula">D_KL(P || Q)</div>
+      <p>Measures how one probability distribution differs from another.</p>
+
+      <h3>Mutual Information</h3>
+      <p>Measures shared information between variables. Useful for feature selection.</p>
+    </section>
+
+    <section id="optimization">
+      <h2>17. Optimization</h2>
+      <p>Optimization is the process of finding the best parameters that minimize a cost function.</p>
+
+      <h3>Objective / Cost Function</h3>
+      <div class="formula">J(θ)</div>
+
+      <h3>Gradient Descent</h3>
+      <div class="formula">θ_new = θ_old - α∇J(θ)</div>
+      <p>θ = model parameters, α = learning rate.</p>
+
+      <h3>Learning Rate</h3>
+      <p>Too small: slow learning. Too large: may diverge.</p>
+
+      <h3>Convex Function</h3>
+      <p>A function where any local minimum is also a global minimum.</p>
+
+      <h3>Local Minimum</h3>
+      <p>Best point nearby, but not necessarily best overall.</p>
+
+      <h3>Global Minimum</h3>
+      <p>Best point overall.</p>
+
+      <h3>Saddle Point</h3>
+      <p>A flat or mixed-curvature point common in deep learning optimization.</p>
+
+      <h3>Stochastic Gradient Descent</h3>
+      <p>Uses one training example at a time.</p>
+
+      <h3>Mini-Batch Gradient Descent</h3>
+      <p>Uses small batches. This is common in real machine learning training.</p>
+    </section>
+
+    <section id="ml-math">
+      <h2>18. Machine Learning Math</h2>
+      <h3>Linear Regression</h3>
+      <div class="formula">ŷ = β₀ + β₁x</div>
+      <div class="real"><strong>Real-world example:</strong> Predict salary from years of experience.</div>
+
+      <h3>Logistic Regression</h3>
+      <p>Used for classification. Output is a probability.</p>
+
+      <h3>Sigmoid Function</h3>
+      <div class="formula">σ(x) = 1 / (1 + e⁻ˣ)</div>
+
+      <h3>Loss Functions</h3>
+      <ul>
+        <li><strong>MSE:</strong> mean squared error.</li>
+        <li><strong>MAE:</strong> mean absolute error.</li>
+        <li><strong>Cross entropy:</strong> common for classification.</li>
+      </ul>
+
+      <h3>Mean Squared Error</h3>
+      <div class="formula">MSE = (1/n)Σ(y - ŷ)²</div>
+
+      <h3>Regularization</h3>
+      <h4>L1 Regularization</h4>
+      <p>Encourages sparse models.</p>
+      <h4>L2 Regularization</h4>
+      <p>Penalizes large weights. Also called weight decay.</p>
+
+      <h3>Bias-Variance Tradeoff</h3>
+      <table>
+        <tr><th>Problem</th><th>Meaning</th></tr>
+        <tr><td>High bias</td><td>Model is too simple. Underfitting.</td></tr>
+        <tr><td>High variance</td><td>Model is too sensitive to data. Overfitting.</td></tr>
+      </table>
+    </section>
+
+    <section id="dimensionality">
+      <h2>19. Dimensionality Reduction</h2>
+      <h3>PCA: Principal Component Analysis</h3>
+      <p>PCA reduces the number of features while preserving as much variance as possible.</p>
+      <p>Must know:</p>
+      <ol>
+        <li>Covariance matrix</li>
+        <li>Eigenvalues</li>
+        <li>Eigenvectors</li>
+      </ol>
+
+      <h3>SVD</h3>
+      <p>Related to PCA and useful in recommendation systems and compression.</p>
+
+      <h3>t-SNE</h3>
+      <p>Visualization method for high-dimensional data.</p>
+
+      <h3>UMAP</h3>
+      <p>Modern visualization and dimensionality-reduction technique.</p>
+    </section>
+
+    <section id="time-series">
+      <h2>20. Time Series</h2>
+      <p>Time series data is ordered by time.</p>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Trend</td><td>Long-term movement.</td></tr>
+        <tr><td>Seasonality</td><td>Repeating pattern.</td></tr>
+        <tr><td>Noise</td><td>Random variation.</td></tr>
+        <tr><td>Autocorrelation</td><td>Correlation with past values.</td></tr>
+        <tr><td>Lag</td><td>Previous time step.</td></tr>
+        <tr><td>Moving average</td><td>Smoothing method.</td></tr>
+        <tr><td>Exponential smoothing</td><td>Weighted smoothing favoring recent values.</td></tr>
+        <tr><td>ARIMA</td><td>Classical forecasting model.</td></tr>
+      </table>
+    </section>
+
+    <section id="graph-theory">
+      <h2>21. Graph Theory</h2>
+      <p>Graph theory is used in social networks, recommendation engines, route planning, and knowledge graphs.</p>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Node / Vertex</td><td>Object in a graph.</td></tr>
+        <tr><td>Edge</td><td>Connection between nodes.</td></tr>
+        <tr><td>Degree</td><td>Number of edges connected to a node.</td></tr>
+        <tr><td>Path</td><td>Sequence of connected nodes.</td></tr>
+        <tr><td>Cycle</td><td>Path that returns to starting point.</td></tr>
+        <tr><td>Tree</td><td>Connected graph with no cycles.</td></tr>
+        <tr><td>DAG</td><td>Directed acyclic graph.</td></tr>
+      </table>
+    </section>
+
+    <section id="complexity">
+      <h2>22. Computational Complexity</h2>
+      <p>Big O notation describes how runtime or memory grows as input size grows.</p>
+      <table>
+        <tr><th>Notation</th><th>Name</th><th>Example</th></tr>
+        <tr><td>O(1)</td><td>Constant</td><td>Accessing an array element.</td></tr>
+        <tr><td>O(log n)</td><td>Logarithmic</td><td>Binary search.</td></tr>
+        <tr><td>O(n)</td><td>Linear</td><td>Scan list once.</td></tr>
+        <tr><td>O(n²)</td><td>Quadratic</td><td>Nested loops.</td></tr>
+        <tr><td>O(2ⁿ)</td><td>Exponential</td><td>Brute-force subsets.</td></tr>
+      </table>
+    </section>
+
+    <section id="ai-preview">
+      <h2>23. AI / Deep Learning Preview</h2>
+      <h3>Neural Networks</h3>
+      <p>Use weighted sums, matrix multiplication, activation functions, and gradients.</p>
+
+      <h3>Backpropagation</h3>
+      <p>Uses the chain rule to compute gradients through layers.</p>
+
+      <h3>Embeddings</h3>
+      <p>Represent words, images, users, or items as vectors.</p>
+
+      <h3>Cosine Similarity</h3>
+      <p>Measures similarity between vectors based on angle.</p>
+
+      <h3>Transformers</h3>
+      <p>Use attention, softmax, probability distributions, and matrix multiplication.</p>
+
+      <h3>LLMs</h3>
+      <p>Use linear algebra, probability, information theory, cross entropy, KL divergence, and gradient descent.</p>
+    </section>
+
+    <section id="study-plan">
+      <h2>24. Suggested Study Order</h2>
+      <div class="priority">
+        <div class="card">
+          <h3>Tier 1: Must Master</h3>
+          <ul>
+            <li>Functions</li>
+            <li>Algebra</li>
+            <li>Vectors and matrices</li>
+            <li>Matrix operations</li>
+            <li>Dot product</li>
+            <li>Derivatives</li>
+            <li>Partial derivatives</li>
+            <li>Gradient</li>
+            <li>Probability</li>
+            <li>Mean, variance, standard deviation</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Tier 2: Very Important</h3>
+          <ul>
+            <li>Eigenvalues and eigenvectors</li>
+            <li>PCA</li>
+            <li>Covariance and correlation</li>
+            <li>Optimization</li>
+            <li>Convexity</li>
+            <li>Information theory</li>
+            <li>Cross entropy</li>
+            <li>Bayesian thinking</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Tier 3: Helpful</h3>
+          <ul>
+            <li>Proofs</li>
+            <li>Set theory</li>
+            <li>Graph theory</li>
+            <li>Numerical methods</li>
+            <li>Complexity theory</li>
+            <li>Time series</li>
+            <li>SVD</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Limited-Time Study Order</h3>
+      <ol>
+        <li>Algebra</li>
+        <li>Functions</li>
+        <li>Linear algebra</li>
+        <li>Probability</li>
+        <li>Statistics</li>
+        <li>Calculus, especially derivatives</li>
+        <li>Optimization</li>
+        <li>Linear regression</li>
+        <li>Logistic regression</li>
+        <li>Information theory</li>
+      </ol>
+
+      <div class="warning">
+        Linear algebra, probability/statistics, calculus, optimization, and information theory are the five pillars. These topics appear again and again in machine learning, deep learning, and generative AI.
+      </div>
+    </section>
+
+    <div class="footer">
+      Mathematics for Data Science
+    </div>
+  </div>
+</body>
+</html>

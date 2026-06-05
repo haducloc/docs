@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>Docker Cheatsheet</title>
+    <link href="styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <span id="top" style="display:none;"></span>
+    <div class="toplink"><a href="https://haducloc.github.io/docs/">🏠 Docs Home</a></div>
+    <h1>Docker Cheatsheet</h1>
+    <p class="subtitle">Quick reference for Docker fundamentals, images, runtime components, registries, storage, networking, Compose, Swarm, high availability, and mental models.</p>
+    <div class="toc"><h3>Table of Contents</h3><ol>
+    <li><a href="#part-1-docker-fundamentals">Part 1 — Docker Fundamentals</a>
+    <ul>
+    <li><a href="#what-is-docker">What is Docker?</a></li>
+    <li><a href="#container">Container</a></li>
+    <li><a href="#linux-container">Linux Container</a></li>
+    <li><a href="#is-a-container-an-operating-system">Is a Container an Operating System?</a></li>
+    <li><a href="#container-vs-virtual-machine">Container vs Virtual Machine</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-2-images-and-building-containers">Part 2 — Images and Building Containers</a>
+    <ul>
+    <li><a href="#image">Image</a></li>
+    <li><a href="#dockerfile">Dockerfile</a></li>
+    <li><a href="#dockerfile">Dockerfile</a></li>
+    <li><a href="#image">Image</a></li>
+    <li><a href="#container">Container</a></li>
+    <li><a href="#layers">Layers</a></li>
+    <li><a href="#writable-container-layer">Writable Container Layer</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-3-docker-runtime-components">Part 3 — Docker Runtime Components</a>
+    <ul>
+    <li><a href="#docker-engine">Docker Engine</a></li>
+    <li><a href="#docker-daemon">Docker Daemon</a></li>
+    <li><a href="#docker-cli">Docker CLI</a></li>
+    <li><a href="#docker-cli">Docker CLI</a></li>
+    <li><a href="#docker-daemon">Docker Daemon</a></li>
+    <li><a href="#docker-desktop">Docker Desktop</a></li>
+    <li><a href="#docker-engine">Docker Engine</a></li>
+    <li><a href="#docker-cli">Docker CLI</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-4-registries-and-image-storage">Part 4 — Registries and Image Storage</a>
+    <ul>
+    <li><a href="#registry">Registry</a></li>
+    <li><a href="#docker-hub">Docker Hub</a></li>
+    <li><a href="#docker-hub">Docker Hub</a></li>
+    <li><a href="#repository">Repository</a></li>
+    <li><a href="#tag">Tag</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-5-storage">Part 5 — Storage</a>
+    <ul>
+    <li><a href="#volume">Volume</a></li>
+    <li><a href="#bind-mount">Bind Mount</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-6-networking">Part 6 — Networking</a>
+    <ul>
+    <li><a href="#network">Network</a></li>
+    <li><a href="#port-mapping">Port Mapping</a></li>
+    <li><a href="#host">Host</a></li>
+    <li><a href="#localhost-confusion">Localhost Confusion</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-7-docker-compose">Part 7 — Docker Compose</a>
+    <ul>
+    <li><a href="#what-is-docker-compose">What is Docker Compose?</a></li>
+    <li><a href="#service-compose">Service (Compose)</a></li>
+    <li><a href="#compose-project">Compose Project</a></li>
+    <li><a href="#docker-deployment-evolution">Docker Deployment Evolution</a></li>
+    <li><a href="#level-1-single-container">Level 1 — Single Container</a></li>
+    <li><a href="#level-2-multiple-containers">Level 2 — Multiple Containers</a></li>
+    <li><a href="#level-3-multiple-replicas">Level 3 — Multiple Replicas</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-8-orchestration">Part 8 — Orchestration</a>
+    <ul>
+    <li><a href="#orchestration">Orchestration</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-9-docker-swarm">Part 9 — Docker Swarm</a>
+    <ul>
+    <li><a href="#what-is-docker-swarm">What is Docker Swarm?</a></li>
+    <li><a href="#level-4-cluster">Level 4 — Cluster</a></li>
+    <li><a href="#node">Node</a></li>
+    <li><a href="#manager-node">Manager Node</a></li>
+    <li><a href="#worker-node">Worker Node</a></li>
+    <li><a href="#manager-node">Manager Node</a></li>
+    <li><a href="#worker-node">Worker Node</a></li>
+    <li><a href="#service-swarm">Service (Swarm)</a></li>
+    <li><a href="#replica">Replica</a></li>
+    <li><a href="#replicated-service">Replicated Service</a></li>
+    <li><a href="#global-service">Global Service</a></li>
+    <li><a href="#placement-constraints">Placement Constraints</a></li>
+    <li><a href="#swarm-scaling">Swarm Scaling</a></li>
+    <li><a href="#are-replicas-always-on-different-nodes">Are Replicas Always on Different Nodes?</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-10-high-availability-features">Part 10 — High Availability Features</a>
+    <ul>
+    <li><a href="#high-availability-ha">High Availability (HA)</a></li>
+    <li><a href="#self-healing">Self-Healing</a></li>
+    <li><a href="#rolling-updates">Rolling Updates</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-11-traffic-management">Part 11 — Traffic Management</a>
+    <ul>
+    <li><a href="#load-balancing">Load Balancing</a></li>
+    <li><a href="#routing-mesh">Routing Mesh</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-12-multi-host-networking">Part 12 — Multi-Host Networking</a>
+    <ul>
+    <li><a href="#overlay-network">Overlay Network</a></li>
+    <li><a href="#service-discovery">Service Discovery</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-13-real-example">Part 13 — Real Example</a>
+    <ul>
+    <li><a href="#3-tier-application">3-Tier Application</a></li>
+    </ul>
+    </li>
+    <li><a href="#part-14-final-mental-model">Part 14 — Final Mental Model</a>
+    <ul>
+    <li><a href="#dockerfile">Dockerfile</a></li>
+    <li><a href="#image">Image</a></li>
+    <li><a href="#container">Container</a></li>
+    <li><a href="#compose">Compose</a></li>
+    <li><a href="#swarm">Swarm</a></li>
+    <li><a href="#one-sentence-mental-model">One-Sentence Mental Model</a></li>
+    </ul>
+    </li>
+    </ol></div>
+    <div class="part-heading" id="part-1-docker-fundamentals"><h2>Part 1 — Docker Fundamentals</h2></div>
+    <h3 id="what-is-docker">What is Docker?</h3>
+    <p>Docker is a platform for building, packaging, running, and sharing applications using containers.</p>
+    <p><strong>Instead of installing everything directly on a machine, Docker packages:</strong></p><pre class="code-block"><code>Application code
+Runtime
+Libraries
+Dependencies
+Configuration
+into a portable unit.
+Example:
+docker run nginx</code></pre>
+    <p>This downloads and runs the Nginx web server in a container.</p>
+    <h3 id="container">Container</h3>
+    <p>A container is a lightweight, isolated environment used to run an application.</p>
+    <p><strong>A container has its own:</strong></p><ul><li>Filesystem</li><li>Processes</li><li>Network settings</li><li>Environment variables</li><li>Installed packages</li><li>Application</li></ul>
+    <p>But it shares the host machine&#x27;s operating system kernel.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker run -it ubuntu bash</code></pre>
+    <h3 id="linux-container">Linux Container</h3>
+    <p>A Linux container uses Linux kernel features to isolate processes.</p>
+    <p><strong>Key Linux technologies:</strong></p><pre class="code-block"><code>Namespaces
+cgroups
+Filesystem layers
+Network isolation
+Process isolation
+Examples:
+Ubuntu container
+Alpine container
+Debian container
+CentOS container
+All share the host kernel.</code></pre>
+    <h3 id="is-a-container-an-operating-system">Is a Container an Operating System?</h3>
+    <p>Not exactly.</p>
+    <p><strong>A container looks like a small OS because you can run commands inside it:</strong></p><pre class="code-block"><code>docker run -it ubuntu bash
+But it does not have:
+Its own kernel
+Full boot process
+Virtual hardware
+Better definition:</code></pre>
+    <p>A container is an isolated user-space environment, not a complete operating system.</p>
+    <h3 id="container-vs-virtual-machine">Container vs Virtual Machine</h3>
+    <table aria-label="Container vs Virtual Machine"><thead><tr><th>Feature</th><th>Container</th><th>Virtual Machine</th></tr></thead><tbody>
+    <tr><td>Kernel</td><td>Shares host kernel</td><td>Own kernel</td></tr>
+    <tr><td>Size</td><td>Small</td><td>Large</td></tr>
+    <tr><td>Startup</td><td>Fast</td><td>Slower</td></tr>
+    <tr><td>Isolation</td><td>Process-level</td><td>Hardware/OS-level</td></tr>
+    <tr><td>Resource Usage</td><td>Low</td><td>Higher</td></tr>
+    </tbody></table>
+    <p><strong>Simple explanation:</strong></p><pre class="code-block"><code>VM = full computer inside your computer
+Container = isolated application environment</code></pre>
+    <div class="part-heading" id="part-2-images-and-building-containers"><h2>Part 2 — Images and Building Containers</h2></div>
+    <h3 id="image">Image</h3>
+    <p>An image is a read-only package used to create containers.</p>
+    <p><strong>Mental model:</strong></p><pre class="code-block"><code>Image = Blueprint
+Container = Running instance
+Example:
+docker pull nginx
+docker run nginx
+Multiple containers can be created from the same image:
+docker run -d --name web1 nginx
+docker run -d --name web2 nginx
+docker run -d --name web3 nginx</code></pre>
+    <h3 id="dockerfile">Dockerfile</h3>
+    <p>A Dockerfile contains instructions for building an image.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>FROM nginx
+COPY ./html /usr/share/nginx/html
+Build:
+docker build -t my-nginx .
+Run:
+docker run -p 8080:80 my-nginx
+Flow:</code></pre>
+    <h3 id="dockerfile-2">Dockerfile</h3>
+    <pre class="code-block"><code>↓</code></pre>
+    <h3 id="image-2">Image</h3>
+    <pre class="code-block"><code>↓</code></pre>
+    <h3 id="container-2">Container</h3>
+    <h3 id="layers">Layers</h3>
+    <pre class="code-block"><code>Images are built from layers.</code></pre>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y curl
+COPY app /app
+Each major instruction creates a layer.
+Image = Stack of Layers
+Container = Image + Writable Layer</code></pre>
+    <h3 id="writable-container-layer">Writable Container Layer</h3>
+    <pre class="code-block"><code>Images are read-only.</code></pre>
+    <p>When a container starts, Docker adds a writable layer on top.</p>
+    <p><strong>Example:</strong></p><ul><li>Ubuntu layer</li><li>App layer</li><li>Config layer</li><li>Writable container layer</li></ul>
+    <p>Changes made inside the container go into the writable layer.</p>
+    <p>Removing the container removes that layer.</p>
+    <div class="part-heading" id="part-3-docker-runtime-components"><h2>Part 3 — Docker Runtime Components</h2></div>
+    <h3 id="docker-engine">Docker Engine</h3>
+    <p>The core software that runs Docker.</p>
+    <p>Includes:</p>
+    <h3 id="docker-daemon">Docker Daemon</h3>
+    <h3 id="docker-cli">Docker CLI</h3>
+    <p>Docker API<br/>Container Runtime</p>
+    <h3 id="docker-cli-2">Docker CLI</h3>
+    <p>Command-line interface.</p>
+    <p><strong>Examples:</strong></p><pre class="code-block"><code>docker ps
+docker run nginx
+docker stop web
+docker images</code></pre>
+    <h3 id="docker-daemon-2">Docker Daemon</h3>
+    <p><strong>Background service that manages:</strong></p><pre class="code-block"><code>Containers
+Images
+Networks
+Volumes
+Builds
+Linux process:
+dockerd</code></pre>
+    <h3 id="docker-desktop">Docker Desktop</h3>
+    <p><strong>Available on:</strong></p><pre class="code-block"><code>Windows
+macOS
+Includes:</code></pre>
+    <h3 id="docker-engine-2">Docker Engine</h3>
+    <h3 id="docker-cli-3">Docker CLI</h3>
+    <pre class="code-block"><code>Docker Compose
+GUI Dashboard
+Kubernetes option</code></pre>
+    <div class="part-heading" id="part-4-registries-and-image-storage"><h2>Part 4 — Registries and Image Storage</h2></div>
+    <h3 id="registry">Registry</h3>
+    <p>A place where Docker images are stored.</p>
+    <p>Examples:</p>
+    <h3 id="docker-hub">Docker Hub</h3>
+    <p>GitHub Container Registry<br/>Amazon ECR<br/>Azure Container Registry<br/>Google Artifact Registry</p>
+    <h3 id="docker-hub-2">Docker Hub</h3>
+    <p>Docker&#x27;s public image registry.</p>
+    <p><strong>Examples:</strong></p><pre class="code-block"><code>docker pull ubuntu
+docker pull nginx
+docker pull postgres
+docker pull redis</code></pre>
+    <h3 id="repository">Repository</h3>
+    <p>A collection of image versions.</p>
+    <p><strong>Examples:</strong></p><pre class="code-block"><code>nginx
+ubuntu
+postgres
+redis</code></pre>
+    <h3 id="tag">Tag</h3>
+    <p>Represents a specific image version.</p>
+    <p><strong>Examples:</strong></p><pre class="code-block"><code>nginx:1.27
+postgres:16
+ubuntu:22.04
+If omitted:
+latest
+is assumed.</code></pre>
+    <div class="part-heading" id="part-5-storage"><h2>Part 5 — Storage</h2></div>
+    <h3 id="volume">Volume</h3>
+    <p>Persistent Docker-managed storage.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker volume create pgdata
+docker run \
+-v pgdata:/var/lib/postgresql/data \
+postgres
+Use for:
+Databases
+Uploaded files
+Application data
+Persistent logs</code></pre>
+    <h3 id="bind-mount">Bind Mount</h3>
+    <p>Maps a host folder into a container.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker run \
+-v &quot;$(pwd)/html:/usr/share/nginx/html&quot; \
+nginx
+Useful during development.</code></pre>
+    <div class="part-heading" id="part-6-networking"><h2>Part 6 — Networking</h2></div>
+    <h3 id="network">Network</h3>
+    <p>Allows containers to communicate.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker network create appnet
+Containers:
+docker run -d --name db --network appnet postgres
+docker run -d --name app --network appnet myapp
+Application connects using:
+db
+not
+localhost</code></pre>
+    <h3 id="port-mapping">Port Mapping</h3>
+    <p>Expose container ports to the host.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker run -p 8080:80 nginx
+Meaning:
+Host Port      8080
+Container Port 80
+Access:
+http://localhost:8080</code></pre>
+    <h3 id="host">Host</h3>
+    <p>A host is simply a machine.</p>
+    <p><strong>Could be:</strong></p><pre class="code-block"><code>Physical server
+Virtual machine
+Cloud VM
+Laptop
+Examples:
+192.168.1.10
+192.168.1.11
+192.168.1.12</code></pre>
+    <h3 id="localhost-confusion">Localhost Confusion</h3>
+    <p><strong>Inside a container:</strong></p><pre class="code-block"><code>localhost = that container
+On your machine:
+localhost = your computer
+Wrong:
+DB_HOST=localhost
+Correct in Compose:
+DB_HOST=db</code></pre>
+    <div class="part-heading" id="part-7-docker-compose"><h2>Part 7 — Docker Compose</h2></div>
+    <h3 id="what-is-docker-compose">What is Docker Compose?</h3>
+    <pre class="code-block"><code>Docker Compose runs multiple containers together using YAML.</code></pre>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>services:
+app:
+build: .
+db:
+image: postgres:16
+Run:
+docker compose up -d</code></pre>
+    <h3 id="service-compose">Service (Compose)</h3>
+    <p><strong>In Compose:</strong></p><pre class="code-block"><code>A service is a container definition.
+Example:
+services:
+app:
+image: myapp
+db:
+image: postgres
+Compose creates containers from services.</code></pre>
+    <h3 id="compose-project">Compose Project</h3>
+    <p><strong>Everything created by a Compose file:</strong></p><pre class="code-block"><code>Containers
+Networks
+Volumes
+Example:
+docker compose up -d
+Creates:
+myfolder-app-1
+myfolder-db-1
+myfolder_default
+Custom project name:
+docker compose -p myproject up -d</code></pre>
+    <h3 id="docker-deployment-evolution">Docker Deployment Evolution</h3>
+    <h3 id="level-1-single-container">Level 1 — Single Container</h3>
+    <pre class="code-block"><code>docker run nginx
+Host A
+└── nginx</code></pre>
+    <h3 id="level-2-multiple-containers">Level 2 — Multiple Containers</h3>
+    <pre class="code-block"><code>docker compose up
+Host A
+├── app
+├── postgres
+└── redis</code></pre>
+    <h3 id="level-3-multiple-replicas">Level 3 — Multiple Replicas</h3>
+    <pre class="code-block"><code>docker compose up --scale app=3
+Host A
+├── app1
+├── app2
+├── app3
+└── postgres</code></pre>
+    <p><strong>Important:</strong></p><pre class="code-block"><code>All replicas run on the same host.
+If Host A dies:
+Everything dies
+No clustering.
+No failover.
+No high availability.</code></pre>
+    <div class="part-heading" id="part-8-orchestration"><h2>Part 8 — Orchestration</h2></div>
+    <h3 id="orchestration">Orchestration</h3>
+    <p>Managing many containers across one or more machines.</p>
+    <p><strong>Includes:</strong></p><pre class="code-block"><code>Starting
+Stopping
+Scaling
+Restarting
+Updating
+Load balancing
+Service discovery
+Docker&#x27;s built-in orchestrator:
+Docker Swarm</code></pre>
+    <div class="part-heading" id="part-9-docker-swarm"><h2>Part 9 — Docker Swarm</h2></div>
+    <h3 id="what-is-docker-swarm">What is Docker Swarm?</h3>
+    <p>Docker&#x27;s built-in clustering system.</p>
+    <pre class="code-block"><code>Docker Compose = One machine
+Docker Swarm   = Multiple machines</code></pre>
+    <p><strong>Create swarm:</strong></p><pre class="code-block"><code>docker swarm init</code></pre>
+    <h3 id="level-4-cluster">Level 4 — Cluster</h3>
+    <pre class="code-block"><code>Host A      Host B      Host C
+app1        app2        app3</code></pre>
+    <h3 id="node">Node</h3>
+    <p><strong>In Swarm:</strong></p><pre class="code-block"><code>Host = Machine
+Node = Machine participating in the Swarm
+Types:</code></pre>
+    <h3 id="manager-node">Manager Node</h3>
+    <h3 id="worker-node">Worker Node</h3>
+    <h3 id="manager-node-2">Manager Node</h3>
+    <p>Controls the cluster.</p>
+    <p><strong>Responsibilities:</strong></p><ul><li>Scheduling</li><li>Placement</li><li>Scaling</li><li>Updates</li><li>Health checks</li><li>Networking</li></ul>
+    <h3 id="worker-node-2">Worker Node</h3>
+    <p>Runs containers.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>Worker 1
+├── app1
+└── app2
+Worker 2
+└── app3</code></pre>
+    <h3 id="service-swarm">Service (Swarm)</h3>
+    <p>A Service is NOT a container.</p>
+    <p>It is a desired-state definition.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker service create \
+--name web \
+--replicas 3 \
+nginx
+Meaning:
+Keep 3 nginx containers running.</code></pre>
+    <h3 id="replica">Replica</h3>
+    <p>A replica is a copy of a service.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker service create \
+--name api \
+--replicas 5 \
+my-api
+Creates:
+api.1
+api.2
+api.3
+api.4
+api.5</code></pre>
+    <h3 id="replicated-service">Replicated Service</h3>
+    <p><strong>Normal service:</strong></p><pre class="code-block"><code>docker service create \
+--replicas 5 \
+nginx
+Docker decides placement.</code></pre>
+    <h3 id="global-service">Global Service</h3>
+    <p>One container per node.</p>
+    <pre class="code-block"><code>docker service create \
+--mode global \
+fluentd</code></pre>
+    <p><strong>Result:</strong></p><pre class="code-block"><code>Host A -&gt; fluentd
+Host B -&gt; fluentd
+Host C -&gt; fluentd
+Used for:
+Logging
+Monitoring
+Security agents</code></pre>
+    <h3 id="placement-constraints">Placement Constraints</h3>
+    <p>Force a service onto a node.</p>
+    <pre class="code-block"><code>docker service create \
+--constraint node.hostname==host2 \
+nginx</code></pre>
+    <h3 id="swarm-scaling">Swarm Scaling</h3>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>docker service create \
+--name app \
+--replicas 6 \
+myapp
+Possible placement:
+Host A -&gt; app1 app2
+Host B -&gt; app3 app4
+Host C -&gt; app5 app6</code></pre>
+    <h3 id="are-replicas-always-on-different-nodes">Are Replicas Always on Different Nodes?</h3>
+    <p>No.</p>
+    <pre class="code-block"><code>Swarm decides placement.</code></pre>
+    <p><strong>Possible:</strong></p><pre class="code-block"><code>Host A -&gt; app1
+Host A -&gt; app2
+or
+Host A -&gt; app1
+Host B -&gt; app2</code></pre>
+    <div class="part-heading" id="part-10-high-availability-features"><h2>Part 10 — High Availability Features</h2></div>
+    <h3 id="high-availability-ha">High Availability (HA)</h3>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>Host A -&gt; app1
+Host B -&gt; app2
+Host C -&gt; app3
+Host B fails.
+Swarm detects:
+Desired = 3
+Actual  = 2
+Creates replacement automatically.</code></pre>
+    <h3 id="self-healing">Self-Healing</h3>
+    <p><strong>Container crashes:</strong></p><pre class="code-block"><code>Desired = 3
+Actual  = 2
+Swarm starts another replica automatically.</code></pre>
+    <h3 id="rolling-updates">Rolling Updates</h3>
+    <p><strong>Current:</strong></p><pre class="code-block"><code>api:v1
+Update:
+docker service update \
+--image api:v2 \
+api
+Swarm replaces replicas gradually.</code></pre>
+    <div class="part-heading" id="part-11-traffic-management"><h2>Part 11 — Traffic Management</h2></div>
+    <h3 id="load-balancing">Load Balancing</h3>
+    <p>Traffic distributed across replicas.</p>
+    <p>User<br/>|<br/>Load Balancer<br/>/   |   \<br/>app1 app2 app3</p>
+    <h3 id="routing-mesh">Routing Mesh</h3>
+    <p>One of Swarm&#x27;s best features.</p>
+    <p><strong>Even if the container only exists on Host C:</strong></p><pre class="code-block"><code>Host A:8080
+Host B:8080
+Host C:8080
+all still work.
+Swarm forwards traffic internally.</code></pre>
+    <div class="part-heading" id="part-12-multi-host-networking"><h2>Part 12 — Multi-Host Networking</h2></div>
+    <h3 id="overlay-network">Overlay Network</h3>
+    <p>Network spanning multiple hosts.</p>
+    <p><strong>Create:</strong></p><pre class="code-block"><code>docker network create \
+--driver overlay \
+appnet
+Example:
+Host A -&gt; app1
+Host B -&gt; app2
+Host C -&gt; db
+All communicate through:
+appnet</code></pre>
+    <h3 id="service-discovery">Service Discovery</h3>
+    <p>No need to know IP addresses.</p>
+    <p><strong>Example:</strong></p><pre class="code-block"><code>DB_HOST=db
+Docker DNS resolves:
+db -&gt; running service
+even if IP changes.</code></pre>
+    <div class="part-heading" id="part-13-real-example"><h2>Part 13 — Real Example</h2></div>
+    <h3 id="3-tier-application">3-Tier Application</h3>
+    <p><strong>Cluster:</strong></p><pre class="code-block"><code>Host A
+Host B
+Host C
+Deploy:
+Frontend = 3 replicas
+API      = 4 replicas
+Redis    = 1 replica
+Possible placement:
+
+Host A
+frontend1
+api1
+redis
+
+Host B
+frontend2
+api2
+api3
+
+Host C
+frontend3
+api4
+
+Flow:
+User
+↓
+Frontend
+↓
+API
+↓
+Redis</code>
+</pre>
+<p>Note: A host/node is just a machine that can run many containers from different services.</p>
+
+    <div class="part-heading" id="part-14-final-mental-model"><h2>Part 14 — Final Mental Model</h2></div>
+    <h3 id="one-sentence-mental-model">One-Sentence Mental Model</h3>
+    <p>Docker Image<br/>= Blueprint</p>
+    <p>Docker Container<br/>= Running isolated process</p>
+    <pre class="code-block"><code>Docker Compose
+= Many containers on ONE host
+
+Docker Swarm Service
+= Desired application definition
+
+Docker Swarm Replica
+= Copy of a service
+
+Docker Swarm Node
+= Machine in cluster
+
+Docker Swarm Cluster
+= Multiple Docker hosts managed together
+
+Docker Swarm Load Balancer
+= Distributes traffic
+
+Docker Swarm Scheduler
+= Decides placement
+
+Docker Swarm Overlay Network
+= Network across hosts
+
+Docker Swarm Routing Mesh</code></pre>
+    <p>= Any node can receive traffic and forward it</p>
+    <footer>Tip: In your browser print dialog, enable “Background graphics” if you want the shaded headings and callouts to print.</footer>
+  </body>
+</html>

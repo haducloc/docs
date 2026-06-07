@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>JSTL Tags Quick Reference</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 24px;
+  line-height: 1.45;
+  color: #222;
+}
+h1 {
+  margin-bottom: 4px;
+  border-bottom: 2px solid #bbb;
+  padding-bottom: 8px;
+}
+.note {
+  margin: 8px 0 20px 0;
+  color: #555;
+}
+h2 {
+  margin-top: 28px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+pre {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-size: 14px;
+}
+.tag {
+  margin-bottom: 12px;
+}
+
+.toc {
+  margin: 18px 0 24px 0;
+  padding: 14px 18px;
+  background: #f8f9fb;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.toc h2 {
+  margin-top: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.toc ul {
+  margin: 8px 0 0 0;
+  padding-left: 22px;
+  columns: 2;
+}
+.toc li {
+  margin: 4px 0;
+}
+.toc a {
+  color: #0645ad;
+  text-decoration: none;
+}
+.toc a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<h1>JSTL Tags Quick Reference</h1>
+<p class="note">Namespace: <b>t</b>. Required attributes are marked with <b>*</b>. Every tag below lists all attributes from the taglib.</p><nav aria-label="Table of contents" class="toc"><h2>Table of Contents</h2><ul><li><a href="#forms">Forms</a></li><li><a href="#labels-and-validation">Labels &amp; Validation</a></li><li><a href="#input-fields">Input Fields</a></li><li><a href="#select-and-choice-controls">Select &amp; Choice Controls</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#links-and-urls">Links &amp; URLs</a></li><li><a href="#messages-and-display-helpers">Messages &amp; Display Helpers</a></li><li><a href="#security">Security</a></li><li><a href="#layout-and-logic">Layout &amp; Logic</a></li><li><a href="#constants-and-formatting">Constants &amp; Formatting</a></li><li><a href="#script-support">Script Support</a></li></ul></nav>
+<h2 id="forms">Forms</h2>
+<pre>
+&lt;t:form action*="index" acceptCharset="" autocomplete="off" clazz="css-class" controller="user" datatag="${value}" enctype="" hidden="true" id="id" method="post" model="user" name="name" novalidate="true" rendered="true" style="" target="_self" title="Title"&gt;&lt;/t:form&gt;
+
+&lt;t:formErrors clazz="css-class" datatag="${value}" fieldOrder="" form="userForm" hidden="true" id="id" itemClass="" listClass="" modelOnly="true" rendered="true" style="" title="Title" /&gt;
+
+&lt;t:formAction datatag="${value}" form="userForm" rendered="true" /&gt;
+
+&lt;t:csrfId datatag="${value}" form="userForm" rendered="true" /&gt;
+</pre>
+<h2 id="labels-and-validation">Labels &amp; Validation</h2>
+<pre>
+&lt;t:label path*="email" clazz="css-class" datatag="${value}" form="userForm" hidden="true" id="id" labelKey="label.key" rendered="true" required="true" div="true" style="" title="Title"&gt;&lt;/t:label&gt;
+
+&lt;t:fieldError path*="email" clazz="css-class" datatag="${value}" form="userForm" hidden="true" id="id" rendered="true" style="" title="Title" /&gt;
+</pre>
+<h2 id="input-fields">Input Fields</h2>
+<pre>
+&lt;t:hidden path*="email" datatag="${value}" disabled="true" form="userForm" formatter="" model="user" rendered="true" required="true" /&gt;
+
+&lt;t:input path*="email" autocapitalize="" autocomplete="off" autofocus="true" clazz="css-class" datatag="${value}" disabled="true" form="userForm" formatter="" hidden="true" inputmode="" max="${value}" maxlength="1" min="${value}" minlength="1" model="user" pattern="" placeholder="" readonly="true" rendered="true" required="true" step="${value}" style="" title="Title" type="text" /&gt;
+
+&lt;t:textarea path*="email" autocapitalize="" autocomplete="off" autofocus="true" clazz="css-class" cols="1" datatag="${value}" disabled="true" form="userForm" formatter="" hidden="true" inputmode="" maxlength="1" minlength="1" model="user" placeholder="" readonly="true" rendered="true" required="true" rows="1" style="" title="Title" wrap="" /&gt;
+
+&lt;t:datalist id*="id" items*="${items}" datatag="${value}" formatter="" rendered="true" /&gt;
+</pre>
+<h2 id="select-and-choice-controls">Select &amp; Choice Controls</h2>
+<pre>
+&lt;t:select items*="${items}" path*="email" autocomplete="off" autofocus="true" clazz="css-class" datatag="${value}" disabled="true" form="userForm" formatter="" hidden="true" model="user" optLabel="" optional="true" rendered="true" required="true" size="1" style="" title="Title" /&gt;
+
+&lt;t:choiceBox path*="email" clazz="css-class" datatag="${value}" form="userForm" formatter="" hidden="true" id="id" group="true" rendered="true" style="" title="Title"&gt;&lt;/t:choiceBox&gt;
+
+&lt;t:choiceInput value*="${value}" autocomplete="off" autofocus="true" checkbox="true" clazz="css-class" datatag="${value}" disabled="true" form="userForm" hidden="true" model="user" rendered="true" required="true" style="" title="Title" /&gt;
+
+&lt;t:choiceLabel value*="${value}" clazz="css-class" datatag="${value}" hidden="true" id="id" labelKey="label.key" rendered="true" style="" title="Title"&gt;&lt;/t:choiceLabel&gt;
+</pre>
+<h2 id="buttons">Buttons</h2>
+<pre>
+&lt;t:button autofocus="true" clazz="css-class" datatag="${value}" disabled="true" form="userForm" hidden="true" id="id" labelKey="label.key" name="name" rendered="true" style="" title="Title" type="text" value="value"&gt;&lt;/t:button&gt;
+</pre>
+<h2 id="links-and-urls">Links &amp; URLs</h2>
+<pre>
+&lt;t:actionUrl action*="index" absUrl="true" controller="user" esc="true" rendered="true" /&gt;
+
+&lt;t:actionLink action*="index" absUrl="true" clazz="css-class" controller="user" datatag="${value}" hidden="true" id="id" labelKey="label.key" rel="" rendered="true" style="" target="_self" title="Title"&gt;&lt;/t:actionLink&gt;
+
+&lt;t:actionImage action*="index" absUrl="true" alt="" clazz="css-class" controller="user" datatag="${value}" decoding="" fetchpriority="" height="" hidden="true" id="id" loading="" rendered="true" style="" title="Title" width="" /&gt;
+
+&lt;t:link baseUrl*="/index" clazz="css-class" datatag="${value}" hidden="true" id="id" labelKey="label.key" rel="" rendered="true" style="" target="_self" title="Title"&gt;&lt;/t:link&gt;
+
+&lt;t:url base*="/index" esc="true" rendered="true" /&gt;
+</pre>
+<h2 id="messages-and-display-helpers">Messages &amp; Display Helpers</h2>
+<pre>
+&lt;t:messages value*="${items}" type*="text" clazz="css-class" datatag="${value}" hidden="true" id="id" itemClass="" listClass="" rendered="true" style="" title="Title" /&gt;
+
+&lt;t:checkMark value*="true" clazz="css-class" datatag="${value}" heavy="true" hidden="true" id="id" rendered="true" style="" title="Title" /&gt;
+
+&lt;t:checkOrX value*="true" clazz="css-class" datatag="${value}" heavy="true" hidden="true" id="id" rendered="true" style="" title="Title" /&gt;
+
+&lt;t:testViewError clazz="css-class" datatag="${value}" hidden="true" id="id" rendered="true" style="" title="Title" /&gt;
+</pre>
+<h2 id="security">Security</h2>
+<pre>
+&lt;t:ifAuth module="main" rendered="true" roles="ADMIN"&gt;&lt;/t:ifAuth&gt;
+
+&lt;t:ifUnauth module="main" rendered="true"&gt;&lt;/t:ifUnauth&gt;
+
+&lt;t:userName guestKey="" module="main" rendered="true" /&gt;
+</pre>
+<h2 id="layout-and-logic">Layout &amp; Logic</h2>
+<pre>
+&lt;t:wrapper t*="div" clazz="css-class" datatag="${value}" hidden="true" id="id" rendered="true" style="" title="Title"&gt;&lt;/t:wrapper&gt;
+
+&lt;t:if test*="true" rendered="true"&gt;&lt;/t:if&gt;
+
+&lt;t:iterate items*="${value}" rendered="true" var="item"&gt;&lt;/t:iterate&gt;
+</pre>
+<h2 id="constants-and-formatting">Constants &amp; Formatting</h2>
+<pre>
+&lt;t:const group*="group" value*="${value}" rendered="true" /&gt;
+
+&lt;t:sym n*="check" t="1" clazz="css-class" datatag="${value}" hidden="true" id="id" rendered="true" style="" title="Title" /&gt;
+
+&lt;t:fmtGroup name*="name" value*="value" rendered="true" /&gt;
+</pre>
+<h2 id="script-support">Script Support</h2>
+<pre>
+&lt;t:scriptJson id*="id" value*="${value}" clazz="css-class" datatag="${value}" hidden="true" rendered="true" style="" title="Title" type="text" /&gt;
+</pre>
+</body>
+</html>

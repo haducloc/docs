@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LaTeX Cheat Sheet for K1–K12 Math, Physics, and Chemistry</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#f7f8fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--line:#d9e1ec;--accent:#1d4ed8;--accent2:#0f766e;--code:#111827;--soft:#eef5ff;}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;}
+header{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:white;padding:36px 28px;} header h1{margin:0;font-size:2rem} header p{max-width:980px;margin:10px 0 0;color:#dbeafe;font-size:1.05rem}
+main{max-width:1180px;margin:0 auto;padding:24px}.toc,.section,.intro{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 4px 18px rgba(15,23,42,.06)}
+h2{font-size:1.55rem;border-bottom:2px solid var(--line);padding-bottom:8px;margin-top:0} h3{font-size:1.18rem;color:#0f172a;margin-top:28px}.grade{color:var(--accent)}
+.toc ol{columns:2;margin:8px 0}.toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+.note{background:#ecfdf5;border-left:5px solid var(--accent2);padding:12px 14px;border-radius:10px;margin:12px 0}.warn{background:#fff7ed;border-left:5px solid #ea580c;padding:12px 14px;border-radius:10px;margin:12px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:14px}.card h4{margin:0 0 8px;color:#0f172a}
+pre{margin:8px 0 0;padding:12px;border-radius:12px;background:#0b1020;color:#e5e7eb;overflow:auto;font-size:.92rem} code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.render{background:white;border:1px dashed #b6c3d1;border-radius:12px;min-height:56px;display:flex;align-items:center;justify-content:center;padding:12px;font-size:1.15rem;margin-top:8px;overflow:auto}.small{color:var(--muted);font-size:.92rem}.tag{display:inline-block;background:var(--soft);color:#1e40af;border:1px solid #bfdbfe;padding:2px 8px;border-radius:999px;font-size:.8rem;margin-right:5px}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:white} th,td{border:1px solid var(--line);padding:9px;vertical-align:top} th{background:#eff6ff;text-align:left}
+@media print{body{background:white}header{background:white;color:black;border-bottom:2px solid #111}.toc,.section,.intro{box-shadow:none;border:1px solid #aaa;break-inside:avoid}.card{break-inside:avoid}.toc ol{columns:2}a{color:black;text-decoration:none}pre{white-space:pre-wrap;background:#f3f4f6;color:black;border:1px solid #ccc}.render{border:1px solid #ccc}}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.toc ol{columns:1}main{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+<h1>LaTeX Cheat Sheet for K1–K12</h1>
+<p>A printable, navigable LaTeX reference for elementary, middle school, and high school math, plus common physics and chemistry formulas. Every code sample includes rendered output.</p>
+</header>
+<main>
+<section class="intro">
+<h2>How to Read This Cheat Sheet</h2>
+<p>Use <strong>inline math</strong> for short expressions inside text and <strong>display math</strong> for centered formulas.</p>
+<div class="grid">
+<div class="card"><h4>Inline math</h4><pre><code>\( 2 + 3 = 5 \)</code></pre><div class="render">\( 2 + 3 = 5 \)</div></div>
+<div class="card"><h4>Display math</h4><pre><code>\[
+2 + 3 = 5
+\]</code></pre><div class="render">\[2+3=5\]</div></div>
+</div>
+<div class="note">For web pages, MathJax renders LaTeX in the browser. For printed documents, you can print this page after the formulas finish rendering.</div>
+</section>
+<section class="toc">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#core">Core Syntax for All Grades</a></li>
+<li><a href="#k1k2">K1–K2: Counting, Comparing, Shapes</a></li>
+<li><a href="#g3g4">Grades 3–4: Fractions, Measurement, Area</a></li>
+<li><a href="#g5">Grade 5: Decimals, Volume, Coordinate Plane</a></li>
+<li><a href="#g6">Grade 6: Ratios, Integers, Expressions, Statistics</a></li>
+<li><a href="#g7">Grade 7: Proportions, Percent, Probability</a></li>
+<li><a href="#g8">Grade 8: Linear Equations, Functions, Pythagorean Theorem</a></li>
+<li><a href="#alg1">High School Algebra I</a></li>
+<li><a href="#geo">High School Geometry</a></li>
+<li><a href="#alg2">High School Algebra II</a></li>
+<li><a href="#precalc">Precalculus and Trigonometry</a></li>
+<li><a href="#calc">Calculus / AP Calculus</a></li>
+<li><a href="#stats">Statistics and Probability</a></li>
+<li><a href="#physics">Physics Formulas</a></li>
+<li><a href="#chem">Chemistry Formulas</a></li>
+<li><a href="#symbols">Quick Symbol Reference</a></li>
+</ol>
+</section>
+<section id="core" class="section"><h2>1. Core Syntax for All Grades</h2>
+<div class="grid">
+<div class="card"><h4>Superscript</h4><pre><code>x^2</code></pre><div class="render">\(x^2\)</div></div>
+<div class="card"><h4>Subscript</h4><pre><code>x_1</code></pre><div class="render">\(x_1\)</div></div>
+<div class="card"><h4>Group multiple characters</h4><pre><code>x^{10}, a_{n+1}</code></pre><div class="render">\(x^{10},\ a_{n+1}\)</div></div>
+<div class="card"><h4>Fraction</h4><pre><code>\frac{3}{4}</code></pre><div class="render">\(\frac{3}{4}\)</div></div>
+<div class="card"><h4>Root</h4><pre><code>\sqrt{25}</code></pre><div class="render">\(\sqrt{25}\)</div></div>
+<div class="card"><h4>Parentheses auto-size</h4><pre><code>\left( \frac{x+1}{2} \right)</code></pre><div class="render">\(\left(\frac{x+1}{2}\right)\)</div></div>
+</div></section>
+<section id="k1k2" class="section"><h2><span class="grade">K1–K2</span>: Counting, Comparing, Shapes</h2>
+<div class="grid">
+<div class="card"><h4>Counting</h4><pre><code>1, 2, 3, 4, 5</code></pre><div class="render">\(1,2,3,4,5\)</div></div>
+<div class="card"><h4>Addition sentence</h4><pre><code>2 + 3 = 5</code></pre><div class="render">\(2+3=5\)</div></div>
+<div class="card"><h4>Subtraction sentence</h4><pre><code>7 - 4 = 3</code></pre><div class="render">\(7-4=3\)</div></div>
+<div class="card"><h4>Compare numbers</h4><pre><code>8 &gt; 5</code></pre><div class="render">\(8>5\)</div></div>
+<div class="card"><h4>Less than</h4><pre><code>3 &lt; 9</code></pre><div class="render">\(3<9\)</div></div>
+<div class="card"><h4>Equal groups</h4><pre><code>2 + 2 + 2 = 6</code></pre><div class="render">\(2+2+2=6\)</div></div>
+<div class="card"><h4>Unknown box</h4><pre><code>4 + \square = 9</code></pre><div class="render">\(4+\square=9\)</div></div>
+<div class="card"><h4>Basic shape names</h4><pre><code>\triangle, \square, \circ</code></pre><div class="render">\(\triangle,\ \square,\ \circ\)</div></div>
+</div></section>
+<section id="g3g4" class="section"><h2><span class="grade">Grades 3–4</span>: Multiplication, Fractions, Measurement</h2>
+<div class="grid">
+<div class="card"><h4>Multiplication</h4><pre><code>6 \times 7 = 42</code></pre><div class="render">\(6\times7=42\)</div></div>
+<div class="card"><h4>Division</h4><pre><code>42 \div 7 = 6</code></pre><div class="render">\(42\div7=6\)</div></div>
+<div class="card"><h4>Fraction</h4><pre><code>\frac{3}{8}</code></pre><div class="render">\(\frac{3}{8}\)</div></div>
+<div class="card"><h4>Equivalent fractions</h4><pre><code>\frac{1}{2} = \frac{2}{4}</code></pre><div class="render">\(\frac12=\frac24\)</div></div>
+<div class="card"><h4>Mixed number</h4><pre><code>2\frac{1}{3}</code></pre><div class="render">\(2\frac13\)</div></div>
+<div class="card"><h4>Area of rectangle</h4><pre><code>A = l \times w</code></pre><div class="render">\(A=l\times w\)</div></div>
+<div class="card"><h4>Perimeter</h4><pre><code>P = 2l + 2w</code></pre><div class="render">\(P=2l+2w\)</div></div>
+<div class="card"><h4>Angle measure</h4><pre><code>90^\circ</code></pre><div class="render">\(90^\circ\)</div></div>
+</div></section>
+<section id="g5" class="section"><h2><span class="grade">Grade 5</span>: Decimals, Volume, Coordinate Plane</h2>
+<div class="grid">
+<div class="card"><h4>Decimal comparison</h4><pre><code>0.75 &gt; 0.7</code></pre><div class="render">\(0.75>0.7\)</div></div>
+<div class="card"><h4>Place value power of ten</h4><pre><code>10^3 = 1000</code></pre><div class="render">\(10^3=1000\)</div></div>
+<div class="card"><h4>Order of operations</h4><pre><code>3 + 4 \times 2 = 11</code></pre><div class="render">\(3+4\times2=11\)</div></div>
+<div class="card"><h4>Volume rectangular prism</h4><pre><code>V = lwh</code></pre><div class="render">\(V=lwh\)</div></div>
+<div class="card"><h4>Coordinate point</h4><pre><code>(x,y) = (3,4)</code></pre><div class="render">\((x,y)=(3,4)\)</div></div>
+<div class="card"><h4>Line plot value</h4><pre><code>x = \frac{1}{4}</code></pre><div class="render">\(x=\frac14\)</div></div>
+</div></section>
+<section id="g6" class="section"><h2><span class="grade">Grade 6</span>: Ratios, Integers, Expressions, Statistics</h2>
+<div class="grid">
+<div class="card"><h4>Ratio</h4><pre><code>3:4</code></pre><div class="render">\(3:4\)</div></div>
+<div class="card"><h4>Rate</h4><pre><code>\frac{60\text{ miles}}{1\text{ hour}}</code></pre><div class="render">\(\frac{60\text{ miles}}{1\text{ hour}}\)</div></div>
+<div class="card"><h4>Negative number</h4><pre><code>-7 &lt; 0</code></pre><div class="render">\(-7<0\)</div></div>
+<div class="card"><h4>Absolute value</h4><pre><code>|-8| = 8</code></pre><div class="render">\(|-8|=8\)</div></div>
+<div class="card"><h4>Expression</h4><pre><code>3x + 5</code></pre><div class="render">\(3x+5\)</div></div>
+<div class="card"><h4>Inequality</h4><pre><code>x \leq 12</code></pre><div class="render">\(x\leq12\)</div></div>
+<div class="card"><h4>Mean</h4><pre><code>\bar{x} = \frac{\text{sum}}{n}</code></pre><div class="render">\(\bar{x}=\frac{\text{sum}}{n}\)</div></div>
+<div class="card"><h4>Box plot labels</h4><pre><code>Q_1, Q_2, Q_3</code></pre><div class="render">\(Q_1,\ Q_2,\ Q_3\)</div></div>
+</div></section>
+<section id="g7" class="section"><h2><span class="grade">Grade 7</span>: Proportions, Percent, Probability</h2>
+<div class="grid">
+<div class="card"><h4>Proportion</h4><pre><code>\frac{a}{b} = \frac{c}{d}</code></pre><div class="render">\(\frac ab=\frac cd\)</div></div>
+<div class="card"><h4>Percent</h4><pre><code>25\% = \frac{25}{100}</code></pre><div class="render">\(25\%=\frac{25}{100}\)</div></div>
+<div class="card"><h4>Simple interest</h4><pre><code>I = Prt</code></pre><div class="render">\(I=Prt\)</div></div>
+<div class="card"><h4>Scale factor</h4><pre><code>k = \frac{\text{image}}{\text{original}}</code></pre><div class="render">\(k=\frac{\text{image}}{\text{original}}\)</div></div>
+<div class="card"><h4>Probability</h4><pre><code>P(A)=\frac{\text{favorable}}{\text{total}}</code></pre><div class="render">\(P(A)=\frac{\text{favorable}}{\text{total}}\)</div></div>
+<div class="card"><h4>Compound event</h4><pre><code>P(A \cap B)</code></pre><div class="render">\(P(A\cap B)\)</div></div>
+</div></section>
+<section id="g8" class="section"><h2><span class="grade">Grade 8</span>: Linear Equations, Functions, Pythagorean Theorem</h2>
+<div class="grid">
+<div class="card"><h4>Slope</h4><pre><code>m=\frac{y_2-y_1}{x_2-x_1}</code></pre><div class="render">\(m=\frac{y_2-y_1}{x_2-x_1}\)</div></div>
+<div class="card"><h4>Slope-intercept form</h4><pre><code>y=mx+b</code></pre><div class="render">\(y=mx+b\)</div></div>
+<div class="card"><h4>Function notation</h4><pre><code>f(x)=2x+3</code></pre><div class="render">\(f(x)=2x+3\)</div></div>
+<div class="card"><h4>System of equations</h4><pre><code>\begin{cases}
+y=2x+1\\
+y=-x+4
+\end{cases}</code></pre><div class="render">\(\begin{cases}y=2x+1\\y=-x+4\end{cases}\)</div></div>
+<div class="card"><h4>Pythagorean theorem</h4><pre><code>a^2+b^2=c^2</code></pre><div class="render">\(a^2+b^2=c^2\)</div></div>
+<div class="card"><h4>Scientific notation</h4><pre><code>3.2 \times 10^5</code></pre><div class="render">\(3.2\times10^5\)</div></div>
+</div></section>
+<section id="alg1" class="section"><h2>High School Algebra I</h2>
+<div class="grid">
+<div class="card"><h4>Linear equation</h4><pre><code>ax+b=c</code></pre><div class="render">\(ax+b=c\)</div></div>
+<div class="card"><h4>Point-slope form</h4><pre><code>y-y_1=m(x-x_1)</code></pre><div class="render">\(y-y_1=m(x-x_1)\)</div></div>
+<div class="card"><h4>Quadratic standard form</h4><pre><code>y=ax^2+bx+c</code></pre><div class="render">\(y=ax^2+bx+c\)</div></div>
+<div class="card"><h4>Quadratic formula</h4><pre><code>x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</code></pre><div class="render">\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\)</div></div>
+<div class="card"><h4>Exponential growth</h4><pre><code>y=a(1+r)^t</code></pre><div class="render">\(y=a(1+r)^t\)</div></div>
+<div class="card"><h4>Absolute value equation</h4><pre><code>|x-3|=7</code></pre><div class="render">\(|x-3|=7\)</div></div>
+</div></section>
+<section id="geo" class="section"><h2>High School Geometry</h2>
+<div class="grid">
+<div class="card"><h4>Angle</h4><pre><code>\angle ABC</code></pre><div class="render">\(\angle ABC\)</div></div>
+<div class="card"><h4>Triangle</h4><pre><code>\triangle ABC</code></pre><div class="render">\(\triangle ABC\)</div></div>
+<div class="card"><h4>Parallel</h4><pre><code>AB \parallel CD</code></pre><div class="render">\(AB\parallel CD\)</div></div>
+<div class="card"><h4>Perpendicular</h4><pre><code>AB \perp CD</code></pre><div class="render">\(AB\perp CD\)</div></div>
+<div class="card"><h4>Circle area</h4><pre><code>A=\pi r^2</code></pre><div class="render">\(A=\pi r^2\)</div></div>
+<div class="card"><h4>Circumference</h4><pre><code>C=2\pi r</code></pre><div class="render">\(C=2\pi r\)</div></div>
+<div class="card"><h4>Distance formula</h4><pre><code>d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}</code></pre><div class="render">\(d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\)</div></div>
+<div class="card"><h4>Volume of cone</h4><pre><code>V=\frac{1}{3}\pi r^2h</code></pre><div class="render">\(V=\frac13\pi r^2h\)</div></div>
+</div></section>
+<section id="alg2" class="section"><h2>High School Algebra II</h2>
+<div class="grid">
+<div class="card"><h4>Polynomial</h4><pre><code>p(x)=x^3-4x^2+x-7</code></pre><div class="render">\(p(x)=x^3-4x^2+x-7\)</div></div>
+<div class="card"><h4>Rational expression</h4><pre><code>\frac{x^2-1}{x-1}</code></pre><div class="render">\(\frac{x^2-1}{x-1}\)</div></div>
+<div class="card"><h4>Radical equation</h4><pre><code>\sqrt{x+5}=9</code></pre><div class="render">\(\sqrt{x+5}=9\)</div></div>
+<div class="card"><h4>Logarithm</h4><pre><code>\log_b(x)=y</code></pre><div class="render">\(\log_b(x)=y\)</div></div>
+<div class="card"><h4>Natural log</h4><pre><code>\ln(e^x)=x</code></pre><div class="render">\(\ln(e^x)=x\)</div></div>
+<div class="card"><h4>Complex number</h4><pre><code>a+bi</code></pre><div class="render">\(a+bi\)</div></div>
+</div></section>
+<section id="precalc" class="section"><h2>Precalculus and Trigonometry</h2>
+<div class="grid">
+<div class="card"><h4>Sine</h4><pre><code>\sin\theta</code></pre><div class="render">\(\sin\theta\)</div></div>
+<div class="card"><h4>Cosine</h4><pre><code>\cos\theta</code></pre><div class="render">\(\cos\theta\)</div></div>
+<div class="card"><h4>Tangent</h4><pre><code>\tan\theta=\frac{\sin\theta}{\cos\theta}</code></pre><div class="render">\(\tan\theta=\frac{\sin\theta}{\cos\theta}\)</div></div>
+<div class="card"><h4>Pythagorean identity</h4><pre><code>\sin^2\theta+\cos^2\theta=1</code></pre><div class="render">\(\sin^2\theta+\cos^2\theta=1\)</div></div>
+<div class="card"><h4>Radians</h4><pre><code>180^\circ = \pi \text{ radians}</code></pre><div class="render">\(180^\circ=\pi\text{ radians}\)</div></div>
+<div class="card"><h4>Unit circle point</h4><pre><code>(\cos\theta,\sin\theta)</code></pre><div class="render">\((\cos\theta,\sin\theta)\)</div></div>
+</div></section>
+<section id="calc" class="section"><h2>Calculus / AP Calculus</h2>
+<div class="grid">
+<div class="card"><h4>Limit</h4><pre><code>\lim_{x\to a} f(x)</code></pre><div class="render">\(\lim_{x\to a}f(x)\)</div></div>
+<div class="card"><h4>Derivative</h4><pre><code>\frac{dy}{dx}</code></pre><div class="render">\(\frac{dy}{dx}\)</div></div>
+<div class="card"><h4>Second derivative</h4><pre><code>\frac{d^2y}{dx^2}</code></pre><div class="render">\(\frac{d^2y}{dx^2}\)</div></div>
+<div class="card"><h4>Indefinite integral</h4><pre><code>\int x^2\,dx</code></pre><div class="render">\(\int x^2\,dx\)</div></div>
+<div class="card"><h4>Definite integral</h4><pre><code>\int_a^b f(x)\,dx</code></pre><div class="render">\(\int_a^b f(x)\,dx\)</div></div>
+<div class="card"><h4>Series</h4><pre><code>\sum_{n=1}^{\infty} \frac{1}{n^2}</code></pre><div class="render">\(\sum_{n=1}^{\infty}\frac{1}{n^2}\)</div></div>
+</div></section>
+<section id="stats" class="section"><h2>Statistics and Probability</h2>
+<div class="grid">
+<div class="card"><h4>Mean</h4><pre><code>\bar{x}=\frac{x_1+x_2+\cdots+x_n}{n}</code></pre><div class="render">\(\bar{x}=\frac{x_1+x_2+\cdots+x_n}{n}\)</div></div>
+<div class="card"><h4>Standard deviation</h4><pre><code>\sigma=\sqrt{\frac{\sum (x_i-\mu)^2}{N}}</code></pre><div class="render">\(\sigma=\sqrt{\frac{\sum (x_i-\mu)^2}{N}}\)</div></div>
+<div class="card"><h4>Z-score</h4><pre><code>z=\frac{x-\mu}{\sigma}</code></pre><div class="render">\(z=\frac{x-\mu}{\sigma}\)</div></div>
+<div class="card"><h4>Conditional probability</h4><pre><code>P(A|B)=\frac{P(A\cap B)}{P(B)}</code></pre><div class="render">\(P(A|B)=\frac{P(A\cap B)}{P(B)}\)</div></div>
+</div></section>
+<section id="physics" class="section"><h2>Physics Formulas</h2>
+<div class="grid">
+<div class="card"><h4>Force</h4><pre><code>F=ma</code></pre><div class="render">\(F=ma\)</div></div>
+<div class="card"><h4>Velocity</h4><pre><code>v=\frac{d}{t}</code></pre><div class="render">\(v=\frac dt\)</div></div>
+<div class="card"><h4>Acceleration</h4><pre><code>a=\frac{\Delta v}{\Delta t}</code></pre><div class="render">\(a=\frac{\Delta v}{\Delta t}\)</div></div>
+<div class="card"><h4>Kinetic energy</h4><pre><code>KE=\frac{1}{2}mv^2</code></pre><div class="render">\(KE=\frac12mv^2\)</div></div>
+<div class="card"><h4>Potential energy</h4><pre><code>PE=mgh</code></pre><div class="render">\(PE=mgh\)</div></div>
+<div class="card"><h4>Ohm's law</h4><pre><code>V=IR</code></pre><div class="render">\(V=IR\)</div></div>
+<div class="card"><h4>Wave speed</h4><pre><code>v=f\lambda</code></pre><div class="render">\(v=f\lambda\)</div></div>
+<div class="card"><h4>Einstein energy</h4><pre><code>E=mc^2</code></pre><div class="render">\(E=mc^2\)</div></div>
+</div></section>
+<section id="chem" class="section"><h2>Chemistry Formulas</h2>
+<div class="warn">Plain LaTeX can write chemistry, but serious chemistry documents often use the <code>mhchem</code> package. This HTML uses normal MathJax-compatible LaTeX examples.</div>
+<div class="grid">
+<div class="card"><h4>Water</h4><pre><code>H_2O</code></pre><div class="render">\(H_2O\)</div></div>
+<div class="card"><h4>Carbon dioxide</h4><pre><code>CO_2</code></pre><div class="render">\(CO_2\)</div></div>
+<div class="card"><h4>Sulfuric acid</h4><pre><code>H_2SO_4</code></pre><div class="render">\(H_2SO_4\)</div></div>
+<div class="card"><h4>Sodium ion</h4><pre><code>Na^+</code></pre><div class="render">\(Na^+\)</div></div>
+<div class="card"><h4>Sulfate ion</h4><pre><code>SO_4^{2-}</code></pre><div class="render">\(SO_4^{2-}\)</div></div>
+<div class="card"><h4>Chemical reaction</h4><pre><code>2H_2 + O_2 \rightarrow 2H_2O</code></pre><div class="render">\(2H_2+O_2\rightarrow2H_2O\)</div></div>
+<div class="card"><h4>Equilibrium</h4><pre><code>N_2 + 3H_2 \rightleftharpoons 2NH_3</code></pre><div class="render">\(N_2+3H_2\rightleftharpoons2NH_3\)</div></div>
+<div class="card"><h4>Molarity</h4><pre><code>M=\frac{\text{mol}}{\text{L}}</code></pre><div class="render">\(M=\frac{\text{mol}}{\text{L}}\)</div></div>
+</div></section>
+<section id="symbols" class="section"><h2>Quick Symbol Reference</h2>
+<table><thead><tr><th>Category</th><th>Code</th><th>Rendered</th></tr></thead><tbody>
+<tr><td>Comparisons</td><td><code>\leq, \geq, \neq, \approx</code></td><td>\(\leq,\ \geq,\ \neq,\ \approx\)</td></tr>
+<tr><td>Greek letters</td><td><code>\alpha, \beta, \theta, \pi, \lambda, \mu</code></td><td>\(\alpha,\ \beta,\ \theta,\ \pi,\ \lambda,\ \mu\)</td></tr>
+<tr><td>Sets</td><td><code>\in, \notin, \subset, \cup, \cap</code></td><td>\(\in,\ \notin,\ \subset,\ \cup,\ \cap\)</td></tr>
+<tr><td>Logic</td><td><code>\land, \lor, \neg, \Rightarrow</code></td><td>\(\land,\ \lor,\ \neg,\ \Rightarrow\)</td></tr>
+<tr><td>Arrows</td><td><code>\to, \rightarrow, \leftarrow, \leftrightarrow</code></td><td>\(\to,\ \rightarrow,\ \leftarrow,\ \leftrightarrow\)</td></tr>
+<tr><td>Calculus</td><td><code>\lim, \sum, \prod, \int, \infty</code></td><td>\(\lim,\ \sum,\ \prod,\ \int,\ \infty\)</td></tr>
+</tbody></table>
+</section>
+<section class="section"><h2>Minimal Full LaTeX Document Template</h2>
+<pre><code>\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+Inline example: \( 2+3=5 \)
+
+Display example:
+\[
+x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\]
+
+\end{document}</code></pre>
+<div class="render">\(2+3=5\) &nbsp;&nbsp; \(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\)</div>
+</section>
+</main>
+</body>
+</html>
